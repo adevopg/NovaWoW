@@ -6,7 +6,11 @@
                     <div class="bar2"></div>
                     <div class="bar3"></div>
                 </a>
+                {% if request.session.username %}
+                <a href="/">INICIO</a>
+                {% else %}
                 <a href="create-account">CREAR CUENTA</a>
+                {% endif %}
                 <div class="nav-dropdown">
                     <div class="nav-dropdown-btn">DESCARGAS <i class="fas fa-caret-down"></i></div>
                     <div class="nav-dropdown-content">

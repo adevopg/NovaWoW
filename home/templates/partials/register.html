@@ -1,3 +1,61 @@
+{% if request.session.username %}
+<div class="main-page">
+            <div class="middle-content">
+                <script>
+                    function checkAdBlocker() {
+                        let adBlockerDetected = false;
+
+                        const testAdURL = "https://ultimowow.com/es/uw-js-handlers/openad.js";
+                        const xhr = new XMLHttpRequest();
+                        xhr.open("GET", testAdURL, false);
+                        try {
+                          xhr.send();
+                          if (xhr.status === 0) {
+                            adBlockerDetected = true;
+                          }
+                        } catch (e) {
+                          adBlockerDetected = true;
+                        }
+
+                        return adBlockerDetected;
+                      }
+
+                      if (checkAdBlocker()) {
+                        console.log("Ad blocker detectado");
+                      } else {
+                        console.log("No se detectó un ad blocker");
+                    }
+                </script>
+                <div class="body-content">
+                <div class="title-content"><h1>Creación de cuenta</h1></div>
+                    <div class="box-content" id="focus" tabindex="1">
+                        <div class="body-box-content info-box-light justified">
+                            <p>El usuario debe ser alfanumérico y con una longitud de hasta 17 caracteres.</p>
+                            <p>La contraseña debe ser alfanumérica y con una longitud de hasta 16 caracteres.</p>
+                            <p>El correo debe pertenecer a gmail y con acceso al mismo. Un mismo correo puede usarse para registrar hasta 10 cuentas.</p>
+                            <br>
+                            <p>Una vez que la cuenta se haya creado exitosamente, se enviará un correo con un enlace de activación.</p>
+                            <p>De no usar el enlace de activación, la cuenta no podrá usarse para conectar al servidor.</p>
+                            <p><i class="fas fa-exclamation-triangle"></i> Al iniciar sesión, ingresa con el NOMBRE de la cuenta.</p>
+                            <br>
+                            <p>La cuenta del foro es independiente y se puede crear <a href="https://foro.ultimowow.com/register" target="_blank" rel="noopener noreferrer">aquí</a>.</p>
+                        </div>
+                    </div>
+                    <script>
+                        document.getElementById("focus").focus()
+                    </script>
+
+                    <div class="box-content">
+                        <div class="body-box-content centered">
+                            <p>¡Ya estás conectado!</p>
+                            <br>
+                            <p>Si quieres crear una cuenta, primero <a href="logout">desconecta</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		{% else %}
 <div class="main-page">
             <div class="middle-content">
                 <script>
@@ -95,3 +153,4 @@
                 </div>
             </div>
         </div>
+		{% endif %}
