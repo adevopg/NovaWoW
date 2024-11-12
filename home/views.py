@@ -19,7 +19,7 @@ from .ac_soap import execute_soap_command
 from django.utils import timezone
 from .library_correo import enviar_correo
 from django.utils.crypto import get_random_string
-
+from django.conf import settings
 
 # Configuración del logger
 logger = logging.getLogger(__name__)
@@ -298,13 +298,22 @@ def register_view(request):
             if cursor.fetchone()[0] > 0:
                 return JsonResponse({'success': False, 'message': 'El nombre de usuario ya está en uso.'})
 
-        # Validar reclutador
-        recruiter_id = None
+        # Validar y obtener recruiter_id
+        recruiter_id = 0  # Valor por defecto si no se proporciona un reclutador
         if recruiter:
             with connections['acore_auth'].cursor() as cursor:
                 cursor.execute("SELECT id FROM account WHERE username = %s", [recruiter])
                 recruiter_data = cursor.fetchone()
-                recruiter_id = recruiter_data[0] if recruiter_data else None
+                if recruiter_data:
+                    recruiter_id = recruiter_data[0]
+                else:
+                    with connections['acore_characters'].cursor() as char_cursor:
+                        char_cursor.execute("SELECT account FROM characters WHERE name = %s", [recruiter])
+                        character_data = char_cursor.fetchone()
+                        if character_data:
+                            recruiter_id = character_data[0]
+                        else:
+                            return JsonResponse({'success': False, 'message': 'El reclutador ingresado no existe.'})
 
         # Generar salt y verifier
         salt = binascii.hexlify(os.urandom(32)).decode('utf-8').upper()
@@ -329,20 +338,28 @@ def register_view(request):
         )
 
         # Enviar correo de activación
-        activation_link = f"http://localhost:8009/activate-account?act={activation_hash}"
+        activation_link = f"http://localhost:8009/es/activate-account?act={activation_hash}"
         context = {
             'username': username,
+            'password': password,
             'activation_link': activation_link,
-            'NOMBRE_SERVIDOR': 'Nova WoW'
+            'NOMBRE_SERVIDOR': settings.NOMBRE_SERVIDOR
         }
         enviar_correo(
-            subject='Activa tu cuenta en Nova WoW',
+            subject=f'Activación de la cuenta {username} - {settings.NOMBRE_SERVIDOR}',
             to_email=email,
             template='emails/activation.html',
             context=context
         )
 
-        return JsonResponse({'success': True, 'message': 'Cuenta creada exitosamente. Revisa tu correo para activarla.'})
+         # Preparar el mensaje de respuesta
+        message = f"""
+        <div class="alert-message" id="create-response" style="display: block;">
+            <span class="ok-form-response">La cuenta '{username}' ha sido creada.</span><br><br>
+            <span>Se ha enviado un enlace de activación al correo {email}.</span>
+        </div>
+        """
+        return JsonResponse({'success': True, 'message': message})
 
     return render(request, 'auth/register.html')
  
