@@ -843,3 +843,12 @@ def trade_points_view(request):
     """
     return render(request, 'account/trade_points.html')    
     
+
+def help_view(request):
+    # Verificar si el usuario está logueado
+    if 'username' not in request.session:
+        # Si no está logueado, redirigir al inicio de sesión
+        return redirect('login')
+    
+    # Si está logueado, renderizar la página de ayuda
+    return render(request, 'community/help.html')  

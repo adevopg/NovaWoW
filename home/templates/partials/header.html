@@ -31,6 +31,9 @@
                         <p><a href="https://foro.novawow.com/" target="_blank" rel="noopener noreferrer">FOROS</a></p>
                         <p><a href="https://wotlk.novawow.com" target="_blank" rel="noopener noreferrer">WOTLK DB</a></p>
                         <p><a href="content-creators">VIDEOS</a></p>
+                        {% if request.session.username %}
+                        <p><a href="help">AYUDA</a></p>
+                        {% endif %}
                     </div>
                 </div>
                 {% if request.session.username %}
