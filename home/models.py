@@ -3,6 +3,7 @@ from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+import uuid
 
 class Noticia(models.Model):
     titulo = models.CharField(max_length=200)
@@ -95,7 +96,22 @@ class ClaimedReward(models.Model):
     character_name = models.CharField(max_length=100)
     username = models.CharField(max_length=100)
     claimed_at = models.DateTimeField(auto_now_add=True)
-    ip_address = models.GenericIPAddressField() 
+    ip_address = models.CharField(max_length=45, default='127.0.0.1')  # Añadir un valor predeterminado
 
     def __str__(self):
         return f"{self.username} - {self.recruit_reward.reward_name} - {self.claimed_at}"
+
+class AccountActivation(models.Model):
+    username = models.CharField(max_length=17)
+    email = models.EmailField()
+    password = models.CharField(max_length=64)  # Hash de la contraseña
+    salt = models.BinaryField(max_length=32)
+    verifier = models.BinaryField(max_length=32)
+    recruiter_id = models.IntegerField(null=True, blank=True)
+    hash = models.CharField(max_length=32, unique=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    
+    def is_expired(self):
+        return timezone.now() > self.created_at + timezone.timedelta(hours=1)
+
+        

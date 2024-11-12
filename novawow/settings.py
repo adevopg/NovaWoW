@@ -47,6 +47,16 @@ AC_SOAP_USER = "AC_SOAP"
 AC_SOAP_PASSWORD = "Ladyamy89"
 AC_SOAP_URN = "urn:AC"
 
+# Configuración del correo electrónico para SMTP de Gmail
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'   
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'inna.aldaia@gmail.com'  # Reemplaza con tu dirección de correo electrónico
+EMAIL_HOST_PASSWORD = 'whqa zzzs mqal vdih'  # Reemplaza con tu contraseña de Gmail o App Password
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
  
 CKEDITOR_5_CONFIGS = {
     'default': {

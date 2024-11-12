@@ -2,19 +2,23 @@ import socket
 import hashlib
 import gmpy2
 import binascii
+import os
+import re
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.db import connections
 from django.contrib import messages
 from django.contrib.auth import logout
 from django import forms
-from .models import Noticia, ClienteCategoria, ServerSelection, RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, ClaimedReward
+from .models import Noticia, ClienteCategoria, ServerSelection, RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, ClaimedReward, AccountActivation
 from django.views.decorators.csrf import csrf_exempt
 import logging
 from datetime import datetime, timedelta
 from .zone_definitions import get_zone_name
 from .ac_soap import execute_soap_command
 from django.utils import timezone
+from .library_correo import enviar_correo
+from django.utils.crypto import get_random_string
 
 
 # Configuración del logger
@@ -265,8 +269,111 @@ def logout_view(request):
     return redirect('index')
 
 # Vistas adicionales
+@csrf_exempt
 def register_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username').strip()
+        password = request.POST.get('password').strip()
+        conf_password = request.POST.get('conf-password').strip()
+        email = request.POST.get('email').strip()
+        conf_email = request.POST.get('conf-email').strip()
+        recruiter = request.POST.get('recruiter').strip()
+
+        # Validar entradas
+        if not username or not password or not email:
+            return JsonResponse({'success': False, 'message': 'Por favor, complete todos los campos.'})
+        
+        if len(username) > 17 or not username.isalnum():
+            return JsonResponse({'success': False, 'message': 'Nombre de usuario no válido.'})
+
+        if password != conf_password:
+            return JsonResponse({'success': False, 'message': 'Las contraseñas no coinciden.'})
+
+        if email != conf_email or not re.match(r'^[a-zA-Z0-9._%+-]+@gmail\.com$', email):
+            return JsonResponse({'success': False, 'message': 'El correo electrónico no es válido.'})
+
+        # Verificar si el usuario ya existe
+        with connections['acore_auth'].cursor() as cursor:
+            cursor.execute("SELECT COUNT(*) FROM account WHERE username = %s", [username])
+            if cursor.fetchone()[0] > 0:
+                return JsonResponse({'success': False, 'message': 'El nombre de usuario ya está en uso.'})
+
+        # Validar reclutador
+        recruiter_id = None
+        if recruiter:
+            with connections['acore_auth'].cursor() as cursor:
+                cursor.execute("SELECT id FROM account WHERE username = %s", [recruiter])
+                recruiter_data = cursor.fetchone()
+                recruiter_id = recruiter_data[0] if recruiter_data else None
+
+        # Generar salt y verifier
+        salt = binascii.hexlify(os.urandom(32)).decode('utf-8').upper()
+        verifier = calculate_srp6_verifier(username, password, salt)
+
+        # Convertir `salt` y `verifier` a bytes antes de guardarlos en la base de datos
+        salt_bytes = binascii.unhexlify(salt)
+        verifier_bytes = binascii.unhexlify(verifier)
+
+        # Generar un hash único para activación
+        activation_hash = get_random_string(32)
+
+        # Guardar la información en la tabla `AccountActivation`
+        AccountActivation.objects.create(
+            username=username,
+            email=email,
+            password=password,
+            salt=salt_bytes,
+            verifier=verifier_bytes,
+            recruiter_id=recruiter_id,
+            hash=activation_hash
+        )
+
+        # Enviar correo de activación
+        activation_link = f"http://localhost:8009/activate-account?act={activation_hash}"
+        context = {
+            'username': username,
+            'activation_link': activation_link,
+            'NOMBRE_SERVIDOR': 'Nova WoW'
+        }
+        enviar_correo(
+            subject='Activa tu cuenta en Nova WoW',
+            to_email=email,
+            template='emails/activation.html',
+            context=context
+        )
+
+        return JsonResponse({'success': True, 'message': 'Cuenta creada exitosamente. Revisa tu correo para activarla.'})
+
     return render(request, 'auth/register.html')
+ 
+    
+def activate_account_view(request):
+    activation_hash = request.GET.get('act')
+
+    try:
+        activation = AccountActivation.objects.get(hash=activation_hash)
+        
+        if activation.is_expired():
+            return render(request, 'auth/activation_invalid.html')
+
+        # Insertar la cuenta en `acore_auth`
+        with connections['acore_auth'].cursor() as cursor:
+            cursor.execute("""
+                INSERT INTO account (username, salt, verifier, email, reg_mail, recruiter, joindate, last_ip)
+                VALUES (%s, %s, %s, %s, %s, %s, NOW(), %s)
+            """, [
+                activation.username, activation.salt, activation.verifier,
+                activation.email, activation.email, activation.recruiter_id,
+                request.META.get('REMOTE_ADDR')
+            ])
+        
+        # Eliminar el registro de activación
+        activation.delete()
+
+        return render(request, 'auth/activation_success.html')
+
+    except AccountActivation.DoesNotExist:
+        return render(request, 'auth/activation_invalid.html')    
 
 def recover_account_view(request):
     return render(request, 'auth/recover_account.html')

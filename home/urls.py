@@ -34,6 +34,7 @@ urlpatterns = [
     path('ban-history/', views.ban_history_view, name='ban-history'),
     path('security-history/', views.security_history_view, name='security_history'),
     path('trade-points/', views.trade_points_view, name='trade_points'),
+    path('activate-account', views.activate_account_view, name='activate_account'),
     
 ]
 
