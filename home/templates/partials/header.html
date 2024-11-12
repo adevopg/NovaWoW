@@ -23,6 +23,9 @@
                     <div class="nav-dropdown-content">
                         <p><a href="https://foro.novawow.com/topic/26596-changelog-2024/" target="_blank" rel="noopener noreferrer">CHANGELOG</a></p>
                         <p><a href="novawow-realm">REINO</a></p>
+                        {% if request.session.username %}
+                        <p><a href="novawow-players">JUGADORES</a></p>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="nav-dropdown">

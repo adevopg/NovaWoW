@@ -36,6 +36,7 @@ urlpatterns = [
     path('trade-points/', views.trade_points_view, name='trade_points'),
     path('activate-account', views.activate_account_view, name='activate_account'),
     path('help', views.help_view, name='help'),
+    path('novawow-players', views.novawow_players_view, name='novawow_players'),
     
 ]
 

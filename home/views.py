@@ -851,4 +851,14 @@ def help_view(request):
         return redirect('login')
     
     # Si está logueado, renderizar la página de ayuda
-    return render(request, 'community/help.html')  
+    return render(request, 'community/help.html')
+
+
+
+def novawow_players_view(request):
+    # Verificar si el usuario está logueado
+    if 'username' not in request.session:
+        return redirect('/login')
+
+    # Si está logueado, renderizar la plantilla
+    return render(request, 'realms/novawow_players.html')    
