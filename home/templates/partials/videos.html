@@ -1,0 +1,50 @@
+<!-- templates/community/content_creators.html -->
+<div class="main-page">
+    <div class="middle-content">
+        <div class="body-content">
+            {% if content_creator %}
+                <div class="title-content">
+                    <h1>{{ content_creator.title }}</h1>
+                </div>
+                <div class="box-content">
+                    <div class="body-box-content justified">
+                        {{ content_creator.description|safe }}
+                        <br><br>
+
+                        {% if content_creator.youtube_video_url or content_creator.avatar_image_url %}
+                        <div class="cc-box cc-youtube">
+                            <div class="cc-text">
+                                {% if content_creator.avatar_image_url %}
+                                    <img class="cc-avatar" src="{{ content_creator.avatar_image_url }}" alt="Avatar">
+                                {% endif %}
+
+                                {% if content_creator.youtube_video_url %}
+									<iframe src="{{ content_creator.youtube_video_url }}" height="168" width="300" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" data-cookieconsent="ignore">
+                                    </iframe>
+                                {% endif %}
+
+                                <p class="cc-name">{{ content_creator.subtitle }}</p>
+                                <br>
+                                <p class="second-brown">Tipo de contenido:</p>
+                                <p>{{ content_creator.content_type }}</p>
+                                <br>
+                                <p class="second-brown">Medios:</p>
+                                <ul>
+                                    {% if content_creator.youtube_channel_url %}
+                                        <li><i class="fab fa-youtube"></i> <a href="{{ content_creator.youtube_channel_url }}" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+                                    {% endif %}
+                                    {% if content_creator.facebook_page_url %}
+                                        <li><i class="fab fa-facebook"></i> <a href="{{ content_creator.facebook_page_url }}" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% else %}
+                <p>No hay información disponible en este momento.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>

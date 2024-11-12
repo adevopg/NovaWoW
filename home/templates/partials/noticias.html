@@ -1,0 +1,86 @@
+ <!-- main --> 
+ <div class="main-page">
+            <div class="middle-content middle-content-index">
+                <div class="body-content">
+                    <div class="title-content"><h1>{{ NOMBRE_SERVIDOR }} WOTLK 3.3.5A</h1></div>
+                    <div class="box-content">
+                        <div class="raf-index-holder">
+                            <div class="right-content" id="right-content-min">
+                                <div class="right-body">
+                                    <table class="max-center-table">
+                                        <tr>
+                                            <td class="yellow-info">{{ server.name }} <span class="blue-info small-font">{{ expansion }}<span></td>
+                                            <td class="real-info-box green-info">{{ online_characters }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Login</td>
+                                            <td class="real-info-box {% if status == 'Online' %}green-info{% else %}red-info{% endif %}">{{ status }}</td>
+											
+                                        </tr>
+                                        <tr>	
+                                            <td>Hora</td>
+                                           <td class="real-info-box"><span id="server-time">{{ server_time }}</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><hr /></td>
+                                        </tr>
+                                        <tr class="centered">
+                                       <td colspan="2">
+									<p><span>{{ server.address }}</span></p>
+									</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="raf-index-responsive"><a href="recruit-a-friend">¡RECLUTA A UN AMIGO!</a></div>
+                            </div>
+                            <div class="raf-index"><a href="recruit-a-friend">¡RECLUTA A UN AMIGO!</a></div>
+                        </div>
+                        <div class="body-box-content">
+                            <div class="body-box-content">
+                                <p>{{ NOMBRE_SERVIDOR }} es una comunidad enfocada en usuarios de habla hispana, especialmente dirigida al público español y latino.</p>
+                                <p>Atraemos a usuarios apasionados tanto por el PvE como por el PvP, y ofrecemos una amplia variedad de contenido.</p>
+                                <br />
+                                <p>Nuestro objetivo principal es mantener una comunidad de alto nivel, brindando un ambiente agradable para que todos los miembros, nuevos y veteranos, encuentren aquí un lugar donde puedan vivir momentos inigualables.</p>
+                                <p>¡Únete y disfruta de una experiencia única con miles de usuarios!</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                <script>
+                    if ($("#live-stream").length > 0) {
+                        $("#content-container").html("EN VIVO" );
+                        $("#live-stream-div").show();
+                    }
+                    else {
+                        $("#live-stream-div").hide();
+                    }
+                </script>
+                  <div class="title-content-h3">
+    <h3 class="big-font">NOTICIAS</h3>
+</div>
+<div class="box-content">
+    <div class="body-box-content">
+        {% for noticia in noticias %}
+            <h3>{{ noticia.titulo }}</h3>
+            <span class="date">{{ noticia.fecha_publicacion }}</span>
+            <div class="noticia-contenido">
+                {{ noticia.contenido|safe }}
+            </div>
+            {% if noticia.enlace %}
+                <p>Enlace: <a href="{{ noticia.enlace }}" target="_blank" rel="noopener noreferrer">aquí</a></p>
+            {% endif %}
+            <br />
+            <hr />
+            <br />
+        {% empty %}
+            <p>No hay noticias disponibles en este momento.</p>
+        {% endfor %}
+        
+        <p class="centered third-brown"><i>* Mostrando las últimas 50 noticias</i></p>
+        <br />
+    </div>
+</div>
+
+
+
+  

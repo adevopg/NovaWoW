@@ -1,0 +1,98 @@
+<div class="main-page">
+            <div class="middle-content">
+                <script>
+                    function checkAdBlocker() {
+                        let adBlockerDetected = false;
+
+                        const testAdURL = "https://ultimowow.com/es/uw-js-handlers/openad.js";
+                        const xhr = new XMLHttpRequest();
+                        xhr.open("GET", testAdURL, false);
+                        try {
+                          xhr.send();
+                          if (xhr.status === 0) {
+                            adBlockerDetected = true;
+                          }
+                        } catch (e) {
+                          adBlockerDetected = true;
+                        }
+
+                        return adBlockerDetected;
+                      }
+
+                      if (checkAdBlocker()) {
+                        console.log("Ad blocker detectado");
+                      } else {
+                        console.log("No se detectó un ad blocker");
+                    }
+                </script>
+                <div class="body-content">
+                <div class="title-content"><h1>Creación de cuenta</h1></div>
+                    <div class="box-content" id="focus" tabindex="1">
+                        <div class="body-box-content info-box-light justified">
+                            <p>El usuario debe ser alfanumérico y con una longitud de hasta 17 caracteres.</p>
+                            <p>La contraseña debe ser alfanumérica y con una longitud de hasta 16 caracteres.</p>
+                            <p>El correo debe pertenecer a gmail y con acceso al mismo. Un mismo correo puede usarse para registrar hasta 10 cuentas.</p>
+                            <br>
+                            <p>Una vez que la cuenta se haya creado exitosamente, se enviará un correo con un enlace de activación.</p>
+                            <p>De no usar el enlace de activación, la cuenta no podrá usarse para conectar al servidor.</p>
+                            <p><i class="fas fa-exclamation-triangle"></i> Al iniciar sesión, ingresa con el NOMBRE de la cuenta.</p>
+                            <br>
+                            <p>La cuenta del foro es independiente y se puede crear <a href="https://foro.novawow.com/register" target="_blank" rel="noopener noreferrer">aquí</a>.</p>
+                        </div>
+                    </div>
+                    <script>
+                        document.getElementById("focus").focus()
+                    </script>
+
+                    <div class="box-content">
+                        <div class="body-box-content centered">
+                            <form action="" method="POST" id="uw-create-form" accept-charset="utf-8">
+                                <table class="middle-center-table">
+                                    <tbody><tr>
+                                        <td><input type="text" maxlength="17" name="username" id="username" placeholder="Nombre de usuario"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="password" maxlength="16" name="password" id="password" placeholder="Contraseña">
+                                        <span class="far fa-eye toggle-password"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="password" maxlength="16" name="conf-password" id="conf-password" placeholder="Confirmar contraseña">
+                                        <span class="far fa-eye toggle-password-conf"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="email" name="email" id="email" placeholder="Correo electrónico de Gmail"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="email" name="conf-email" id="conf-email" placeholder="Confirmar correo electrónico"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Opcional: Sólo si eres reclutado por un amigo</td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" maxlength="12" name="recruiter" id="recruiter" placeholder="Reclutante"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="g-recaptcha g-recaptcha-div" id="gcaptcha" data-theme="dark" data-sitekey="6LcsJH4UAAAAAKqW0y4c-OVFijZjtZqkadRlpbRI"><div style="width: 304px; height: 78px;"><div><iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-416nydq03u12" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcsJH4UAAAAAKqW0y4c-OVFijZjtZqkadRlpbRI&amp;co=aHR0cHM6Ly91bHRpbW93b3cuY29tOjQ0Mw..&amp;hl=en&amp;v=-ZG7BC9TxCVEbzIO2m429usb&amp;theme=dark&amp;size=normal&amp;cb=fc78i952eknd"></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;"></iframe></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                        <input type="checkbox" onclick="click_checkbox()" id="accept-terms-cookies" class="terms-check" name="accept-terms-cookies">
+                                        <label for="vehicle1"> Acepto las <a href="https://foro.novawow.com/forum/novawow/normas-de-la-comunidad/16502-normas-del-juego" target="_blank" rel="noopener noreferrer">Normas</a>, <a href="terms-and-conditions" target="_blank">Términos y Condiciones</a> y la <a href="privacy-policy" target="_blank">Política de Privacidad</a></label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><button type="submit" name="create" class="create-button" data-id="CrearCuenta" id="create-account-btn" disabled="true">Crear cuenta</button></td>
+                                    </tr>
+                                </tbody></table>
+                            </form>
+                            <hr>
+                            <div class="alert-message" id="create-response"></div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

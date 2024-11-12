@@ -1,0 +1,56 @@
+   <header>
+        <div class="nav-wrapper">
+            <div class="nav-bar" id="nw-nav-bar">
+                <a href="javascript:void(0);" class="icon" id="menu-icon" onclick="nwNavBar()">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </a>
+                <a href="create-account">CREAR CUENTA</a>
+                <div class="nav-dropdown">
+                    <div class="nav-dropdown-btn">DESCARGAS <i class="fas fa-caret-down"></i></div>
+                    <div class="nav-dropdown-content">
+                        <p><a href="download-client">CLIENTE</a></p>
+                        <p><a href="download-addons">ADDONS</a></p>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <div class="nav-dropdown-btn">{{ server.name }} <i class="fas fa-caret-down"></i></div>
+                    <div class="nav-dropdown-content">
+                        <p><a href="https://foro.novawow.com/topic/26596-changelog-2024/" target="_blank" rel="noopener noreferrer">CHANGELOG</a></p>
+                        <p><a href="novawow-realm">REINO</a></p>
+                    </div>
+                </div>
+                <div class="nav-dropdown">
+                    <div class="nav-dropdown-btn">COMUNIDAD <i class="fas fa-caret-down"></i></div>
+                    <div class="nav-dropdown-content">
+                        <p><a href="https://foro.novawow.com/" target="_blank" rel="noopener noreferrer">FOROS</a></p>
+                        <p><a href="https://wotlk.novawow.com" target="_blank" rel="noopener noreferrer">WOTLK DB</a></p>
+                        <p><a href="content-creators">VIDEOS</a></p>
+                    </div>
+                </div>
+                {% if request.session.username %}
+    <!-- Usuario autenticado -->
+    <div class="nav-dropdown">
+        <div class="nav-dropdown-btn">
+            {{ request.session.username }} <i class="fas fa-caret-down"></i>
+        </div>
+        <div class="nav-dropdown-content">
+            <p><a href="my-account">MI CUENTA</a></p>
+            <p><a href="{% url 'log-out' %}">DESCONECTAR</a></p>
+        </div>
+    </div>
+{% else %}
+    <!-- Usuario no autenticado -->
+    <a href="log-in" class="last">CONECTAR</a>
+{% endif %}
+
+            </div>
+        </div>
+        <a href="{{ URL_PRINCIPAL }}/static/">
+            <img class="nw-long-logo" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/nw-long-logo.webp" alt="{{ NOMBRE_SERVIDOR }}" title="{{ NOMBRE_SERVIDOR }}" />
+        </a>
+        <a href="javascript:void(0);" onclick="uwIcon()">
+            <img class="nw-logo" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/nw-logo.webp" alt="NW" title="NW" />
+        </a>
+    </header>

@@ -1,0 +1,21 @@
+<!-- server_status/server_status.html -->
+<table class="max-center-table">
+    <tr>
+        <td class="yellow-info">{{ server.name }} <span class="blue-info small-font">{{ game_version }}<span></td>
+        <td class="real-info-box green-info">2587</td>
+    </tr>
+    <tr>
+        <td>Login</td>
+        <td class="real-info-box green-info">{{ status }}</td>
+    </tr>
+    <tr>
+        <td>Hora</td>
+        <td class="real-info-box"><span id="server-time"></span></td>
+    </tr>
+    <tr>
+        <td colspan="2"><hr /></td>
+    </tr>
+    <tr class="centered">
+        <td colspan="2"><p><span>{{ server.address }}</span></p></td>
+    </tr>
+</table>

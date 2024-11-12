@@ -1,0 +1,934 @@
+<div class="main-page">
+            <div class="middle-content">
+                <div class="body-content">
+                <div class="title-content"><h1>Adquirir PD</h1></div>
+                    <div class="body-box-content justified">
+                        <div class="dnt-sidebar">
+                            <button class="dnt-button-2 tablink dnt-selected" onclick="openLink(event, 'Info')">Información</button>
+                            <button class="dnt-button-2 tablink" onclick="openLink(event, 'PayPal')"><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/paypal-p-logo.webp" alt="PayPal" title="PayPal"> PayPal</button>
+                            <button class="dnt-button-2 tablink" onclick="openLink(event, 'dLocal')"><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/dlocalgo-logo.webp" alt="dLocal" title="dLocal"> <span class="new-msg"><sup>¡Nuevo!</sup></span> dLocal go</button>
+                            <button class="dnt-button-2 tablink" onclick="openLink(event, 'Skrill')"><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/skrill-logo-small.webp" alt="Skrill" title="Skrill"> Skrill</button>
+                            <button class="dnt-button-2 tablink" onclick="openLink(event, 'Argentina')"><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/ar.webp" alt="Argentina" title="WoW Argentina"> ARG</button>
+                            <!--<button class="dnt-button-2 tablink" onclick="openLink(event, 'Bolivia')"><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/bo.webp" alt="Bolivia" title="WoW Bolivia"> BOL</button>-->
+                            <button class="dnt-button-2 tablink" onclick="openLink(event, 'Chile')"><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/cl.webp" alt="Chile" title="WoW Chile"> CHI</button>
+                            <button class="dnt-button-2 tablink" onclick="openLink(event, 'Colombia')"><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/co.webp" alt="Colombia" title="WoW Colombia"> COL</button>
+                            <button class="dnt-button-2 tablink" onclick="openLink(event, 'Perú')"><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/pe.webp" alt="Perú" title="WoW Perú"> PER</button>
+                            <a class="back-to-account" href="my-account">Regresar a mi cuenta</a><a class="back-to-account-responsive" href="my-account">Regresar</a>
+                        </div>
+                    </div>
+                    <br>
+                <div class="dnt-tabs">
+                    <div id="Info" class="box-content dnt-tab dnt-animate">
+                        <div class="body-box-content">
+                            <span>¿Qué son los PD?</span>
+                            <p>Ofrecemos a nuestros usuarios la oportunidad de obtener niveles que les brindan beneficios exclusivos dentro de nuestra comunidad en línea. Estos beneficios incluyen acceso a herramientas especiales, contenido exclusivo y mejoras significativas para su experiencia en nuestro sitio web. Al realizar una compra, nuestros usuarios reciben PD, una unidad de reconocimiento interna que refleja su compromiso y progreso en nuestra plataforma. Los PD les permiten alcanzar nuevos niveles y desbloquear recompensas exclusivas. Cabe destacar que estos PD son una forma única de valorar y premiar la participación activa de nuestros usuarios en nuestra comunidad.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cuáles son los niveles disponibles?</span>
+                            <p id="rank-div-show">Mostrar</p>
+                            <p id="rank-div-hide">Ocultar</p>
+                            <div class="rank-div" id="rank-div">
+                                <table class="rank-table">
+                                    <tbody><tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/1_Newbie.svg" alt="Nivel 1" title="Nivel 1" width="24px"></td>
+                                        <td>Nivel 1</td>
+                                        <td class="second-brown">Desde 0 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/2_Rookie.svg" alt="Nivel 2" title="Nivel 2" width="24px"></td>
+                                        <td>Nivel 2</td>
+                                        <td class="second-brown">Hasta 100 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/3_Apprentice.svg" alt="Nivel 3" title="Nivel 3" width="24px"></td>
+                                        <td>Nivel 3</td>
+                                        <td class="second-brown">Hasta 200 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/4_Explorer.svg" alt="Nivel 4" title="Nivel 4" width="24px"></td>
+                                        <td>Nivel 4</td>
+                                        <td class="second-brown">Hasta 300 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/5_Contributor.svg" alt="Nivel 5" title="Nivel 5" width="24px"></td>
+                                        <td>Nivel 5</td>
+                                        <td class="second-brown">Hasta 400 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/6_Enthusiast.svg" alt="Nivel 6" title="Nivel 6" width="24px"></td>
+                                        <td>Nivel 6</td>
+                                        <td class="second-brown">Hasta 500 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/7_Collaborator.svg" alt="Nivel 7" title="Nivel 7" width="24px"></td>
+                                        <td>Nivel 7</td>
+                                        <td class="second-brown">Hasta 600 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/8_Regular.svg" alt="Nivel 8" title="Nivel 8" width="24px"></td>
+                                        <td>Nivel 8</td>
+                                        <td class="second-brown">Hasta 700 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/9_RisingStar.svg" alt="Nivel 9" title="Nivel 9" width="24px"></td>
+                                        <td>Nivel 9</td>
+                                        <td class="second-brown">Hasta 800 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/10_Proficient.svg" alt="Nivel 10" title="Nivel 10" width="24px"></td>
+                                        <td>Nivel 10</td>
+                                        <td class="second-brown">Hasta 900 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/11_Experienced.svg" alt="Nivel 11" title="Nivel 11" width="24px"></td>
+                                        <td>Nivel 11</td>
+                                        <td class="second-brown">Hasta 1000 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/12_Mentor.svg" alt="Nivel 12" title="Nivel 12" width="24px"></td>
+                                        <td>Nivel 12</td>
+                                        <td class="second-brown">Hasta 5000 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/13_Veteran.svg" alt="Nivel 13" title="Nivel 13" width="24px"></td>
+                                        <td>Nivel 13</td>
+                                        <td class="second-brown">Hasta 10000 PD</td>
+                                    </tr>
+                                    <tr>
+                                        <td><img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/14_GrandMaster.svg" alt="Nivel 14" title="Nivel 14" width="24px"></td>
+                                        <td>Nivel 14</td>
+                                        <td class="second-brown">Más de 10000 PD</td>
+                                    </tr>
+                                </tbody></table>
+                            </div>
+                            <script>
+                            $(document).ready(function(){
+                              $("#rank-div-show").click(function(){
+                                $("#rank-div").show();
+                                $("#rank-div-hide").show();
+                                $("#rank-div-show").hide();
+                              });
+                              $("#rank-div-hide").click(function(){
+                                $("#rank-div").hide();
+                                $("#rank-div-show").show();
+                                $("#rank-div-hide").hide();
+                              });
+                            });
+                            </script>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cuáles son los métodos de compra de PD?</span>
+                            <p>Los métodos de compra disponibles actualmente son:</p>
+                            <p>- PayPal (Para todos los países)</p>
+                            <p>- Skrill (Para todos los países)</p>
+                            <p>- dLocal Go para Argentina <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/ar.webp" alt="Argentina" title="WoW Argentina">, Bolivia <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/bo.webp" alt="Bolivia" title="WoW Bolivia">, Chile <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/cl.webp" alt="Chile" title="WoW Chile">, Colombia <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/co.webp" alt="Colombia" title="WoW Colombia">, Costa Rica <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/cr.webp" alt="Costa Rica" title="WoW Costa Rica">, Ecuador <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/ec.webp" alt="Ecuador" title="WoW Ecuador">, Guatemala <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/gt.webp" alt="Guatemala" title="WoW Guatemala">, México <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/mx.png" alt="México" title="WoW México">, Panamá <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/pa.png" alt="Panamá" title="WoW Panamá">, Perú <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/pe.webp" alt="Perú" title="WoW Perú">, Paraguay <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/py.webp" alt="Paraguay" title="WoW Paraguay">, Uruguay <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/uy.webp" alt="Uruguay" title="WoW Uruguay">.</p>
+                            <p>- Métodos alternativos sólo para Argentina (<img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/ar.webp" alt="Argentina" title="WoW Argentina"> ARG)</p>
+                            <!--<p>- Métodos alternativos sólo para Bolivia (<img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/bo.webp" alt="Bolivia" title="WoW Bolivia"> BOL)</p>-->
+                            <p>- Métodos alternativos sólo para Chile ( <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/cl.webp" alt="Chile" title="WoW Chile"> CHI)</p>
+                            <p>- Métodos alternativos sólo para Colombia (<img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/co.webp" alt="Colombia" title="WoW Colombia"> COL)</p>
+                            <p>- Métodos alternativos sólo para Perú (<img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-country-flags/pe.webp" alt="Perú" title="WoW Perú"> PER)</p>
+                            <br>
+                            <p>Puedes hacer una sugerencia sobre nuevos métodos en nuestro foro de sugerencias <a href="https://foro.ultimowow.com/forum/134-sugerencias-ideas-y-encuestas/" target="_blank" rel="noopener noreferrer">aquí</a>.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cuántos PD se reciben?</span>
+                            <p>Cada método indicará cuántos PD se reciben.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Tienes dudas o problemas con una compra?</span>
+                            <p>No realices una compra hasta estar completamente seguro de que has leído esta información y sabes cómo es el proceso que vayas a escoger.</p>
+                            <p>Si a pesar de leer este instructivo o el de alguna de nuestras herramientas, aún tienes dudas, el equipo de UltimoWoW podrá asesorarte en cualquier momento. Puedes colocar un ticket en el servidor, o contactarnos mediante nuestra plataforma de Discord.</p>
+                        </div>
+                    </div>
+
+                    <div id="PayPal" class="box-content dnt-tab dnt-animate" style="display:none">
+                        <div class="body-box-content">
+                            <span>¿Qué es PayPal?</span><img class="pp-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/paypal-logo.webp">
+                            <p>Un servicio que te permite pagar, enviar dinero y aceptar pagos sin tener que introducir tus datos financieros continuamente. Paga con PayPal de forma más rápida y segura. 250 millones de personas de más de 200 países y mercados usan PayPal. Y en 25 divisas.<br>Más información sobre PayPal <a href="https://www.paypal.com/es/webapps/mpp/paypal-popup" target="_blank" rel="noopener noreferrer">aquí</a>.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo adquirir PD a través de PayPal?</span>
+                            <p>Al ser un sistema auto-gestionado, las adquisiciones mediante este sistema son automáticas y en cuestión de minutos tras realizar tu compra, recibirás los PD en tu cuenta en la página web.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <p>- Introduce en el campo de texto que aparece más abajo (el recuadro negro), la cantidad que deseas adquirir en USD.</p>
+                            <p>- Al presionar el botón ADQUIRIR PD, serás redirigido a la plataforma de PayPal donde tendrás que ingresar con tu cuenta de PayPal y confirmar la compra en su plataforma.</p>
+                            <p>- Una vez que PayPal valide tu pago, tendrás los PD en tu cuenta.</p>
+                            <br>
+                            <p>Por favor ten en cuenta que a la hora de realizar tu compra, la cantidad a adquirir sólo acepta números enteros y el mínimo posible es $1 USD.</p>
+                            <p>Ejemplos de valor incorrecto: <span class="red-info2">$5,90 | $22,30 | $53,10</span></p>
+                            <p>Ejemplos de valor correcto: <span class="green-info2">$6 | $22 | $53</span></p>
+                            <br>
+                            <br>
+                            <br>
+                            <p class="yellow-info centered">$1 USD = 100 PD</p>
+                            <p class="centered second-brown">Valor máximo por transacción: $200</p>
+                            <br>
+                            <fieldset>
+                                <div class="separate2">
+                                    <p class="centered red-info2">¡Importante!</p>
+                                    <p class="centered">No añadas ceros decimales, sólo valores enteros.</p>
+                                    <p class="centered">Ejemplo: Si deseas 200 PD, escribe sólo el número 2, sin ceros.</p>
+                                </div>
+                            </fieldset>
+                            <br>
+                            <p class="centered">Cantidad en USD a adquirir</p>
+                            <form class="centered" name="_xclick" id="pp-purch-form" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                                <input type="hidden" name="cmd" value="_xclick">
+                                <input type="number" name="amount" id="pp-input-value" placeholder="Cantidad en USD" min="1" onkeyup="if(this.value > 200) this.value = null;" step="1" pattern="[0-9]" required=""> USD
+                                <input type="hidden" name="charset" value="utf-8">
+                                <input type="hidden" name="custom" value="username=INNAPMINE&amp;ip=37.133.171.76">
+                                <input type="hidden" name="currency_code" value="USD">
+                                <input type="hidden" name="item_name" value="Points">
+                                <input type="hidden" name="item_number" value="2023">
+                                <input type="hidden" name="business" value="cgc.jail@gmail.com">
+                                <input type="hidden" name="return" value="https://ultimowow.com/es/my-account">
+                                <input type="hidden" name="cancel_return" value="https://ultimowow.com/es/my-account">
+                                <input type="hidden" name="notify_url" value="https://ultimowow.com/es/uw-paypal/paypal_ipn_lib">
+                                <!--<script>
+                                    const numberInput = document.getElementById("pp-input-value");
+                                    let number = numberInput.value;
+
+                                    numberInput.addEventListener("change", (event) => {
+                                      number = event.target.value
+                                      console.log(number)
+                                      $("span#final-value").html(number);
+                                    })
+                                </script>
+                                <br />
+                                <br />
+                                <p>Costo final: <span id="final-value"></span> USD</p>-->
+                                <br>
+                                <br>
+                                <input type="checkbox" onclick="click_checkbox_pp()" id="accept-terms-refund-pp" class="terms-check" name="accept-terms-refund-pp" required="">
+                                <label for="vehicle1-pp"> Acepto los <a href="terms-and-conditions" target="_blank">Términos y Condiciones</a> y la <a href="refund-policy" target="_blank">Política de Reembolso</a></label>
+                                <br>
+                                <br>
+                                <script>
+                                    $(document).ready(function() {
+                                        $("#pp-dnt-button").click(function(event) {
+                                        var name = document.getElementById("pp-input-value").value;
+                                            if( !confirm('Por favor revisa que el valor en USD que has ingresado es correcto.\nEl valor ingresado es el costo final en USD que pagarás al ser redirigido.\n\nEl monto a pagar es ' + name + ' USD.') ){
+                                                event.preventDefault();
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <input type="submit" id="pp-dnt-button" class="dnt-button" value="ADQUIRIR PD" disabled="true">
+                            </form>
+                        </div>
+                    </div>
+                    <script>
+                        function click_checkbox_pp() {
+                            if (document.getElementById("accept-terms-refund-pp").checked) {
+                              document.getElementById("pp-dnt-button").removeAttribute("disabled");
+                            } else {
+                              document.getElementById("pp-dnt-button").setAttribute("disabled", "true");
+                            }
+                        }
+
+                        $(document).ready( function() {
+                          $("#pp-purch-form").submit(function(e){
+                             var pp_checkbox= $("input[name=accept-terms-refund-pp]:checked").length;
+                                if(pp_checkbox==0){
+                                    e.preventDefault();
+                                    alert("Debes aceptar los Térmimos y Condiciones y la Política de Reembolso");
+                                }else{
+                                    $("#pp-purch-form").submit();
+                            };
+                          });
+                        });
+                    </script>
+
+                    <div id="dLocal" class="box-content dnt-tab dnt-animate" style="display:none">
+                        <div class="body-box-content">
+                            <span>¿Qué es dLocal Go?</span><img class="pp-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/dlocalgo-logo.webp">
+                            <p>dLocal Go es una plataforma de pagos que permite una conexión en directo con todas las tarjetas de crédito y débito, pagos en efectivo y transferencias bancarias en diferentes países de América Latina.<br>Más información sobre dLocal Go <a href="https://dlocalgo.com/" target="_blank" rel="noopener noreferrer">aquí</a>.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo adquirir PD a través de dlocal Go?</span>
+                            <p>Al ser un sistema auto-gestionado, las adquisiciones mediante este sistema son automáticas y tras realizar tu compra, recibirás los PD en tu cuenta en la página web.</p>
+                            <div class="trade-information">
+                                <p>Tiempo aproximado de procesamiento de pagos según método:</p>
+                                <p>- Tarjeta de crédito/debito: De minutos a 1 día hábil</p>
+                                <p>- Efectivo: 1 a 2 días hábiles</p>
+                                <p>- Transferencia bancaria: 1 día hábil</p>
+                            </div>
+                            <br>
+                            <br>
+                            <p><i class="fas fa-exclamation-triangle"></i> <span>Importante:<span></span></span></p>
+                            <p>Los tiempos indicados en la tabla son orientativos. En algunas ocasiones, la demora puede ser mayor.</p>
+                            <p>Ante cualquier duda con la demora, por favor contáctanos en nuestra plataforma de Discord o a través de los medios de contacto disponibles en <a href="help">Ayuda</a>.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <p>- Introduce en el campo de texto que aparece más abajo (el recuadro negro), la cantidad que deseas adquirir en USD.</p>
+                            <p>- Al presionar el botón ADQUIRIR PD, serás redirigido a la plataforma de dLocal Go donde tendrás que realizar el pago y completar la compra en su plataforma.</p>
+                            <p>- Una vez que dLocal Go valide tu pago, tendrás los PD en tu cuenta.</p>
+                            <br>
+                            <p>Por favor ten en cuenta que a la hora de realizar tu compra, la cantidad a adquirir sólo acepta números enteros y el mínimo posible es $2 USD.</p>
+                            <p>Ejemplos de valor incorrecto: <span class="red-info2">$5,90 | $22,30 | $53,10</span></p>
+                            <p>Ejemplos de valor correcto: <span class="green-info2">$6 | $22 | $53</span></p>
+                            <br>
+                            <br>
+                            <br>
+                            <p class="yellow-info centered">$1 USD = 100 PD</p>
+                            <p class="centered second-brown">Valor mínimo por transacción: $2</p>
+                            <br>
+                            <p class="centered">Cantidad en USD a adquirir</p>
+                            <form class="centered" id="dlocal-form" action="uw-dlocalgo/dlocal_notification" method="post">
+                                <input type="number" placeholder="Cantidad en USD" min="2" step="1" pattern="[0-9]" id="cantidad" name="cantidad" required=""> USD
+                                <input type="hidden" id="username" name="username" value="INNAPMINE">
+                                <br>
+                                <br>
+                                <input type="checkbox" onclick="click_checkbox_dl()" id="accept-terms-refund-dl" class="terms-check" name="accept-terms-refund-dl" required="">
+                                <label for="vehicle1-dl"> Acepto los <a href="terms-and-conditions" target="_blank">Términos y Condiciones</a> y la <a href="refund-policy" target="_blank">Política de Reembolso</a></label>
+                                <br>
+                                <br>
+                                <button class="dnt-button" id="dl-dnt-button" type="submit" disabled="true">Adquirir PD</button>
+                            </form>
+                        </div>
+                    </div>
+                    <script>
+                    function click_checkbox_dl() {
+                        if (document.getElementById("accept-terms-refund-dl").checked) {
+                          document.getElementById("dl-dnt-button").removeAttribute("disabled");
+                        } else {
+                          document.getElementById("dl-dnt-button").setAttribute("disabled", "true");
+                        }
+                      }
+
+                    $(document).ready( function() {
+                          $("#dlocal-form").submit(function(e) {
+                             var pp_checkbox= $("input[name=accept-terms-refund-dl]:checked").length;
+                                if(pp_checkbox==0){
+                                    e.preventDefault();
+                                    alert("Debes aceptar los Térmimos y Condiciones y la Política de Reembolso");
+                                }else{
+                                    $("#dlocal-form").submit();
+                            };
+                          });
+                        });
+                    </script>
+
+                    <div id="Skrill" class="box-content dnt-tab dnt-animate" style="display:none">
+                        <div class="body-box-content">
+                            <span>¿Qué es Skrill?</span><img class="pp-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/skrill-logo.webp">
+                            <p>Skrill es una plataforma de pagos en línea rápida y segura. Envía dinero, paga y recibe pagos sin ingresar tus datos financieros constantemente. Presente en 200 países y acepta 40 monedas.</p>
+                            <p>Más información sobre Skrill <a href="https://www.skrill.com/es/" target="_blank" rel="noopener noreferrer">aquí</a>.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cuál es el valor de los PD?</span>
+                            <p>El valor será calculado según país en base al cambio indicado en el momento del envío.</p>
+                            <br>
+                            <p class="yellow-info centered">$1 USD = 100 PD</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo adquirir PD por Skrill?</span>
+                            <p>Paso 1) Contacta con la persona encargada mediante Discord. El medio de contacto aparece al final de esta sección.</p>
+                            <p>Paso 2) Debes informarle:</p>
+                            <p>- Nombre de cualquier personaje de la cuenta donde deseas recibir los PD.</p>
+                            <p>- Cantidad de PD deseada.</p>
+                            <p>- Método: SKRILL.</p>
+                            <p>Paso 3) La persona encargada te dará el correo para enviar la cantidad deseada mediante Skrill.</p>
+                            <p>Paso 4) Una vez realizado el envío, deberás enviar una imagen de la transacción (no como archivo pdf) a la persona encargada.</p>
+                            <p>Paso 5) Serás informado que has recibido los PD.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>Contacto</span>
+                            <p>- Discord al usuario <span class="ingame-epic">Torete</span> (ID <span class="ingame-epic">soytorete</span>)</p>
+                            <br>
+                            <button class="discord-button" onclick="window.open('https://discordapp.com/users/471698877586604042','_blank')"><img class="discord-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/discord-logo.webp"> Discord</button>
+                            <br>
+                            <br>
+                            <p>* Asegúrate que la persona que contactes tiene rango <span class="ingame-epic">Administrador</span> en nuestro discord.</p>
+                            <br>
+                            <p><i class="fas fa-exclamation-triangle"></i> Este método no es automático sino manual siendo realizado por la persona encargada.</p>
+                            <p>Recomendamos no realizar ninguna acción sin comprobar primero si la persona encargada está disponible para entregar los PD.</p>
+                        </div>
+                    </div>
+
+                    <div id="Argentina" class="box-content dnt-tab dnt-animate" style="display:none">
+                        <div class="body-box-content">
+                            <span>¿Qué son los métodos alternativos para Argentina?</span>
+                            <p>Son métodos disponibles para Argentina para aquellos que no tienen acceso a PayPal.</p>
+                            <p>Este método trabaja con Pesos Argentinos.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>Métodos disponibles</span>
+                            <p>- Transferencia bancaria en pesos argentinos (ARS)</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cuál es el valor de los PD?</span>
+                            <p>La cantidad de Pesos según país será en base al cambio indicado en el momento de la transferencia.</p>
+                            <p>El siguiente recuadro permite hacer una conversión de USD a Pesos argentinos mostrando el valor final y no habrá impuestos ni recargos.</p>
+                            <p>Se puede cambiar los valores para ver el precio de la cantidad deseada de PD.</p>
+                            <br>
+                            <!--Currency Converter widget by FreeCurrencyRates.com -->
+                            <script type="text/javascript" charset="UTF-8" async="" id="scFrdzVMtO5" src="https://freecurrencyrates.com/es/widget-vertical?iso=USD-ARS&amp;df=1&amp;p=FrdzVMtO5&amp;v=fits&amp;source=fcr&amp;width=300&amp;width_title=0&amp;firstrowvalue=1&amp;thm=666666,000000,333333,333333,FFFFFF,666666,555555,ffffff,ffffff&amp;title=Cambio%20USD%20a%20ARS&amp;tzo=180"></script><div id="gcw_mainFrdzVMtO5" class="gcw_mainFrdzVMtO5"><style>    @font-face {        font-family: "Roboto";        src: url("https://freecurrencyrates.com/font/roboto.googlefonts/Roboto-Regular.eot");        src: url("https://freecurrencyrates.com/font/roboto.googlefonts/Roboto-Regular.woff2") format("woff2"),            url("https://freecurrencyrates.com/font/roboto.googlefonts/Roboto-Regular.woff") format("woff"),            url("https://freecurrencyrates.com/font/roboto.googlefonts/Roboto-Regular.ttf") format("truetype"),            url("https://freecurrencyrates.com/font/roboto.googlefonts/Roboto-Regular.svg#Roboto-Regular") format("svg"),            url("https://freecurrencyrates.com/font/roboto.googlefonts/Roboto-Regular.eot?#iefix") format("embedded-opentype");        font-weight: 400;        /*font-style: normal;*/    }    @font-face {        font-family: "Roboto";        src: url("https://freecurrencyrates.com/font/roboto.googlefonts/Roboto-Medium.eot");        src: url("https://freecurrencyrates.com/font/roboto.googlefonts/Roboto-Medium.woff2") format("woff2"),            url("https://freecurrencyrates.com/font/roboto.googlefonts/Roboto-Medium.woff") format("woff"),            url("https://freecurrencyrates.com/font/roboto.googlefonts/Roboto-Medium.ttf") format("truetype"),            url("https://freecurrencyrates.com/font/roboto.googlefonts/Roboto-Medium.svg#Roboto-Medium") format("svg"),            url("https://freecurrencyrates.com/font/roboto.googlefonts/Roboto-Medium.eot?#iefix") format("embedded-opentype");        font-weight: 700;        /*font-style: normal;*/    }    .gcw_mainFrdzVMtO5 * {        padding: 0px !important;        margin: 0px !important;        color: inherit !important;        font-size: inherit !important;        font-family: inherit !important;        font-style: inherit !important;        font-weight: inherit !important;        background-color: inherit !important;        border:0px !important;        /*height: auto !important;*/    }    .gcw_mainFrdzVMtO5 {        display: inherit !important;        border: 1px solid #666666 !important;        background-color: #000000 !important;        color:  #ffffff !important;        max-width: 300px !important;        width: auto !important;        margin:auto !important;        font-family: Roboto,Trebuchet MS,Tahoma,Verdana,Arial,sans-serif !important;        font-size:12px !important;        text-align:center !important;        padding:4px !important;        /*height: auto !important;*/    }    .gcw_headerFrdzVMtO5 {        border: 1px solid #333333 !important;        background-color: #333333 !important;        font-size: 125% !important;        margin-bottom:4px !important;        padding:3px !important;        text-align:center !important;    }    .gcw_headerFrdzVMtO5 a {        text-decoration: none !important;        font-weight:bolder !important;        color:  #FFFFFF !important;    }    .gcw_ratesFrdzVMtO5 {        padding:2px !important;    }    #gcw_siteFrdzVMtO5{        font-size: x-small;        text-align: right;        width: 300px;        display: block;        margin: auto;    }    .gcw_tableFrdzVMtO5 th {        font-weight: 700 !important;    }    .gcw_tableFrdzVMtO5 {        border-spacing: 0px !important;        width: 100% !important;        color: inherit !important;        margin: 0 !important;        border: 0px !important;        white-space:nowrap !important;        background-color: inherit !important;    }    .gcw_ttlFrdzVMtO5 {        width: 70% !important;        max-width: 0 !important;        overflow: hidden !important;        text-overflow: ellipsis !important;        white-space: nowrap !important;        margin:0px 0px !important;        padding:3px !important;        text-align:left !important;        height:18px !important;        line-height: 18px !important;        font-size:inherit !important;        color: inherit !important;    }    .gcw_signFrdzVMtO5 {        padding:4px 3px 4px 3px  !important;        text-align: right !important;        max-width: 3em !important;        overflow: hidden !important;        width: 0%;    }    .gcw_flagFrdzVMtO5 {        padding-right: 2px !important;        width: 24px !important;        max-width: 24px !important;    }    .gcw_flag_tdFrdzVMtO5 {        width: 24px !important;    }    #gcw_refreshFrdzVMtO5 {        margin-right:22px !important;        color: inherit !important;    }    .gcw_sourceFrdzVMtO5 {        font-size: 100% !important;        text-align: left !important;        position:relative !important;        color: #ffffff !important;        padding: 5px 2px 1px 2px !important;    }    .gcw_infoFrdzVMtO5 {        position: absolute !important;        right: 0px !important;        bottom: 0px !important;        width: 16px !important;        height: 16px !important;        text-decoration: none !important;        line-height: 16px !important;        border: 0px solid transparent !important;        background-color: transparent !important;    }    .gcw_info-bgFrdzVMtO5 {        position: absolute !important;        margin: 0 auto !important;        left: 0 !important;        right: 0 !important;        width: 80% !important;        height: 80% !important;        border-radius: 25px !important;        border: 1px solid #666666 !important;        background-color:#555555 !important;    }    .gcw_info-signFrdzVMtO5 {        position: absolute !important;        left: 0 !important;        right: 0 !important;        z-index: 10 !important;        width: 100% !important;        height: 100% !important;        text-align: center !important;        vertical-align: middle !important;        font-family: serif !important;        font-style: italic !important;        font-weight: bold !important;        font-size: 13px !important;        padding-bottom: 0px !important;        color: #ffffff !important;    }    .gcw_valblockFrdzVMtO5 {        text-align:right !important;        width: 30%;        max-width: 8em;        min-width: 4em;        box-sizing: border-box !important;    }    .gcw_inputFrdzVMtO5 {        font:inherit !important;        color:#ffffff !important;        font-weight:bolder !important;        background-color:#555555 !important;        border:1px solid #666666 !important;        text-align:right !important;        padding:2px 2px !important;        margin:1px 0px 1px 2px !important;        display:inline !important;        box-sizing: border-box !important;        height: inherit !important;        width: 100%;    }</style><div class="gcw_headerFrdzVMtO5">    <a href="https://freecurrencyrates.com/es/myconverter#cur=USD-ARS;src=fcr;amt=USD1">Cambio USD a ARS</a></div><div class="gcw_ratesFrdzVMtO5">    <table class="gcw_tableFrdzVMtO5"><tbody><tr class="gcw_itemFrdzVMtO5"><td class="gcw_flag_tdFrdzVMtO5"><img id="gcw_flagFrdzVMtO50" class="gcw_flagFrdzVMtO5" src="https://freecurrencyrates.com/flags/24/us.webp" title="Dólar estadounidense"></td><td class="gcw_ttlFrdzVMtO5" title="Dólar estadounidense">       <b>USD</b> - Dólar estadounidense    </td><td class="gcw_signFrdzVMtO5" title="$" style="">$</td>    <td class="gcw_valblockFrdzVMtO5">    <input class="gcw_inputFrdzVMtO5" id="gcw_valFrdzVMtO50" type="text" title="Dólar estadounidense" value="1" rate="1" onkeyup="gcw_handlerFrdzVMtO5.update(0)" onchange="gcw_handlerFrdzVMtO5.update(0,1)">    </td></tr><tr class="gcw_itemFrdzVMtO5"><td class="gcw_flag_tdFrdzVMtO5"><img id="gcw_flagFrdzVMtO51" class="gcw_flagFrdzVMtO5" src="https://freecurrencyrates.com/flags/24/ar.webp" title="Peso argentino"></td><td class="gcw_ttlFrdzVMtO5" title="Peso argentino">       <b>ARS</b> - Peso argentino    </td><td class="gcw_signFrdzVMtO5" title="$" style="">$</td>    <td class="gcw_valblockFrdzVMtO5">    <input class="gcw_inputFrdzVMtO5" id="gcw_valFrdzVMtO51" type="text" title="Peso argentino" value="998" rate="998" onkeyup="gcw_handlerFrdzVMtO5.update(1)" onchange="gcw_handlerFrdzVMtO5.update(1,1)">    </td></tr>        </tbody></table></div><div class="gcw_sourceFrdzVMtO5">    <a href="https://freecurrencyrates.com/es/get-widget" class="gcw_infoFrdzVMtO5" title="www.freecurrencyrates.com widgets">        <div class="gcw_info-bgFrdzVMtO5"></div>        <div class="gcw_info-signFrdzVMtO5">i</div></a>    <a href="javascript:void(0)" id="gcw_refreshFrdzVMtO5" onclick="gcw_handlerFrdzVMtO5.reload()" title="Refresh">Noviembre 11, 2024 18:15:07</a></div></div>
+                            <a id="gcw_siteFrdzVMtO5" href="https://freecurrencyrates.com/es/">FreeCurrencyRates.com</a>
+                            <script>function reloadFrdzVMtO5(){ var sc = document.getElementById('scFrdzVMtO5');if (sc) sc.parentNode.removeChild(sc);sc = document.createElement('script');sc.type = 'text/javascript';sc.charset = 'UTF-8';sc.async = true;sc.id='scFrdzVMtO5';sc.src = 'https://freecurrencyrates.com/es/widget-vertical?iso=USD-ARS&df=1&p=FrdzVMtO5&v=fits&source=fcr&width=300&width_title=0&firstrowvalue=1&thm=666666,000000,333333,333333,FFFFFF,666666,555555,ffffff,ffffff&title=Cambio%20USD%20a%20ARS&tzo=180';var div = document.getElementById('gcw_mainFrdzVMtO5');div.parentNode.insertBefore(sc, div);} reloadFrdzVMtO5(); </script>
+                            <style>
+                            .gcw_inputFrdzVMtO5 {
+                                width: 82px !important;
+                                background-color: black !important;
+                                border: 2px solid #352115 !important;
+                            }
+
+                            .gcw_mainFrdzVMtO5 {
+                                background-color: hsla(0,0%,100%,0.05) !important;
+                                border: none !important;
+                                font-size: 14px !important;
+                                max-width: 350px !important;
+                            }
+
+                            .gcw_mainFrdzVMtO5 div {
+                                background: none !important;
+                                border: none !important;
+                            }
+
+                            .gcw_valblockFrdzVMtO5 {
+                                width: unset !important;
+                            }
+                            </style>
+                            <!--End of Currency Converter widget by FreeCurrencyRates.com -->
+                            <br>
+                            <p class="yellow-info centered">$1 USD = X PESOS ARGENTINOS = 100 PD</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo adquirir PD por Transferencia?</span>
+                            <p>Paso 1) Contacta con la persona encargada mediante Discord. El medio de contacto aparece al final de esta sección.</p>
+                            <p>Paso 2) Debes informarle:</p>
+                            <p>- Nombre de cualquier personaje de la cuenta donde deseas recibir los PD.</p>
+                            <p>- Cantidad de PD deseada.</p>
+                            <p>Paso 3) La persona encargada te dará los datos necesarios para la transferencia.</p>
+                            <p>Paso 4) Una vez realizada la transferencia, deberás enviarla como imagen (no como archivo pdf) a la persona encargada.</p>
+                            <p>Paso 5) Serás informado que has recibido los PD.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>Contacto</span>
+                            <p>- Discord al usuario <span class="ingame-epic">Ryuzaki</span> (ID <span class="ingame-epic">ryuzaki9942</span>)</p>
+                            <br>
+                            <button class="discord-button" onclick="window.open('https://discordapp.com/users/469358961049731074','_blank')"><img class="discord-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/discord-logo.webp"> Discord</button>
+                            <br>
+                            <br>
+                            <p>* Asegúrate que la persona que contactes tiene rango <span class="ingame-epic">Administrador</span> en nuestro discord.</p>
+                            <br>
+                            <p><i class="fas fa-exclamation-triangle"></i> Este método no es automático sino manual siendo realizado por la persona encargada.</p>
+                            <p>Recomendamos no realizar ninguna acción sin comprobar primero si la persona encargada está disponible para entregar los PD.</p>
+                        </div>
+                    </div>
+
+                    <!--<div id="Bolivia" class="box-content dnt-tab dnt-animate" style="display:none">
+                        <div class="body-box-content">
+                            <span>¿Qué son los métodos alternativos para Bolivia?</span>
+                            <p>Son métodos disponibles para aquellos que no tienen acceso a PayPal que se lleva a cabo a través de un representante oficial, a través de diversos métodos de pago para un país en específico.</p>
+                            <p>Este método trabaja con Pesos Bolivianos.</p>
+                            <br />
+                            <hr />
+                            <br />
+                            <span>¿Cuál es el valor de los PD?</span>
+                            <table class="points-center-table">
+                                <tr>
+                                    <th>Precio</th>
+                                    <th>PD</th>
+                                </tr>
+                                <tr>
+                                    <td>36 Pesos Bolivianos (Compra mínima)</td>
+                                    <td>300 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>48 Pesos Bolivianos</td>
+                                    <td>400 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>60 Pesos Bolivianos</td>
+                                    <td>500 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>72 Pesos Bolivianos</td>
+                                    <td>600 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>120 Pesos Bolivianos</td>
+                                    <td>1000 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>300 Pesos Bolivianos</td>
+                                    <td>2500 PD</td>
+                                </tr>
+                            </table>
+                            <br />
+                            <hr />
+                            <br />
+                            <span>¿Cómo adquirir PD por Representante?</span>
+                            <p>Para realizar una adquisición y recibir tus PD, tienes varios medios disponibles:</p>
+                            <p>- Banco Fie</p>
+                            <p>- Banco Sol</p>
+                            <p>- Banco Unión</p>
+                            <p>- Tigo Money</p>
+                            <br />
+                            <fieldset>
+                                <legend>Por Banco</legend><img class="bolivia-banks-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/bolivia-banks-logo2.webp" />
+                                <div class="separate">
+                                    <p>1 - En el banco, pide un ticket para caja.</p>
+                                    <p>2 - En ventanilla, la cajera te preguntará qué operación deseas realizar y te pedirá Carnet de Identidad y/o Certificado de Sufragio en algunos departamentos.</p>
+                                    <p>3 - Le informas que realizarás un deposito a la cuenta:</p>
+                                    <br />
+                                    <ul>
+                                        <li>Para Banco Fie:
+                                            <p class="p-ident">Número de cuenta: <span>40007268132</span></p>
+                                            <p class="p-ident">A nombre de: <span>Aldo Junior Guzman Roman</span></p></li>
+                                        <br />
+                                        <li>Para Banco Sol:
+                                            <p class="p-ident">Número de cuenta: <span>1372533000001</span></p>
+                                            <p class="p-ident">A nombre de: <span>Aldo Junior Guzman Roman</span></p></li>
+                                        <br />
+                                        <li>Para Banco Unión:
+                                            <p class="p-ident">Número de cuenta: <span>10000017784782</span></p>
+                                            <p class="p-ident">A nombre de: <span>Aldo Junior Guzman Roman</span></p></li>
+                                    </ul>
+                                    <br />
+                                    <p>4 - Luego de efectuar el pago, te entregarán un comprobante para que lo firmes.</p>
+                                    <p>5 - Revisa en el comprobante que el nombre del receptor y el monto son correctos antes de firmarlo.</p>
+                                    <p>6 - El número de transacción será solicitado por el representante antes de la entrega de los PD.</p>
+                                    <p>7 - Cada comprobante tiene un número de transacción en la parte superior derecha, arriba de la fecha (No compartas este número con otras personas).</p>
+                                </div>
+                            </fieldset>
+                            <br />
+                            <fieldset>
+                                <legend>Por Tigo Money</legend><img class="tigo-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/tigo-logo.webp" />
+                                <div class="separate">
+                                    <p>1 - En un punto Tigo Money, le informas al operador que quieres enviar dinero a un número.</p>
+                                    <p>2 - Te pedirán Carnet de Identidad y/o Certificado de Sufragio en algunos departamentos.</p>
+                                    <p>3 - El operador te preguntará y anotará el número o te pasará su cuaderno para que anotes el número al cual enviar dinero y firmes.</p>
+                                    <br />
+                                    <ul>
+                                        <li>Número: <span>77888827</span></li>
+                                    </ul>
+                                    <br />
+                                    <p>4 - Tigo Money no cobra por enviar dinero pero si por retirarlo, así que si usas este método debes añadir la comisión al envío (listada debajo).</p>
+                                    <p>5 - Una vez cancelado todo te darán un comprobante en el cual está el número al cual enviaste dinero y un número de transacción.</p>
+                                    <p>6 - El número de transacción será solicitado por el representante antes de la entrega de los PD.</p>
+                                    <br />
+                                    <span>Comisiones</span>
+                                    <table class="points-center-table">
+                                        <tr>
+                                            <th>Cantidad de Pesos Bolivianos</th>
+                                            <th>Comisión</th>
+                                        </tr>
+                                         <tr>
+                                            <td>De 10 Pesos Bolivianos a 100 Pesos Bolivianos</td>
+                                            <td>4 Pesos Bolivianos</td>
+                                        </tr>
+                                         <tr>
+                                            <td>De 101 Pesos Bolivianos a 200 Pesos Bolivianos</td>
+                                            <td>7 Pesos Bolivianos</td>
+                                        </tr>
+                                         <tr>
+                                            <td>De 201 Pesos Bolivianos a 250 Pesos Bolivianos</td>
+                                            <td>10 Pesos Bolivianos</td>
+                                        </tr>
+                                        <tr>
+                                            <td>De 251 Pesos Bolivianos a 400 Pesos Bolivianos</td>
+                                            <td>13 Pesos Bolivianos</td>
+                                        </tr>
+                                        <tr>
+                                            <td>De 401 Pesos Bolivianos a 600 Pesos Bolivianos</td>
+                                            <td>20 Pesos Bolivianos</td>
+                                        </tr>
+                                        <tr>
+                                            <td>De 601 Pesos Bolivianos a 800 Pesos Bolivianos</td>
+                                            <td>30 Pesos Bolivianos</td>
+                                        </tr>
+                                    </table>
+                                    <br />
+                                    <p>Ejemplos:</p>
+                                    <ul>
+                                        <li>Para 300 PD: 30 Bs + 4 Bs (Comisión) = 34 Bs</li>
+                                        <li>Para 1000 PD: 100 Bs + 7 Bs (Comisión) = 107 Bs</li>
+                                        <li>Para 2000 PD: 200 Bs + 10 Bs (Comisión) = 210 Bs</li>
+                                        <li>Para 3000 PD: 300 Bs + 13 Bs (Comisión) = 313 Bs</li>
+                                    </ul>
+                                </div>
+                            </fieldset>
+                            <br />
+                            <p>Una vez realizado el proceso por cualquiera de los medios indicados, contactar con el Representante.</p>
+                            <p>Si es en los horarios de atención, los PD serán cargados en minutos en la cuenta.</p>
+                            <br />
+                            <hr />
+                            <br />
+                            <span>¿Cómo contactar con el Representante?</span>
+                            <p>Nombre: Aldo Guzman</p>
+                            <p>Lunes a Sábado: 9:00 a 11:15 - 14:00 a 21:00 (Horario Bolivia)</p>
+                            <br />
+                            <button class="wp-button" onclick="window.open('https://wa.me/59168748494','_blank')"><img class="wp-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/whatsapp-logo.webp" /> Contacto</button>
+                            <br />
+                        </div>
+                    </div>-->
+
+                    <div id="Chile" class="box-content dnt-tab dnt-animate" style="display:none">
+                        <div class="body-box-content">
+                            <span>¿Qué son los métodos alternativos para Chile?</span>
+                            <p>Son métodos disponibles para Chile para aquellos que no tienen acceso a PayPal.</p>
+                            <p>Este método trabaja con Pesos Chilenos.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>Métodos disponibles</span>
+                            <p>- Transferencia bancaria en pesos chilenos (CLP)</p>
+                            <p>- Mach en pesos chilenos (CLP)</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cuál es el valor de los PD?</span>
+                            <table class="points-center-table">
+                                <tbody><tr>
+                                    <th>Precio</th>
+                                    <th>PD</th>
+                                </tr>
+                                <tr>
+                                    <td>1.100 Pesos Chilenos</td>
+                                    <td>100 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>3.300 Pesos Chilenos</td>
+                                    <td>300 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>5.500 Pesos Chilenos</td>
+                                    <td>500 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>8.800 Pesos Chilenos</td>
+                                    <td>800 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>11.000 Pesos Chilenos</td>
+                                    <td>1000 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>27.500 Pesos Chilenos</td>
+                                    <td>2500 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>55.000 Pesos Chilenos</td>
+                                    <td>5000 PD</td>
+                                </tr>
+                            </tbody></table>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo adquirir PD por Transferencia?</span>
+                            <p>Paso 1) Contacta con la persona encargada mediante Discord. El medio de contacto aparece al final de esta sección.</p>
+                            <p>Paso 2) Debes informarle:</p>
+                            <p>- Nombre de cualquier personaje de la cuenta donde deseas recibir los PD.</p>
+                            <p>- Cantidad de PD deseada.</p>
+                            <p>Paso 3) La persona encargada te dará los datos necesarios para la transferencia.</p>
+                            <p>Paso 4) Confirma con la persona encargada el costo final antes de realizar la transferencia.</p>
+                            <p>Si usas el método Mach, se te entregará un código QR para realizar la transferencia.</p>
+                            <p>Paso 5) Una vez realizada la transferencia, deberás enviarla como imagen (no como archivo pdf) a la persona encargada.</p>
+                            <p>Paso 6) Serás informado que has recibido los PD.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>Contacto</span>
+                            <p>- Discord al usuario <span class="blue-gm">Bhaal</span> (ID <span class="blue-gm">dakiron</span>)</p>
+                            <br>
+                            <button class="discord-button" onclick="window.open('https://discordapp.com/users/300063037958914048','_blank')"><img class="discord-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/discord-logo.webp"> Discord</button>
+                            <br>
+                            <br>
+                            <p>* Asegúrate que la persona que contactes tiene rango <span class="blue-gm">Maestro de Juego</span> en nuestro discord.</p>
+                            <br>
+                            <p><i class="fas fa-exclamation-triangle"></i> Este método no es automático sino manual siendo realizado por la persona encargada.</p>
+                            <p>Recomendamos no realizar ninguna acción sin comprobar primero si la persona encargada está disponible para entregar los PD.</p>
+                        </div>
+                    </div>
+
+                    <div id="Colombia" class="box-content dnt-tab dnt-animate" style="display:none">
+                        <div class="body-box-content">
+                            <span>¿Qué son los métodos alternativos para Colombia?</span>
+                            <p>Son métodos disponibles para Colombia para aquellos que no tienen acceso a PayPal que se lleva a cabo a través de un representante oficial, a través de diversos métodos de pago para un país en específico.</p>
+                            <p>Este método trabaja con Pesos Colombianos.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cuál es el valor de los PD?</span>
+                            <table class="points-center-table">
+                                <tbody><tr>
+                                    <th>Precio</th>
+                                    <th>PD</th>
+                                </tr>
+                                <tr>
+                                    <td>17.200 Pesos Colombianos</td>
+                                    <td>300 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>23.000 Pesos Colombianos</td>
+                                    <td>400 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>28.700 Pesos Colombianos</td>
+                                    <td>500 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>34.400 Pesos Colombianos</td>
+                                    <td>600 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>57.350 Pesos Colombianos</td>
+                                    <td>1000 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>143.350 Pesos Colombianos</td>
+                                    <td>2500 PD</td>
+                                </tr>
+                            </tbody></table>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo adquiir PD por Representante?</span>
+                            <p>Para realizar una adquisición y recibir tus PD, tienes varios medios disponibles:</p>
+                            <p>- Recarga NEQUI en Efectivo</p>
+                            <p>- Recarga NEQUI mediante PSE</p>
+                            <p>- Transferencia mediante NEQUI</p>
+                            <p>- Consignación o transferencia bancaria</p>
+                            <br>
+                            <fieldset>
+                                <legend>Por Recarga NEQUI en Efectivo</legend><img class="bolivia-banks-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/nequi-logo.webp">
+                                <div class="separate">
+                                    <p>1 - Ubica el punto más cercano a donde estés <a href="https://www.nequi.com.co/mapas/" target="_blank" rel="noopener noreferrer">aquí</a>.</p>
+                                    <p>2 - Al entrar te solicitará conocer tu ubicación y debes hacer clic al botón Permitir.</p>
+                                    <p>3 - Cuando la web te pregunte ¿Qué quieres hacer? Selecciona la opción Recargar.</p>
+                                    <p>4 - Mira las ubicaciones que te aparecen señalados en el mapa en color amarillo (Para ver la dirección exacta toca el punto que deseas ver en el mapa).</p>
+                                    <p>5 - Ve al establecimiento elegido e indica que quieres Recargar a NEQUI X Pesos donde X es la cantidad de pesos correspondiente a los PD deseados (Verifica la tabla y coloca el valor correctamente).</p>
+                                    <p>6 - Necesitarás dar la siguiente información:</p>
+                                    <br>
+                                    <ul>
+                                        <li>Número de convenio: <span>63703</span></li>
+                                        <li>Número de celular: <span>3133639892</span></li>
+                                    </ul>
+                                    <br>
+                                    <p>7 - Solicita recibo de la transacción.</p>
+                                    <p>8 - Escanea o toma una foto de dicho recibo y envíalo al representante junto con la cantidad de PD y el nombre del personaje donde deseas recibir los PD.</p>
+                                    <p>9 - Espera a que el encargado te envíe respuesta por el medio que le enviaste el mensaje donde te indicará que ya fueron cargados los PD.</p>
+                                </div>
+                            </fieldset>
+                            <br>
+                            <fieldset>
+                                <legend>Por Recarga NEQUI mediante PSE</legend><img class="bolivia-banks-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/nequi-logo.webp">
+                                <div class="separate">
+                                    <p>El recargar NEQUI por PSE es un método que permite enviar dinero de una cuenta bancaria (de casi cualquier banco) a NEQUI.</p>
+                                    <p>Nota: Este método puede implicar que tengas activo algunos servicios en el banco donde tienes tu cuenta para poder realizarlo.</p>
+                                    <br>
+                                    <p>1 - Ingresa a la web de <a href="https://www.nequi.com.co/" target="_blank" rel="noopener noreferrer">Nequi</a>.</p>
+                                    <p>2 - Haz clic en la opción Recarga.</p>
+                                    <p>3 - Aparecerá un formulario que solicitará la siguiente información:</p>
+                                    <br>
+                                    <ul>
+                                        <li>Número de celular: <span>3133639892</span></li>
+                                        <li>Confirma el número de celular: <span>3133639892</span></li>
+                                        <li>Tipo de persona: <span>Natural</span></li>
+                                        <li>Cantidad: <span>Cantidad correspondiente a los PD deseados (Verifica la tabla y coloca correctamente el valor)</span></li>
+                                    </ul>
+                                    <br>
+                                    <p>4 - Haz clic en No soy robot y de ahí a Continuar.</p>
+                                    <p>5 - Al momento de dar a Continuar serás redireccionado a la web oficial de PSE, donde deberás ingresar TU cuenta de PSE (si nunca antes haz hecho pagos por PSE deberás registrarte).</p>
+                                    <p>6 - Cuando ingreses la cuenta de PSE serás redireccionado a la web de tu banco que accede a este servicio donde deberás completar el proceso que tenga el banco de TU cuenta bancaria (puede que algunos bancos cobren adicional por el acceso o uso de este servicio).</p>
+                                    <p>7 - Una vez completado y finalizado el pago por PSE, serás re direccionado a NEQUI donde te mostrará un enlace con el mensaje Ver comprobante al cual debes hacerle clic.</p>
+                                    <p>8 - Descarga el comprobante de pago para generar un archivo en formato pdf y envíalo al representante junto con la cantidad de PD y el nombre del personaje donde deseas recibir los PD.</p>
+                                    <p>9 - Espera a que el encargado te envíe respuesta por el medio que le enviaste el mensaje donde te indicará que ya fueron cargados los PD.</p>
+                                </div>
+                            </fieldset>
+                            <br>
+                            <fieldset>
+                                <legend>Transferencia mediante NEQUI</legend><img class="bolivia-banks-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/nequi-logo.webp">
+                                <div class="separate">
+                                    <p>1 - Ingresa a tu cuenta NEQUI Desde la App móvil de NEQUI Colombia.</p>
+                                    <p>2 - Al ingresar, selecciona el botón con el símbolo $ de color rosa.</p>
+                                    <p>3 - Selecciona la opción Envía plata.</p>
+                                    <p>4 - Indica desde dónde enviarás el dinero.</p>
+                                    <p>5 - En los campos que están en Envía a NEQUI coloca la siguiente información:</p>
+                                    <br>
+                                    <ul>
+                                        <li>Número de celular: <span>3133639892</span></li>
+                                        <li>Cantidad: <span>Cantidad correspondiente a los PD deseados (Verifica la tabla y coloca correctamente el valor)</span></li>
+                                        <li>Mensaje: <span>PD {{ NOMBRE_SERVIDOR }}</span></li>
+                                    </ul>
+                                    <br>
+                                    <p>6 - Presiona Continuar.</p>
+                                    <p>7 - Una vez que se termine de procesar el pago te mostrará la lista de tus movimientos, en el último sale el nombre de la persona relacionada a la cuenta transferida que es ROBERT PENA.</p>
+                                    <p>8 - Selecciona dicho movimiento para que te muestre los detalles del mismo.</p>
+                                    <p>9 - Toma una captura de pantalla de los detalles y envíalo al representante junto con la cantidad de PD y el nombre del personaje donde deseas recibir los PD.</p>
+                                    <p>10 - Espera a que el encargado te envíe respuesta por el medio que le enviaste el mensaje donde te indicará que ya fueron cargados los PD.</p>
+                                </div>
+                            </fieldset>
+                            <br>
+                            <fieldset>
+                                <legend>Consignación o Transferencia a cuenta bancaria</legend><img class="bolivia-banks-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/bancolombia-logo.webp">
+                                <div class="separate">
+                                    <p>Mediante este método deberas realizar una consignación en un banco o corresponsal bancario por el valor de los PD que quieres adquirir (Verifica la tabla y coloca correctamente el valor).</p>
+                                    <br>
+                                    <p>1 - Cuando realices la consignación te solicitarán los siguientes datos:</p>
+                                    <br>
+                                    <ul>
+                                        <li>Número de cuenta: <span>203-133849-78</span></li>
+                                        <li>A nombre de: <span>Robert Camilo Peña</span></li>
+                                        <li>Tipo de cuenta: <span>De ahorros</span></li>
+                                        <li>Banco: <span>Bancolombia</span></li>
+                                    </ul>
+                                    <br>
+                                    <p>2 - Solicita copia del recibo de transacción.</p>
+                                    <p>3 - Escanea o toma una foto del recibo y envíalo al representante junto con la cantidad de PD y el nombre del personaje donde deseas recibir los PD.</p>
+                                    <p>4 - Espera a que el encargado te envíe respuesta por el medio que le enviaste el mensaje donde te indicará que ya fueron cargados los PD.</p>
+                                </div>
+                            </fieldset>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo contactar con el Representante?</span>
+                            <p>Nombre: Robert Peña</p>
+                            <p>Usuario de Discord: <span class="blue-gm">Raziel#1403</span></p>
+                            <p>Lunes a Jueves: 15:00 a 22:00 (Horario Colombia)</p>
+                            <p>Sábados y Domingos: 18:00 a 23:00 (Horario Colombia)</p>
+                            <p class="red-info2">Importante: Los días Viernes no hay atención</p>
+                            <br>
+                            <button class="discord-button" onclick="window.open('https://discordapp.com/users/1053037915065831425','_blank')"><img class="discord-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/discord-logo.webp"> Discord</button>
+                            <button class="wp-button" onclick="window.open('https://wa.me/573195069649','_blank')"><img class="wp-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/whatsapp-logo.webp"> Whatsapp</button>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div id="Perú" class="box-content dnt-tab dnt-animate" style="display:none">
+                        <div class="body-box-content">
+                            <span>¿Qué son los métodos alternativos para Perú?</span>
+                            <p>Son métodos disponibles para aquellos que no tienen acceso a PayPal que se lleva a cabo a través de un representante oficial, a través de diversos métodos de pago para un país en específico.</p>
+                            <p>Este método trabaja con Soles Peruanos.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cuál es el valor de los PD?</span>
+                            <table class="points-center-table">
+                                <tbody><tr>
+                                    <th>Precio</th>
+                                    <th>PD</th>
+                                </tr>
+                                <tr>
+                                    <td>5.5 Soles Peruanos</td>
+                                    <td>100 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>25,5 Soles Peruanos</td>
+                                    <td>500 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>40 Soles Peruanos</td>
+                                    <td>800 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>48 Soles Peruanos</td>
+                                    <td>1000 PD</td>
+                                </tr>
+                                <tr>
+                                    <td>118 Soles Peruanos</td>
+                                    <td>2500 PD</td>
+                                </tr>
+                            </tbody></table>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo adquirir PD por Representante?</span>
+                            <p>Para realizar una adquisición y recibir tus PD, tienes varios medios disponibles:</p>
+                            <p>- Recarga por medio de YAPE</p>
+                            <p>- Recarga por medio de PLIN</p>
+                            <p>- Pago presencial mediante OFICINA (LIMA)</p>
+                            <p>- Transferencia bancaria y interbancaria</p>
+                            <br>
+                            <fieldset>
+                                <legend>Recarga por medio de YAPE</legend>
+                                <div class="separate">
+                                    <img class="peru-logo" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/yape-peru.png">
+                                </div>
+                            </fieldset>
+                            <br>
+                            <fieldset>
+                                <legend>Pago por medio de PLIN</legend>
+                                <div class="separate">
+                                    <p>Pago mediante número.</p>
+                                    <br>
+                                    <img class="peru-logo" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/plin-peru.webp">
+                                </div>
+                            </fieldset>
+                            <br>
+                            <fieldset>
+                                <legend>Pago presencial mediante OFICINA</legend>
+                                <div class="separate">
+                                    <p>Contactarse con el número mediante 941841649 previamente cita.</p>
+                                    <br>
+                                    <img class="peru-logo" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/oficina-peru.png">
+                                </div>
+                            </fieldset>
+                            <br>
+                            <fieldset>
+                                <legend>Transferencia bancaria y interbancaria</legend>
+                                <div class="separate">
+                                    <p>Mediante este método deberas realizar una consignación en un banco o corresponsal bancario por el valor de los PD que quieres adquirir (Verifica la tabla y coloca correctamente el valor).</p>
+                                    <br>
+                                    <p>- BANCO BCP</p>
+                                    <p>- BANCO BBVA</p>
+                                    <p>- BANCO SCOTIABANK</p>
+                                    <p>- BANCO DE LA NACIÓN</p>
+                                    <br>
+                                    <p>Comunicarse previamente con el representante.</p>
+                                </div>
+                            </fieldset>
+                            <br>
+                            <p>Una vez realizado el proceso por cualquiera de los medios indicados, contactar con el Representante.</p>
+                            <p>Si es en los horarios de atención, los PD serán cargados en minutos en la cuenta.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo contactar con el Representante?</span>
+                            <p>Nombre: Anibal Gavidia Correa</p>
+                            <p>Lunes a Jueves: 9:00 a 22:00 (Horario Perú)</p>
+                            <p>Sábados y Domingos: 9:00 a 23:00 (Horario Perú)</p>
+                            <br>
+                            <button class="discord-button" onclick="window.open('https://discordapp.com/users/642217524737605642','_blank')"><img class="discord-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/discord-logo.webp"> Discord</button>
+                            <button class="wp-button" onclick="window.open('https://wa.me/51941841649','_blank')"><img class="wp-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-logos/whatsapp-logo.webp"> Contacto</button>
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+                    <script>
+                        function openLink(evt, linkName) {
+                          var i, x, tablinks;
+                          x = document.getElementsByClassName("dnt-tab");
+                          for (i = 0; i < x.length; i++) {
+                            x[i].style.display = "none";
+                          }
+                          tablinks = document.getElementsByClassName("tablink");
+                          for (i = 0; i < x.length; i++) {
+                            tablinks[i].className = tablinks[i].className.replace(" dnt-selected", ""); 
+                          }
+                          document.getElementById(linkName).style.display = "block";
+                          evt.currentTarget.className += " dnt-selected";
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,154 @@
+<div class="main-page">
+            <div class="middle-content">
+                <div class="body-content">
+                <div class="title-content"><h1>Comercio de PD</h1></div>
+                    <div class="box-content justified">
+                        <div class="title-box-content"><h2>Información</h2><a class="back-to-account" href="my-account">Regresar a mi cuenta</a><a class="back-to-account-responsive" href="my-account">Regresar</a></div>
+                        <div class="body-box-content">
+                            <br>
+                            <p>La herramienta <span>Comercio de PD</span> permite comprar o vender PD a cambio de oro de una forma segura.</p>
+                            <br>
+                            <p>El sistema permite crear códigos de 1 solo uso que valdrán X cantidad de PD a cambio de X cantidad de oro.</p>
+                            <p>Los vendedores disponen de la sección VENTA para crear el código y los compradores disponen de la sección COMPRA para canjear dicho código.</p>
+                            <br>
+                            <div class="trade-information">
+                                <h2>Venta</h2>
+                                <p>1) Decide cuánto valdrá el código en PD.</p>
+                                <p>2) Decide por cuánto oro se podrá canjear.</p>
+                                <p>3) Escoge a qué personaje de la cuenta se enviará el oro cuando el código sea canjeado.</p>
+                                <p>4) Completa los datos con la contraseña y Token de Seguridad.</p>
+                                <p>5) Usa el botón CREAR CÓDIGO.</p>
+                                <p>6) Un recuadro aparecerá con los datos del Código creado con el ID que se debe usar para enviar a otro jugador.</p>
+                                <br>
+                            </div>
+                            <div class="trade-information">
+                                <h2>Compra</h2>
+                                <p>1) Ingresa ID del código que te ha dado otro jugador.</p>
+                                <p>2) Chequea el valor en PD y costo en oro con el botón CHEQUEAR CÓDIGO.</p>
+                                <p>3) Escoge de qué personaje de la cuenta se descontará el oro cuando el código sea canjeado.</p>
+                                <p>4) Completa los datos con la contraseña y Token de Seguridad.</p>
+                                <p>5) Usa el botón CANJEAR CÓDIGO.</p>
+                                <p>6) Un recuadro aparecerá con los datos del Código canjeado, PD recibidos y oro retirado del personaje seleccionado.</p>
+                            </div>
+                            <br>
+                            <br>
+                            <p>Cada código tiene una duración de 1 hora.</p>
+                            <p>Una vez canjeado el código:</p>
+                            <p>- Los PD serán retirados de la cuenta del creador del código y enviados a quien lo haya canjeado.</p>
+                            <p>- El oro será retirado y enviado por correo al creador.</p>
+                            <p>- La transacción quedará registrada en el Historial de PD y PV.</p>
+                            <br>
+                            <p>La cuenta de quien canjee el código será bloqueada por 5s como medida de seguridad si el trámite es exitoso.</p>
+                            <br>
+                            <p>Si aún no tienes Token de seguridad, puedes solicitarlo <a href="security-token" target="_blank">aquí</a>.</p>
+                            <br>
+                            <fieldset>
+                            <legend>NOTA</legend>
+                                <div class="separate2">
+                                    <p>Por favor, asegúrate de haber escrito todos los datos correctos ya que esta acción no es reversible una vez realizada.</p>
+                                </div>
+                            </fieldset>
+
+                            <div class="centered">
+                                <br>
+                                <br>
+                                    <button id="trade-sell-a" class="trade-option-button">VENTA</button>
+                                    <button id="trade-buy-a" class="trade-option-button">COMPRA</button>
+                                    <br>
+                                    <div id="trade-sell-div">
+                                        <form action="" method="POST" id="uw-trade-points-sell-form" accept-charset="utf-8">
+                                            <table class="middle-center-table">
+                                                <tbody><tr>
+                                                    <td>¿Cuánto valdrá el código en PD?</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" maxlength="5" name="points-amount" id="points-amount" min="1" step="1" pattern="[0-9]" placeholder="Valor del código en PD"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>¿Cuánto costará el código en oro?</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="number" maxlength="5" name="gold-amount" id="gold-amount" min="1" step="1" pattern="[0-9]" placeholder="Valor del código en oro"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>¿A qué personaje se enviará el oro?</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <select name="character">
+                                                        <option disabled="" selected="" value=""></option>
+                                                        
+                                                        <option class="priest big-font" value="Innapmine">Innapmine</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><br><input type="password" maxlength="16" name="password" id="password-sell" placeholder="Contraseña de tu cuenta">
+                                                    <span class="far fa-eye toggle-password"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="password" maxlength="6" name="security-token" id="security-token-sell" placeholder="Token de seguridad">
+                                                    <span class="far fa-eye toggle-token"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div class="g-recaptcha g-recaptcha-div" id="gcaptcha" data-theme="dark" data-sitekey="6LcsJH4UAAAAAKqW0y4c-OVFijZjtZqkadRlpbRI"><div style="width: 304px; height: 78px;"><div><iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-g3ecgzljqvko" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcsJH4UAAAAAKqW0y4c-OVFijZjtZqkadRlpbRI&amp;co=aHR0cHM6Ly91bHRpbW93b3cuY29tOjQ0Mw..&amp;hl=en&amp;v=-ZG7BC9TxCVEbzIO2m429usb&amp;theme=dark&amp;size=normal&amp;cb=xm874zjpmaou"></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><button type="submit" name="tradepointssell" class="trade-points-sell-button" data-id="CrearCodigo">Crear código</button></td>
+                                                </tr>
+                                            </tbody></table>
+                                        </form>
+                                        <hr>
+                                        <div class="alert-message" id="trade-points-sell-response"></div>
+                                    </div>
+                                    <div id="trade-buy-div">
+                                        <form action="" method="POST" id="uw-trade-points-buy-form" accept-charset="utf-8">
+                                            <table class="middle-center-table">
+                                                <tbody><tr>
+                                                    <td>Ingresa el ID del código de PD</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" maxlength="25" name="trade-code" id="trade-code" placeholder="Código de PD"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>¿De qué personaje se cobrará el oro?</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <select name="character">
+                                                        <option disabled="" selected="" value=""></option>
+                                                        
+                                                        <option class="priest big-font" value="Innapmine">Innapmine</option>
+                                                        </select>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td><br><input type="password" maxlength="16" name="password" id="password-buy" placeholder="Contraseña de tu cuenta">
+                                                    <span class="far fa-eye toggle-password"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="password" maxlength="6" name="security-token" id="security-token-buy" placeholder="Token de seguridad">
+                                                    <span class="far fa-eye toggle-token"></span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div class="g-recaptcha g-recaptcha-div" id="gcaptcha" data-theme="dark" data-sitekey="6LcsJH4UAAAAAKqW0y4c-OVFijZjtZqkadRlpbRI"><div style="width: 304px; height: 78px;"><div><iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-9hpssgl3yeev" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcsJH4UAAAAAKqW0y4c-OVFijZjtZqkadRlpbRI&amp;co=aHR0cHM6Ly91bHRpbW93b3cuY29tOjQ0Mw..&amp;hl=en&amp;v=-ZG7BC9TxCVEbzIO2m429usb&amp;theme=dark&amp;size=normal&amp;cb=fpc7mb29a2di"></iframe></div><textarea id="g-recaptcha-response-1" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;"></iframe></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><button type="submit" name="tradepointscheck" class="trade-points-check-button" data-id="ChequearCodigo">Chequear código</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><button type="submit" name="tradepointsbuy" class="trade-points-buy-button" data-id="CanjearCodigo">Canjear código</button></td>
+                                                </tr>
+                                            </tbody></table>
+                                        </form>
+                                        <hr>
+                                        <div class="alert-message" id="trade-points-buy-response"></div>
+                                    </div>
+
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

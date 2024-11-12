@@ -1,0 +1,287 @@
+<div class="main-page">
+            <div class="middle-content">
+                <div class="body-content">
+                <div class="title-content"><h1>Mi cuenta</h1></div>
+                    <div class="box-content">
+                        <div class="title-box-content"><h2>Información</h2></div>
+                        <div class="body-box-content">
+                            <fieldset class="account-fieldset">
+                            <legend>Datos básicos</legend>
+                                <div class="separate">
+                                    <p>Nombre de la cuenta: <span>{{ user_info.username }}</span></p>
+                                    <p>Correo de registro: <span>{{ user_info.reg_mail }}</span></p>
+                                    <p>Correo actual: <span>{{ user_info.email }}</span></p>
+                                    <p>Fecha de registro: <span>{{ user_info.joindate }}</span></p>
+                                    <p>Última IP (web): <span>{{ user_info.last_ip }}</span></p>
+                                    <p>Última IP (Servidor): <span>{{ user_info.last_attempt_ip }}</span></p>
+                                </div>
+                            </fieldset>
+							<fieldset class="account-fieldset">
+					 <legend>Estado de la cuenta</legend>
+    <div class="separate">
+        <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/1_Newbie.svg" class="nw-rank" alt="Nivel 1" title="Nivel 1">
+        <p>PD: <span>0</span></p>
+        <p>PV: <span>0</span></p>
+        <p>Token de Seguridad: <span>Sin solicitar</span></p>
+
+        {% if account_status.is_banned %}
+            <p>Cuenta baneada: <span>Sí</span></p>
+            <p>Fin de la suspensión: <span>{{ account_status.unban_date }}</span></p>
+            <p id="ban-timer">Tiempo restante: <span id="remaining-time">{{ account_status.remaining_time }}</span></p>
+        {% else %}
+            <p>Cuenta baneada: <span>No</span> (<a href="ban-history">Consultar historial</a>)</p>
+            
+            {% if account_status.is_recruited %}
+                <p>Cuenta reclutada: <span>Sí</span></p>
+            {% else %}
+                <p>Cuenta reclutada: <span>No</span></p>
+            {% endif %}
+            
+            <p>Amigos reclutados: <span>{{ account_status.recruited_count }}</span></p>
+        {% endif %}
+     </div>
+                            </fieldset>
+                        </div>
+                    </div>
+{% if has_characters %}
+<div class="box-content">
+    <div class="title-box-content">
+        <h2>Mis personajes</h2>
+    </div>
+    <div class="characters-grid">
+        {% for character in characters %}
+        <div class="char-box char-box-{{ character.class_css }}">
+            <div class="char-text">
+                <!-- Imagen del personaje basada en raza, clase y género -->
+                <img class="img-small-icon char-icon" src="{{ URL_PRINCIPAL }}/static/{{ character.image_url }}" alt="{{ character.name }}">
+
+                <!-- Información del personaje -->
+                <p class="{{ character.class_css }} big-font">{{ character.name }}</p>
+                <p><span>Nivel {{ character.level }}</span></p>
+
+                <!-- Mostrar zona del personaje -->
+                <p class="second-brown">
+					{{ character.zone }}
+				</p>
+
+                <!-- Mostrar monedas del personaje -->
+                <p>
+                    <span>
+                        {{ character.gold }}<img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/money-gold.gif" width="10px">
+                        {{ character.silver }}<img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/money-silver.webp" width="10px">
+                        {{ character.copper }}<img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/money-copper.gif" width="10px">
+                    </span>
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+<style>
+.title-box-content {
+    margin-bottom: 20px; /* Separación entre el título y la cuadrícula */
+    text-align: center;  /* Alineación centrada del título */
+}
+</style>
+
+					
+                    <div class="box-content">
+                        <div class="title-box-content"><h2>Utilidades y Herramientas</h2></div>
+                        <div class="body-box-content-account">
+                            <div id="account-settings">OPCIONES DE CUENTA <i class="fas fa-arrow-down fa-arrow-down-account rotate2"></i></div>
+                            <div id="account-settings-panel" style="display: none;">
+                                <table class="max-center-table fixed-layout-table">
+                                    <tbody><tr>
+                                        <td>
+                                            <a href="change-password">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon password-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Cambiar contraseña</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Gestiona una nueva contraseña</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="change-email">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon email-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Cambiar correo</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Gestiona un correo activo</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="promo-code">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon promo-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Código de promoción</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Canjea códigos por PD o PV</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="security-token">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon token-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Token de seguridad</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Seguridad extra para tu cuenta</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="recruit-a-friend">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon recruit-a-friend-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Recluta a un amigo</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Trae amigos y recibe grandes premios</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="rename-guild">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon rename-guild-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Renombrar hermandad</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Cambia el nombre de tu hermandad</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="vote-points">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon vote-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Votar por nosotros</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Suma tu voto en páginas top</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="d-points">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon dnt-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Adquirir PD</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Obtiene PD y accede a recompensas</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody></table>
+                                <br>
+                            </div>
+                            <div id="account-history">HISTORIALES <i class="fas fa-arrow-down fa-arrow-down-history rotate2"></i></div>
+                            <div id="account-history-panel">
+                                <table class="max-center-table fixed-layout-table">
+                                    <tbody><tr>
+                                        <td>
+                                            <a href="points-history">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon pointsh-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Historial de PD y PV</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Revisa en qué has usado tus PD y PV</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                         <td>
+                                            <a href="trans-history">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon dnth-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Historial de transacciones</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Revisa los trámites que has realizado</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="ban-history">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon banh-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Historial de sanciones</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Revisa las sanciones de tu cuenta</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                         <td>
+                                            <a href="security-history">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon securityh-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Historial de seguridad</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Revisa la seguridad de tu cuenta</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody></table>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+		
+		<script>
+document.addEventListener('DOMContentLoaded', function () {
+    let remainingTime = parseInt(document.getElementById('remaining-time').textContent);
+
+    function updateBanTimer() {
+        if (remainingTime > 0) {
+            remainingTime--;
+            const hours = Math.floor(remainingTime / 3600);
+            const minutes = Math.floor((remainingTime % 3600) / 60);
+            const seconds = remainingTime % 60;
+            document.getElementById('ban-timer').textContent = `Tiempo restante: ${hours}h ${minutes}m ${seconds}s`;
+
+            if (remainingTime === 0) {
+                location.reload(); // Recargar la página cuando el tiempo llegue a 0
+            }
+        }
+    }
+
+    // Actualizar el contador cada segundo
+    setInterval(updateBanTimer, 1000);
+});
+</script>

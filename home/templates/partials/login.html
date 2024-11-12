@@ -1,0 +1,44 @@
+<div class="main-page">
+    <div class="middle-content">
+        <div class="body-content">
+            <div class="title-content">
+                <h1>Conectar a UltimoWoW</h1>
+            </div>
+            <div class="box-content">
+                <div class="body-box-content centered">
+                    <form action="{% url 'login' %}" method="POST" id="uw-login-form" accept-charset="utf-8" onsubmit="event.preventDefault(); submitLoginForm();">
+                        {% csrf_token %}
+                        <table class="middle-center-table">
+                            <tr>
+                                <td><input type="text" maxlength="20" name="username" id="username" placeholder="Nombre de usuario" autofocus required></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="password" maxlength="16" name="password" id="password" placeholder="Contraseña" required>
+                                    <span class="far fa-eye toggle-password" onclick="togglePasswordVisibility()"></span>
+                                </td>
+                            </tr>
+                            <tr>
+							 
+							  </tr>
+                                    <tr>
+                                <td>
+                                    <button type="submit" class="login-button" id="login-button">Conectar</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                    <hr>
+                    <div class="alert-message" id="login-response"></div>
+                    <br>
+                    <p><a href="recover">He olvidado mi contraseña/usuario</a></p>
+                    <p><a href="recover">No me ha llegado el enlace de activación</a></p>
+                    <br>
+                    <p>¿Nuevo en la comunidad? Puedes crear una cuenta <a href="create-account">aquí</a></p>
+                    <br>
+                    <p class="grey-info2">* Si conectas desde un lugar público recuerda desconectar cuando no estés usando la página web o el foro.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

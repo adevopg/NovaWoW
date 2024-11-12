@@ -1,0 +1,81 @@
+<div class="main-page">
+            <div class="middle-content">
+                <div class="body-content">
+                <div class="title-content"><h1>Recuperar información de cuenta</h1></div>
+                    <div class="box-content">
+                        <div class="title-box-content"><h2>Información</h2></div>
+                        <div class="body-box-content justified">
+                            <span>Si has olvidado la contraseña de la cuenta:</span>
+                            <p>- Selecciona la opción 'Contraseña'.</p>
+                            <p>- Escribe Nombre de usuario.</p>
+                            <p>- Un correo será enviado con un enlace para generar una contraseña nueva.</p>
+                            <br>
+                            <span>Si has olvidado el nombre de la cuenta:</span>
+                            <p>- Selecciona la opción 'Nombre de cuenta'.</p>
+                            <p>- Escribe el correo electrónico.</p>
+                            <p>- Un correo será enviado con todas las cuentas ligadas al correo.</p>
+                            <br>
+                            <span>Si no has recibido en enlace de activación:</span>
+                            <p>- Selecciona la opción 'Enlace de activación'.</p>
+                            <p>- Escribe el correo electrónico.</p>
+                            <p>- Un correo será enviado con el enlace de activación.</p>
+                        </div>
+                    </div>
+
+                    <div class="box-content">
+                        <div class="title-box-content"><h2>Solicitud de información</h2></div>
+                        <div class="body-box-content centered">
+                        <p>Escoge la opción acorde a la información que quieres recuperar</p><p>
+                        <br>
+                            <select onchange="updateForm(this.value)" id="selection">
+                                <option value="recover-accountpassword-form" selected="selected">Contraseña</option>
+                                <option value="recover-accountname-form">Nombre de cuenta</option>
+                                <option value="recover-activationlink-form">Enlace de activación</option>
+                            </select>
+                            </p><form action="" method="POST" id="uw-recover-accountpassword-form" accept-charset="utf-8" style="">
+                                <table class="middle-center-table">
+                                    <tbody><tr>
+                                        <td><input type="text" maxlength="20" name="username" id="username" placeholder="Nombre de usuario"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="g-recaptcha g-recaptcha-div" id="gcaptcha" data-theme="dark" data-sitekey="6LcsJH4UAAAAAKqW0y4c-OVFijZjtZqkadRlpbRI"><div style="width: 304px; height: 78px;"><div><iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-qxqlxz4xlesu" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcsJH4UAAAAAKqW0y4c-OVFijZjtZqkadRlpbRI&amp;co=aHR0cHM6Ly91bHRpbW93b3cuY29tOjQ0Mw..&amp;hl=en&amp;v=-ZG7BC9TxCVEbzIO2m429usb&amp;theme=dark&amp;size=normal&amp;cb=m8d6xkv8z4oz"></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button type="submit" name="recover" class="recover-button" data-id="RecuperarInfo">Solicitar</button></td>
+                                    </tr>
+                                </tbody></table>
+                            </form>
+                            <form action="" method="POST" id="uw-recover-accountname-form" accept-charset="utf-8" style="display: none;">
+                                <table class="middle-center-table">
+                                    <tbody><tr>
+                                        <td><input type="email" name="email" id="email" placeholder="Correo electrónico"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="g-recaptcha g-recaptcha-div" id="gcaptcha" data-theme="dark" data-sitekey="6LcsJH4UAAAAAKqW0y4c-OVFijZjtZqkadRlpbRI"><div style="width: 304px; height: 78px;"><div><iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-xflp6m78yzp" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcsJH4UAAAAAKqW0y4c-OVFijZjtZqkadRlpbRI&amp;co=aHR0cHM6Ly91bHRpbW93b3cuY29tOjQ0Mw..&amp;hl=en&amp;v=-ZG7BC9TxCVEbzIO2m429usb&amp;theme=dark&amp;size=normal&amp;cb=3s51wzqngwmx"></iframe></div><textarea id="g-recaptcha-response-1" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button type="submit" name="recover" class="recover-button" data-id="RecuperarInfo">Solicitar</button></td>
+                                    </tr>
+                                </tbody></table>
+                            </form>
+                            <form action="" method="POST" id="uw-recover-activationlink-form" accept-charset="utf-8" style="display: none;">
+                                <table class="middle-center-table">
+                                    <tbody><tr>
+                                        <td><input type="text" maxlength="20" name="username" id="username" placeholder="Nombre de usuario"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><div class="g-recaptcha g-recaptcha-div" id="gcaptcha" data-theme="dark" data-sitekey="6LcsJH4UAAAAAKqW0y4c-OVFijZjtZqkadRlpbRI"><div style="width: 304px; height: 78px;"><div><iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-sv4k9abynly6" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=1&amp;k=6LcsJH4UAAAAAKqW0y4c-OVFijZjtZqkadRlpbRI&amp;co=aHR0cHM6Ly91bHRpbW93b3cuY29tOjQ0Mw..&amp;hl=en&amp;v=-ZG7BC9TxCVEbzIO2m429usb&amp;theme=dark&amp;size=normal&amp;cb=ujz7erfdzg8x"></iframe></div><textarea id="g-recaptcha-response-2" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid rgb(193, 193, 193); margin: 10px 25px; padding: 0px; resize: none; display: none;"></textarea></div><iframe style="display: none;"></iframe></div></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button type="submit" name="recover" class="recover-button" data-id="RecuperarInfo">Solicitar</button></td>
+                                    </tr>
+                                </tbody></table>
+                            </form>
+                            <hr>
+                            <div class="alert-message" id="recover-response"></div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

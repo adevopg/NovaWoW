@@ -1,0 +1,48 @@
+<div class="main-page">
+            <div class="middle-content">
+                <div class="body-content">
+                <div class="title-content"><h1>Token de seguridad</h1></div>
+                    <div class="box-content">
+                        <div class="title-box-content"><h2>Información</h2><a class="back-to-account" href="my-account">Regresar a mi cuenta</a><a class="back-to-account-responsive" href="my-account">Regresar</a></div>
+                        <div class="body-box-content justified">
+                            <br>
+                            <p>El <span>Token de seguridad</span> es un código de 6 dígitos (sensible a mayúsculas y minúsculas), que añade seguridad a ciertas opciones en tu panel de cuenta en la página web.</p>
+                            <p>El mismo será solicitado para acciones importantes de la cuenta.</p>
+                            <br>
+                            <p>Para obtenerlo, es necesario solicitarlo haciendo click en el botón debajo.</p>
+                            <p>Al hacer click, un mensaje será enviado al correo de la cuenta conteniendo el Token de Seguridad.</p>
+                            <br>
+                            <p><span class="red-info2">Es importante que conserves el Token de seguridad en un lugar seguro y no lo compartas con otros usuarios.</span></p>
+                            <br>
+                            <fieldset>
+                            <legend>NOTA</legend>
+                                <div class="separate2">
+                                    <p>Puedes solicitar un nuevo Token de seguridad una vez cada 7 días.</p>
+                                </div>
+                            </fieldset>
+                            <div class="centered">
+                                <br>
+                                <br>
+                                <p>Fecha de solicitud de Token de seguridad:</p>
+                                <p><span>Sin solicitar</span></p>
+                                <br>
+                                <form id="uw-sec-token-form" action="" method="POST" accept-charset="utf-8">
+                                    <button class="sec-token-button" type="submit" name="securitytoken" data-id="Sectoken">Solicitar token</button>
+                                </form>
+                                <br>
+                                <hr>
+                                <div class="alert-message" id="sec-token-response"></div>
+                                <br>
+                                <p><a href="recover">He olvidado el Token de seguridad</a></p>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $("select").change(function(){
+                            $(this).css("color", $(this).children("option:selected").css("color")); 
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>

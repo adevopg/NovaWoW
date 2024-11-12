@@ -1,0 +1,119 @@
+   <!-- main -->
+<div class="main-page">
+        <div class="middle-content">
+            <div class="body-content">
+                <div class="title-content">
+                    <h1>{{ download_content.title }}</h1>
+                </div>
+	  <script>
+        function mostrarSistemasOperativos() {
+            const idiomaSelect = document.getElementById("game-language");
+            const sistemasOperativosDivs = document.getElementsByClassName("sistema-operativo");
+
+            for (const div of sistemasOperativosDivs) {
+                div.style.display = "none";
+            }
+
+            const selectedValue = idiomaSelect.options[idiomaSelect.selectedIndex].value;
+            if (selectedValue) {
+                document.getElementById("sistemas-" + selectedValue).style.display = "block";
+            }
+
+            actualizarDescripcionIdioma();
+        }
+
+        function iniciarDescarga() {
+            const soSelect = document.querySelector(".sistema-operativo select:enabled");
+            const url = soSelect.options[soSelect.selectedIndex].getAttribute("data-url");
+            if (url) {
+                window.open(url, "_blank");
+            }
+        }
+
+        function actualizarDescripcionIdioma() {
+            const idiomaSelect = document.getElementById("game-language");
+            const selectedOption = idiomaSelect.options[idiomaSelect.selectedIndex];
+            const descripcion = selectedOption.getAttribute("data-descripcion");
+            const gameInfo = document.getElementById("game-info");
+
+            gameInfo.textContent = descripcion || "";
+        }
+
+        function verificarMacOS() {
+            const osSelect = document.querySelector(".sistema-operativo select:enabled");
+            const selectedOS = osSelect.options[osSelect.selectedIndex].text;
+
+            // Verifica si el sistema operativo seleccionado es "Mac OS Catalina"
+            if (selectedOS === "Mac OS Catalina") {
+                document.getElementById("op-info").style.display = "block";
+            } else {
+                document.getElementById("op-info").style.display = "none";
+            }
+        }
+    </script>
+                 <div class="box-content">
+                    <div class="title-box-content" id="torrent"><h2></h2></div>
+                    <div class="body-box-content justified">
+                         {{ download_content.content|safe }}
+                        <div class="centered">
+                           <form name="uw-client-dowload" id="uw-client-download" method="post" autocomplete="off">
+                            <p><span>Idioma</span></p>
+                            <br>
+                            <select name="game-language" id="game-language" class="game-download-select" onchange="mostrarSistemasOperativos();">
+                                <option selected="true" disabled="disabled">Elegir idioma</option>
+                                {% for categoria in categorias %}
+                                    <option value="{{ categoria.id }}" data-descripcion="{{ categoria.descripcion }}">{{ categoria.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                            <br><br>
+                            
+                            {% for categoria in categorias %}
+                                <div id="sistemas-{{ categoria.id }}" class="sistema-operativo" style="display: none;">
+                                    <br>
+                                    <p id="game-info">&nbsp;</p> <!-- Descripción del idioma -->
+                                    <br>
+                                    <p><span>Sistema operativo</span></p>
+                                    <br>
+                                    <select name="operating-system" class="game-download-select" onchange="verificarMacOS();">
+                                        <option selected="true" disabled="disabled">Elegir sistema operativo</option>
+                                        {% for sistema in categoria.sistemas_operativos.all %}
+                                            <option value="{{ sistema.id }}" data-url="{{ sistema.url_descarga }}">{{ sistema.nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            {% endfor %}
+
+                            <br>
+                            <button type="button" onclick="iniciarDescarga();" class="g-download-button" id="download-c-button">DESCARGAR</button>
+                   </div>
+                                </form>
+                                <br>
+                                <hr>
+                                <div id="error-message" class="red-form-response"></div>
+                                <br>
+                            </div>
+                        </div>
+
+                <div id="op-info" class="box-content" style="display: none;">
+                    <div class="title-box-content" id="torrent"><h2>Guía para ejecutar el cliente en mac OS Catalina</h2></div>
+                    <div class="body-box-content">
+                        <p>macOS Catalina ya no soporta aplicaciones que trabajan en 32bits, y el cliente se ejecuta en 32bits.</p>
+                        <p>Siguiendo los pasos a continuación podrás disfrutar {{ NOMBRE_SERVIDOR }} sin problemas en macOS Catalina.</p>
+                        <br>
+                        <span>Instrucciones</span>
+                        <p>1 - Descarga e instala <a href="https://insmac.org/macosx/3728-crossover-19.html" target="_blank">CrossOver</a>.</p>
+                        <p>2 - Una vez que tengas descargado el cliente, ejecuta CrossOver y haz clic en "Instalar una aplicación para Windows".</p>
+                        <p>3 - En el campo "Seleccionar una aplicación para instalar", busca la descarga, selecciónalo y haz clic en continuar. (No hagas clic en instalar aún).</p>
+                        <p>4 - Ve a la pestaña donde dice "Seleccionar instalador", haz clic en "Elegir archivo de instalador", y ahora busca WoW.exe y selecciónalo.</p>
+                        <p>5 - En la pestaña Botella, puedes seleccionar Windows 7 64bits.</p>
+                        <p>6 - Ve a la pestaña "Instalar y finalizar", haz clic en Instalar, se instalarán todas las fuentes, archivos y Visual Redistributables necesarios que WoW usa en un sistema operativo Windows estándar.</p>
+                        <p>7 - Te pedirá instalar y aceptar los FONTS, Microsoft Visual C ++, haz clic en Sí para cada solicitud que aparezca.</p>
+                        <p>8 - El cliente se iniciará automáticamente.</p>
+                        <p>9 - Una vez que termines y salgas del cliente, haz clic en "Listo" en la aplicación CrossOver.</p>
+                        <p>10 - La próxima vez que desees volver, abre la aplicación CrossOver, mira el panel izquierdo y selecciona en Botella el WoW que se creó anteriormente, y haz clic en RUN COMMAND, selecciona WoW.exe y haz clic en ¨Guardar comando como iniciador¨, luego haz clic en Abrir.</p>
+                        <p>11 - Finalmente, verás el ícono de WoW debajo de la pestaña Botella de WoW, ahora puedes arrastrar el lanzador de WoW al Dock, de esta manera, la próxima vez que quieras entrar, simplemente ejecuta WoW desde el Dock.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,178 @@
+<div class="main-page">
+            <div class="middle-content">
+                <div class="body-content">
+                <div class="title-content"><h1>Votar por nosotros</h1></div>
+                    <div class="box-content">
+                        <div class="title-box-content"><h2>Información</h2><a class="back-to-account" href="my-account">Regresar a mi cuenta</a><a class="back-to-account-responsive" href="my-account">Regresar</a></div>
+                        <div class="body-box-content justified">
+                            <br>
+                            <span>¿Qué son las votaciones?</span>
+                            <p>Una votación es la acción de darle un voto al servidor en una página web que ofrezca listas de tops.</p>
+                            <p>Como recompensa a realizar una votación por {{ NOMBRE_SERVIDOR }}, se otorgan PV.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Qué son los PV?</span>
+                            <p>Brindamos a nuestros usuarios la oportunidad de obtener niveles con beneficios exclusivos en nuestra comunidad en línea. Estos beneficios incluyen acceso a herramientas especiales, contenido exclusivo y mejoras significativas en la experiencia de nuestro sitio web. Al realizar una votación, los usuarios reciben PV, una unidad de reconocimiento interna que refleja su compromiso y progreso en nuestra plataforma. Los PV permiten alcanzar nuevos niveles y desbloquear recompensas exclusivas. Destacamos que los PV son una forma única de valorar y premiar la participación activa de nuestros usuarios en la comunidad.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo se puede votar?</span>
+                            <p>Para votar por {{ NOMBRE_SERVIDOR }}, se debe hacer click en los botones que aparecen debajo, y cada uno de ellos redirigirá a la página web del top correspondiente.</p>
+                            <p>Una vez allí, deberás darle un voto al servidor y así recibirás tus PV.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cuántos PV se reciben por cada voto?</span>
+                            <p>En la lista inferior, cada sitio indica cuántos PV otorgará si se realiza una votación exitosa.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cada cuánto se puede votar?</span>
+                            <p>Sólo se puede votar por cada sitio cada 12 horas.</p>
+                            <p>El recuadro informa sobre la última vez que has votado en cada sitio.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Por qué el voto no cuenta en la web?</span>
+                            <p>Usamos el sistema de postback por lo que cada sitio web de votos nos envía una respuesta cada vez que un usuario vota por nuestro servidor.</p>
+                            <p>Una vez que la respuesta es analizada en nuestra web, se sumarán los PV correspondientes siempre que el usuario haya votado correctamente.</p>
+                            <p>Cada sitio de votación tiene, además, sus propias restricciones como sólo permitir un voto por IP por lo cual puede suceder que el voto no cuente si se usan varias cuentas para votar en el mismo día.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Tienes dudas o problemas para votar?</span>
+                            <p>Si a pesar de leer este instructivo aún tienes dudas, el equipo de {{ NOMBRE_SERVIDOR }} podrá asesorarte en cualquier momento. Puedes colocar un ticket solicitando ayuda para votar.</p>
+                        </div>
+                    </div>
+
+                    <div class="box-content">
+                        <div class="title-box-content"><h2>Sitios de votación</h2></div>
+                        <div class="body-box-content centered" id="vote-panel">
+                            <button class="refresh-button" onclick="doRefresh();"><img class="refresh-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/refresh.webp" title="Refrescar" alt="Refrescar"></button>
+                            <p><span>Nota:</span> Gtop100 puede demorar unos minutos en acreditar el voto.</p>
+                            <br>
+                            <div class="inline-div">
+                                <table>
+                                    <tbody><tr>
+                                        <td><img class="img-med-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-vote-sites/gtop100.jpg" title="Gtop100" alt="Gtop100"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gtop100</td>
+                                    </tr>
+                                    <tr>
+                                        <td><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="lefted">PV: <span>1</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="lefted"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <form action="" method="POST" id="uw-vote-form" accept-charset="utf-8">
+                                                <button type="submit" name="vote" class="vote-button" value="https://gtop100.com/topsites/World-of-Warcraft/sitedetails/{{ NOMBRE_SERVIDOR }}-94649?vote=1&amp;pingUsername=91402">Votar</button>
+                                            </form>
+                                        </td>
+                                    </tr><tr>
+                                </tr></tbody></table>
+                            </div>
+                            <div class="inline-div">
+                                <table>
+                                    <tbody><tr>
+                                        <td><img class="img-med-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-vote-sites/topg.webp" title="TopG" alt="TopG"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>TopG</td>
+                                    </tr>
+                                    <tr>
+                                        <td><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="lefted">PV: <span>1</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="lefted"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <form action="" method="POST" id="uw-vote-form" accept-charset="utf-8">
+                                                <button type="submit" name="vote" class="vote-button" value="https://topg.org/wow-private-servers/in-496618-91402">Votar</button>
+                                            </form>
+                                        </td>
+                                    </tr><tr>
+                                </tr></tbody></table>
+                            </div>
+                            <div class="inline-div">
+                                <table>
+                                    <tbody><tr>
+                                        <td><img class="img-med-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-vote-sites/top100arena.jpg" title="Top100arena" alt="Top100arena"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Top100arena</td>
+                                    </tr>
+                                    <tr>
+                                        <td><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="lefted">PV: <span>1</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="lefted"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <form action="" method="POST" id="uw-vote-form" accept-charset="utf-8">
+                                                <button type="submit" name="vote" class="vote-button" value="http://www.top100arena.com/in.asp?id=94147&amp;incentive=91402">Votar</button>
+                                            </form>
+                                        </td>
+                                    </tr><tr>
+                                </tr></tbody></table>
+                            </div>
+                            <div class="inline-div">
+                                <table>
+                                    <tbody><tr>
+                                        <td><img class="img-med-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-vote-sites/arenatop100.webp" title="Arena-Top100" alt="Arena-Top100"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Arena-Top100</td>
+                                    </tr>
+                                    <tr>
+                                        <td><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="lefted">PV: <span>1</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="lefted"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><hr></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <form action="" method="POST" id="uw-vote-form" accept-charset="utf-8">
+                                                <button type="submit" name="vote" class="vote-button" value="https://www.arena-top100.com/index.php?a=in&amp;u={{ NOMBRE_SERVIDOR }}&amp;id=91402">Votar</button>
+                                            </form>
+                                        </td>
+                                    </tr><tr>
+                                </tr></tbody></table>
+                            </div>
+                            <hr>
+                            <div class="alert-message" id="voteResponse"></div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,15 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block content %}
+  <h1>{% trans "Seleccionar Servidor" %}</h1>
+  <form method="post" action="{% url 'admin:home_serverselection_changelist' %}">
+    {% csrf_token %}
+    <select name="server_selection" required>
+      {% for server in servers %}
+        <option value="{{ server.0 }}">{{ server.1 }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit">{% trans "Guardar selección" %}</button>
+  </form>
+{% endblock %}

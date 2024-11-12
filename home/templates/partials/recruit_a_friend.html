@@ -1,0 +1,189 @@
+<div class="main-page">
+            <div class="middle-content">
+                <div class="body-content">
+                <div class="title-content"><h1>Recluta a un amigo</h1></div>
+                      
+				
+                    <div class="box-content">
+						{% if request.session.username %}
+						<a class="back-to-account" href="my-account">Regresar a mi cuenta</a>
+						{% endif %}
+                        <div class="title-box-content"><h2>Información</h2></div>
+                        <div class="body-box-content justified">
+                            <br>
+                            <span>¿Qué es Recluta a un amigo?</span>
+                            <p>Recluta a un amigo (También conocido como RAF) es un sistema en el cual un usuario de Nova WoW puede registrarse como referido/reclutado de otro usuario y así disfrutar de beneficios y varios premios para el usuario que ha referido/reclutado a otros.</p>
+                            <p>Sólo funciona para usuarios nuevos en el servidor y no tiene límites de hasta cuántas cuentas pueden reclutarse.</p>
+                            <p>Los beneficios funcionan para todos los personajes de cada cuenta y permanece para siempre.</p>
+                            <br>
+                            <p>- Quien se crea una cuenta completando el campo Personaje reclutante en el registro, es el referido/reclutante.</p>
+                            <p>- El personaje que se haya utilizado para crear la cuenta, es el referente/reclutante.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo reclutar a un amigo?</span>
+                            <p>Cuando tu amigo cree una cuenta, dile que en el campo 'Personaje reclutante' escriba el nombre de alguno de los personajes en tu cuenta.</p>
+                            <p>Una vez registrado como referido, ya podrán disfrutar de todos los beneficios.</p>
+                            <p>Asegúrate de elegir bien a tu referente y/o referido ya que la acción no es reversible.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo obtener los beneficios?</span>
+                            <p>- Ambos personajes tienen que estar leveando en grupo. Recuerda que deben estar ambos en lista de amigos para darse grupo.</p>
+                            <p>- Deben estar en una distancia relativamente cercana.</p>
+                            <p>- La diferencia máxima entre ambos jugadores debe ser de 4 niveles.</p>
+                            <br>
+                            <p>Si no se cumple alguna de las condiciones mencionadas, no se recibirá el bonus de experiencia.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cómo ver la experiencia obtenida?</span>
+                            <p>Podrás ver el bonus de experiencia recibida activando los mensajes de experiencia en el chat:</p>
+                            <p>1) Clic derecho en la pestaña de chat General.</p>
+                            <p>2) Clic izquierdo en Configuración.</p>
+                            <p>3) Clic izquierdo en Otros.</p>
+                            <p>4) Marca la casilla Experiencia.</p>
+                            <p>5) Clic izquierdo en Aceptar.</p>
+                            <br>
+                            <p>Al ganar experiencia, verás un mensaje detallado que muestra la cantidad obtenida y cuánto de ello proviene del bonus de Recluta a un amigo.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Puedo desactivar el bonus de experiencia?</span>
+                            <p>El bonus será otorgado siempre y cuando se cumplan los requisitos.</p>
+                            <p>Si deseas dejar de obtenerlo, asegúrate de no cumplir alguna de las condiciones mencionadas en span&gt;¿Cómo obtener los beneficios?.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Hay recompensas por reclutar amigos?</span>
+                            <p>Existen varias recompensas por reclutar amigos.</p>
+                            <p>En el recuadro debajo podrás ver cuáles son los objetivos de cada recompensa. (Debes estar conectado para ver el recuadro).</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Cuáles son los beneficios?</span>
+                            <p>Cuando un personaje del referente y un personaje del referido levean juntos, serán beneficiados por:</p>
+                            <p>Hasta nivel 60:</p>
+                            <p>- La habilidad de 'Invocar amigo'.</p>
+                            <p>- El personaje referido podrá dar niveles al personaje referente.</p>
+                            <br>
+                            <p>Hasta nivel 80:</p>
+                            <p>- Recibirán experiencia x2.</p>
+                            <p>- Un bonus de reputación.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>Invocar amigo</span>
+                            <p>Esta habilidad aparece en 2 lugares:</p>
+                            <p>- Como opción al hacer click derecho en el avatar del personaje referente/referido.</p>
+                            <p>- Si tienes al personaje referente/referido en la lista de amigos, aparece un ícono especial a la derecha de su nombre.</p>
+                            <br>
+                            <p>Al usar esta habilidad se debe tener en target al personaje referente/referido y no debe ser modificado hasta finalizar su casteo.</p>
+                            <p>Su tiempo de reutilización es de 1 hora.</p>
+                            <p></p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>Otorgar niveles</span>
+                            <p>Esta habilidad aparece al hacer click derecho en el avatar del personaje referente y puede utilizarla solamente el personaje referido.</p>
+                            <p>Cuando el personaje referido tenga al menos 1 nivel más que el personaje referente, puede otorgar un nivel que deberá ser aceptado por el personaje referente.</p>
+                            <p>Para volver a otorgar un nivel, el personaje referido tendrá que subir 2 niveles más.</p>
+                            <br>
+                            <hr>
+                            <br>
+                            <span>¿Tienes dudas o problemas para reclutar amigos?</span>
+                            <p>Si a pesar de leer este instructivo aún tienes dudas, el equipo de Nova WoW podrá asesorarte en cualquier momento. Puedes colocar un ticket en el servidor solicitando ayuda para Reclutar a un amigo.</p>
+                        </div>
+                    </div>
+					
+                     {% if request.session.username %}
+                <!-- Panel de Recluta a un amigo cuando el usuario está conectado -->
+                <div class="box-content">
+                    <div class="title-box-content"><h2>Panel de Recluta a un amigo</h2></div>
+                    <div class="body-box-content centered">
+                        {% if account_status.is_recruited %}
+                            <p class="lefted">Cuenta reclutada: <span>Sí</span></p>
+                        {% else %}
+                            <p class="lefted">Cuenta reclutada: <span>No</span></p>
+                        {% endif %}
+                        <p class="lefted">Amigos reclutados: <span>{{ account_status.recruited_count }}</span></p>
+                        <p class="lefted">Amigos reclutados al nivel 80: <span>{{ account_status.recruited_level_80_count }}</span></p>
+                        <p class="lefted">Recompensas reclamadas: <span id="claimed-rewards-counter">{{ claimed_rewards_count }}/6</span></p>
+
+                        <br>
+                          <table class="char-center-table">
+						   <hr>
+                        <p>RECOMPENSAS DISPONIBLES</p>
+                        <hr>
+    <tr>
+        <th>Amigos reclutados</th>
+        <th>Recompensa</th>
+    </tr>
+     {% for reward in all_rewards %}
+        <tr>
+            <td>{{ reward.required_friends }} amigos al nivel 80</td>
+            <td>
+                <a href="{{ reward.item_link }}" target="_blank" class="{{ reward.icon_class }}">
+                    {{ reward.reward_name }}
+                </a>
+            </td>
+            <td>{{ reward.status }}</td>
+        </tr>
+        {% endfor %}
+</table>
+                        <hr>
+                        <p>RECOMPENSAS POR RECLAMAR</p>
+                        <hr>
+						           <table class="char-center-table">
+                            <tr>
+                                <th>Amigos reclutados</th>
+                                <th>Recompensa</th>
+                                <th></th>
+                                <th>Acción</th>
+                            </tr>
+                            {% for reward in available_rewards %}
+        <tr>
+            <td>{{ reward.required_friends }} amigos al nivel 80</td>
+            <td>
+                <a href="{{ reward.item_link }}" target="_blank" class="{{ reward.icon_class }}">
+                    {{ reward.reward_name }}
+                </a>
+            </td>
+            <td>{{ reward.status }}</td>
+			
+            <td class="reward-action">
+			<div class="alert-message" id="recruit-response"></div>
+                {% if account_status.recruited_level_80_count >= reward.required_friends %}
+                <form method="post" class="reward-form">
+                    {% csrf_token %}
+                    <input type="hidden" name="reward_id" value="{{ reward.id }}">
+                    <select name="character">
+                        {% for character in characters %}
+                        <option value="{{ character.name }}">{{ character.name }} (Nivel {{ character.level }})</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Reclamar</button>
+                </form>
+                {% else %}
+                No disponible
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+                        </table>
+
+                        <span>Recluta amigos para poder reclamar las recompensas</span>
+                    </div>
+                </div>
+            {% else %}
+				
+                <!-- Mensaje cuando el usuario no está conectado -->
+                <div class="box-content">
+                    <div class="body-box-content centered">
+                        <p><a href="log-in">Conecta</a> para ver el Panel de recompensas.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
