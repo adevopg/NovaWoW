@@ -820,27 +820,31 @@ def security_token_view(request):
         token_date = existing_token.created_at.strftime('%H:%M:%S %d-%m-%Y')
 
     if request.method == 'POST':
-        # Verificar si ya existe un token activo y si ha caducado
-        if existing_token and existing_token.expires_at > timezone.now():
-            remaining_days = (existing_token.expires_at - timezone.now()).days
-            return JsonResponse({
-                'success': False,
-                'message': f'<span class="red-form-response">Sólo puedes solicitar un nuevo Token de seguridad cada 7 días, faltan {remaining_days} días para generar un nuevo Token.</span>'
-            })
+        # Verificar si ya existe un token y si se puede generar uno nuevo después de 7 días
+        if existing_token:
+            # Comprobar si han pasado al menos 7 días desde la creación del token
+            days_since_creation = (timezone.now() - existing_token.created_at).days
+            if days_since_creation < 7:
+                remaining_days = 7 - days_since_creation
+                return JsonResponse({
+                    'success': False,
+                    'message': f'<span class="red-form-response">Sólo puedes solicitar un nuevo Token de seguridad cada 7 días, faltan {remaining_days} días para generar un nuevo Token.</span>'
+                })
 
         # Generar un nuevo token
         token = secrets.token_urlsafe(4)[:6]
         expires_at = timezone.now() + timedelta(days=7)
 
-        # Eliminar tokens anteriores del usuario
-        SecurityToken.objects.filter(user_id=user_id).delete()
+        # Eliminar el token anterior y crear uno nuevo
+        if existing_token:
+            existing_token.delete()
 
         # Crear y guardar el nuevo token
         new_token = SecurityToken.objects.create(
             user_id=user_id,
             token=token,
             ip_address=ip_address,
-            expires_at=expires_at
+            expires_at=expires_at  # Esta fecha solo se usa para el control de los 7 días
         )
 
         # Enviar el correo con el token al usuario
