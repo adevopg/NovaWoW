@@ -22,13 +22,13 @@
                 <tr><td><hr></td></tr>
                 <tr>
                     <td class="lefted">
-                        <img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> 
+                        <img class="img-small-icon-m img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> 
                         <span class="{{ data.class_name|lower }}">Alianzas: <span>{{ data.alliance }}</span></span>
                     </td>
                 </tr>
                 <tr>
                     <td class="lefted">
-                        <img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> 
+                        <img class="img-small-icon-m img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> 
                         <span class="{{ data.class_name|lower }}">Hordas: <span>{{ data.horde }}</span></span>
                     </td>
                 </tr>
@@ -54,7 +54,7 @@
                 {% for achievement in first_realm_data %}
                 <tr>
                     <td>
-                        <img class="img-small-icon img-align" src="{{ achievement.icon_url }}">
+                        <img class="img-small-icon img-small-icon-h" src="{{ achievement.icon_url }}">
                         <span class="yellow-info">{{ achievement.achievement_name }}</span>
                     </td>
                     <td class="{{ achievement.race_icon }} big-font">{{ achievement.name }}</td>
@@ -111,7 +111,7 @@
             <tr>
                 <td class="{{ player.class_icon }} big-font">{{ player.name }}</td>
                 <td>
-				<img class="img-small-icon img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/{{ player.race_icon }}.webp"></td>
+				<img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/{{ player.race_icon }}.webp"></td>
                 <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/{{ player.class_icon }}.jpg"></td>
                 <td>{{ player.total_kills }}</td>
                 <td>{{ player.today_kills }}</td>
