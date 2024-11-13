@@ -10,7 +10,7 @@ from django.db import connections
 from django.contrib import messages
 from django.contrib.auth import logout
 from django import forms
-from .models import Noticia, ClienteCategoria, ServerSelection, RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, ClaimedReward, AccountActivation
+from .models import Noticia, ClienteCategoria, ServerSelection, RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, ClaimedReward, AccountActivation, SecurityToken
 from django.views.decorators.csrf import csrf_exempt
 import logging
 from datetime import datetime, timedelta
@@ -20,6 +20,8 @@ from django.utils import timezone
 from .library_correo import enviar_correo
 from django.utils.crypto import get_random_string
 from django.conf import settings
+import secrets
+
 
 # Configuración del logger
 logger = logging.getLogger(__name__)
@@ -584,7 +586,7 @@ def my_account(request):
     
     # Si la sesión no tiene el usuario, redirigir al inicio de sesión
     if not username:
-        return redirect('login')
+        return redirect('log-in')
 
     is_logged_in = True  # Si el usuario está en la sesión, asumimos que está conectado
 
@@ -781,12 +783,104 @@ def change_password_view(request):
     return render(request, 'account/change_password.html')
 
 
+
+
+def get_user_from_acore(username):
+    """
+    Obtiene la información del usuario desde la base de datos `acore_auth`.
+    """
+    with connections['acore_auth'].cursor() as cursor:
+        cursor.execute("SELECT id, email FROM account WHERE username = %s", [username])
+        result = cursor.fetchone()
+        if result:
+            return {'id': result[0], 'email': result[1]}
+    return None
+
 def security_token_view(request):
+    # Verificar si el usuario está autenticado mediante la sesión
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener el usuario desde la base de datos de `acore_auth`
+    user_data = get_user_from_acore(username)
+    if not user_data:
+        return redirect('login')
+
+    user_id = user_data['id']
+    email = user_data['email']
+    ip_address = request.META.get('REMOTE_ADDR')
+
+    # Verificar si existe un token activo para mostrar la fecha en la plantilla
+    existing_token = SecurityToken.objects.filter(user_id=user_id).first()
+    
+    # Obtener la fecha del token o "Sin solicitar" si no hay token
+    token_date = "Sin solicitar"
+    if existing_token:
+        token_date = existing_token.created_at.strftime('%H:%M:%S %d-%m-%Y')
+
+    if request.method == 'POST':
+        # Verificar si ya existe un token activo y si ha caducado
+        if existing_token and existing_token.expires_at > timezone.now():
+            remaining_days = (existing_token.expires_at - timezone.now()).days
+            return JsonResponse({
+                'success': False,
+                'message': f'<span class="red-form-response">Sólo puedes solicitar un nuevo Token de seguridad cada 7 días, faltan {remaining_days} días para generar un nuevo Token.</span>'
+            })
+
+        # Generar un nuevo token
+        token = secrets.token_urlsafe(4)[:6]
+        expires_at = timezone.now() + timedelta(days=7)
+
+        # Eliminar tokens anteriores del usuario
+        SecurityToken.objects.filter(user_id=user_id).delete()
+
+        # Crear y guardar el nuevo token
+        new_token = SecurityToken.objects.create(
+            user_id=user_id,
+            token=token,
+            ip_address=ip_address,
+            expires_at=expires_at
+        )
+
+        # Enviar el correo con el token al usuario
+        send_security_token_email(email, username, token, ip_address)
+
+        # Obtener la nueva fecha del token
+        new_token_date = new_token.created_at.strftime('%H:%M:%S %d-%m-%Y')
+
+        # Responder con un mensaje exitoso y la nueva fecha
+        return JsonResponse({
+            'success': True,
+            'message': f'<span class="ok-form-response">Se ha enviado el Token de seguridad al correo {email}.</span>',
+            'token_date': new_token_date
+        })
+
+    # Pasar `token_date` al contexto de la plantilla
+    return render(request, 'account/security_token.html', {
+        'token_date': token_date
+    })
+
+def send_security_token_email(email, username, token, ip_address):
     """
-    Vista para la página de 'Security Token'.
-    Simplemente renderiza un template con información relevante.
+    Envía un correo electrónico con el token de seguridad.
     """
-    return render(request, 'account/security_token.html')
+    context = {
+        'username': username,
+        'token': token,
+        'ip_address': ip_address,
+        'NOMBRE_SERVIDOR': settings.NOMBRE_SERVIDOR
+    }
+
+    # Llamada a tu función personalizada `enviar_correo`
+    enviar_correo(
+         subject=f'Token de seguridad de la cuenta {username} - {settings.NOMBRE_SERVIDOR}',
+        to_email=email,
+        template='emails/security_token.html',  # Asegúrate de que este template exista
+        context=context
+    )
+
+
 
 def change_email_view(request):
     """

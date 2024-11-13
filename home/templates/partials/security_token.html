@@ -24,9 +24,10 @@
                                 <br>
                                 <br>
                                 <p>Fecha de solicitud de Token de seguridad:</p>
-                                <p><span>Sin solicitar</span></p>
+                                <p><span id="token-date">{{ token_date }}</span></p>
                                 <br>
-                                <form id="uw-sec-token-form" action="" method="POST" accept-charset="utf-8">
+                                <form id="nw-sec-token-form" method="POST">
+								{% csrf_token %}
                                     <button class="sec-token-button" type="submit" name="securitytoken" data-id="Sectoken">Solicitar token</button>
                                 </form>
                                 <br>

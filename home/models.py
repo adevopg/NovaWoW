@@ -4,6 +4,8 @@ from django_ckeditor_5.fields import CKEditor5Field
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 import uuid
+from django.contrib.auth.models import User
+import secrets
 
 class Noticia(models.Model):
     titulo = models.CharField(max_length=200)
@@ -113,5 +115,17 @@ class AccountActivation(models.Model):
     
     def is_expired(self):
         return timezone.now() > self.created_at + timezone.timedelta(hours=1)
+
+
+class SecurityToken(models.Model):
+    user_id = models.IntegerField()  # Referencia al ID del usuario en `acore_auth`
+    token = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+    ip_address = models.GenericIPAddressField()
+
+    def __str__(self):
+        return f"Token for user_id {self.user_id}"
+
 
         
