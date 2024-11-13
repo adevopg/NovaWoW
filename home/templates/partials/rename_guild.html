@@ -1,36 +1,70 @@
 <div class="main-page">
-            <div class="middle-content">
-                <div class="body-content">
-                <div class="title-content"><h1>Renombrar hermandad</h1></div>
-                    <div class="box-content">
-                        <div class="title-box-content"><h2>Información</h2><a class="back-to-account" href="my-account">Regresar a mi cuenta</a><a class="back-to-account-responsive" href="my-account">Regresar</a></div>
-                        <div class="body-box-content justified">
-                            <br>
-                            <p>La herramienta <span>Renombrar hermandad</span> te permite cambiar de nombre a una hermandad de la cual seas Maestro de Hermandad.</p>
-                            <br>
-                            <p>A la hora de escoger un nuevo nombre, ten en cuenta:</p>
-                            <p>- La longitud máxima es de 24 caracteres.</p>
-                            <p>- Los caracteres permitidos son A-Za-z y el espacio.</p>
-                            <br>
-                            <p>Al usar el botón RENOMBRAR HERMANDAD de la hermandad que hayas escogido, se cambiará su nombre al nuevo nombre que hayas ingresado.</p>
-                            <p>El cambio de nombre de hermandad es instantáneo. Puede ser necesario que los miembros de la hermandad conectados deban volver a conectar para finalmente ver el nuevo nombre.</p>
-                            <br>
-                            <fieldset>
-                            <legend>NOTA</legend>
-                                <div class="separate2">
-                                    <p>Por favor, asegúrate de haber elegido el nombre correcto ya que esta acción no es reversible una vez realizada.</p>
-                                </div>
-                            </fieldset>
-                            <div class="centered">
-                                <br>
-                                <br>
-                                <p>Requiere <span>1000</span> <span class="yellow-info">PD</span></p>
-                                <br>
-                                <span>No hay personajes Maestros de hermandad</span>
-                                <br>
-                            </div>
+    <div class="middle-content">
+        <div class="body-content">
+            <div class="title-content"><h1>Renombrar Hermandad</h1></div>
+            <div class="box-content">
+                <div class="title-box-content">
+                    <h2>Información</h2>
+                    <a class="back-to-account" href="my-account">Regresar a mi cuenta</a>
+                    <a class="back-to-account-responsive" href="my-account">Regresar</a>
+                </div>
+                <div class="body-box-content justified">
+                    <br>
+                    <p>La herramienta <span>Renombrar hermandad</span> te permite cambiar de nombre a una hermandad de la cual seas Maestro de Hermandad.</p>
+                    <br>
+                    <p>A la hora de escoger un nuevo nombre, ten en cuenta:</p>
+                    <p>- La longitud máxima es de 24 caracteres.</p>
+                    <p>- Los caracteres permitidos son A-Za-z y el espacio.</p>
+                    <br>
+                    <fieldset>
+                        <legend>NOTA</legend>
+                        <div class="separate2">
+                            <p>Por favor, asegúrate de haber elegido el nombre correcto ya que esta acción no es reversible una vez realizada.</p>
                         </div>
+                    </fieldset>
+                    <div class="centered">
+                        <br>
+                        <p>Requiere <span>{{ rename_cost }}</span> <span class="yellow-info">PD</span></p>
+                        <br>
+
+                        <!-- Mostrar mensaje solo si no hay personajes líderes de hermandad -->
+                        {% if no_guild_leader_message %}
+                            <span class="red-form-response">{{ no_guild_leader_message }}</span>
+                        {% else %}
+                            <form id="nw-rename-guild-form" method="POST" accept-charset="utf-8">
+                                {% csrf_token %}
+                                <table class="middle-center-table">
+                                    <tr>
+                                        <td><input type="text" maxlength="24" name="old-guild-name" id="old-guild-name" placeholder="Nombre antiguo de hermandad"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" maxlength="24" name="new-guild-name" id="new-guild-name" placeholder="Nuevo nombre de hermandad"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" maxlength="24" name="conf-new-guild-name" id="conf-new-guild-name" placeholder="Confirmar nuevo nombre"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="password" maxlength="16" name="cur-password" id="cur-password" placeholder="Contraseña actual"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="password" maxlength="6" name="security-token" id="security-token" placeholder="Token de seguridad">
+                                            <span class="far fa-eye toggle-token"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <button type="submit" class="rename-guild-button" data-id="RenameGuild">Renombrar Hermandad</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </form>
+                            <hr>
+                            <div class="alert-message" id="rename-guild-response"></div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>

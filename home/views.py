@@ -10,7 +10,7 @@ from django.db import connections
 from django.contrib import messages
 from django.contrib.auth import logout
 from django import forms
-from .models import Noticia, ClienteCategoria, ServerSelection, RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, ClaimedReward, AccountActivation, SecurityToken
+from .models import Noticia, ClienteCategoria, ServerSelection, RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, ClaimedReward, AccountActivation, SecurityToken, GuildRenameSettings
 from django.views.decorators.csrf import csrf_exempt
 import logging
 from datetime import datetime, timedelta
@@ -967,10 +967,77 @@ def transfer_d_points_view(request):
     # Renderizar la plantilla para la transferencia de puntos
     return render(request, 'account/transfer_d_points.html')    
 
+
+from .models import GuildRenameSettings
+
 def rename_guild_view(request):
-    # Renderizar la plantilla para la transferencia de puntos
-    return render(request, 'account/rename_guild.html')
-    
+    # Verificar si el usuario está autenticado mediante la sesión
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener el usuario desde la base de datos `acore_auth`
+    user_data = get_user_from_acore(username)
+    if not user_data:
+        return redirect('login')
+
+    user_id = user_data['id']
+
+    # Obtener el costo desde la configuración
+    try:
+        settings = GuildRenameSettings.objects.first()
+        rename_cost = settings.cost if settings else 1000
+    except GuildRenameSettings.DoesNotExist:
+        rename_cost = 1000  # Valor predeterminado si no se encuentra la configuración
+
+    # Comprobar si hay personajes que sean líderes de una hermandad
+    with connections['acore_characters'].cursor() as cursor:
+        cursor.execute("""
+            SELECT g.guildid, g.name, gm.rank, c.name
+            FROM guild g
+            JOIN guild_member gm ON g.guildid = gm.guildid
+            JOIN characters c ON c.guid = gm.guid
+            WHERE c.account = %s AND gm.rank = 0
+        """, [user_id])
+        guild_leader_data = cursor.fetchall()
+
+    if not guild_leader_data:
+        no_guild_leader_message = "No tienes personajes que sean Maestros de Hermandad en tu cuenta."
+    else:
+        no_guild_leader_message = None
+
+    if request.method == 'POST':
+        old_guild_name = request.POST.get('old-guild-name').strip()
+        new_guild_name = request.POST.get('new-guild-name').strip()
+        conf_new_guild_name = request.POST.get('conf-new-guild-name').strip()
+        current_password = request.POST.get('cur-password').strip()
+        security_token = request.POST.get('security-token').strip()
+
+        # Validar campos vacíos
+        if not old_guild_name or not new_guild_name or not conf_new_guild_name or not current_password or not security_token:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Por favor, complete todos los campos.</span>'})
+
+        # Verificar si el usuario tiene suficientes Donation Points (DP)
+        with connections['default'].cursor() as cursor:
+            cursor.execute("SELECT dp FROM home_api_points WHERE accountID = %s", [user_id])
+            points_data = cursor.fetchone()
+
+        if not points_data or points_data[0] < rename_cost:
+            return JsonResponse({'success': False, 'message': f'<span class="red-form-response">No tienes suficientes Donation Points (se requieren {rename_cost} DP).</span>'})
+
+        # Deducir los Donation Points del usuario
+        with connections['default'].cursor() as cursor:
+            cursor.execute("UPDATE home_api_points SET dp = dp - %s WHERE accountID = %s", [rename_cost, user_id])
+
+        return JsonResponse({'success': True, 'message': '<span class="ok-form-response">Hermandad renombrada exitosamente.</span>'})
+
+    return render(request, 'account/rename_guild.html', {
+        'guild_leader_data': guild_leader_data,
+        'no_guild_leader_message': no_guild_leader_message,
+        'rename_cost': rename_cost
+    })
+
+  
 def vote_points_view(request):
     """
     Vista para la página de puntos de votación.

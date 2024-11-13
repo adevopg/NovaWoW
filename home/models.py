@@ -118,14 +118,23 @@ class AccountActivation(models.Model):
 
 
 class SecurityToken(models.Model):
-    user_id = models.IntegerField()  # Referencia al ID del usuario en `acore_auth`
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.CharField(max_length=6)
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
     ip_address = models.GenericIPAddressField()
 
     def __str__(self):
-        return f"Token for user_id {self.user_id}"
+        return f"Token for {self.user.username}"
+        
+        
+class GuildRenameSettings(models.Model):
+    cost = models.IntegerField(default=1000, help_text="Costo en Donation Points (DP) para renombrar una hermandad.")
 
+    def __str__(self):
+        return f"Costo actual: {self.cost} DP"
 
+    class Meta:
+        verbose_name = "Configuración de Renombrar Hermandad"
+        verbose_name_plural = "Configuraciones de Renombrar Hermandad"        
         

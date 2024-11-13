@@ -3,7 +3,7 @@ from django.contrib import admin
 from django import forms
 from .models import (
     Noticia, ClienteCategoria, SistemaOperativo, ServerSelection,
-    RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward
+    RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, GuildRenameSettings
 )
 from django.db import connections
 import logging
@@ -128,7 +128,18 @@ class ClienteCategoriaAdmin(admin.ModelAdmin):
 @admin.register(RecruitReward)
 class RecruitRewardAdmin(admin.ModelAdmin):
     list_display = ('required_friends', 'reward_name', 'item_id', 'item_quantity', 'icon_class')
-    search_fields = ('reward_name',)   
+    search_fields = ('reward_name',)
+
+@admin.register(GuildRenameSettings)
+class GuildRenameSettingsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'cost')
+    list_display_links = ('id',)  # Hacemos que 'id' sea el enlace
+    list_editable = ('cost',)     # Permitimos que 'cost' sea editable
+    fieldsets = (
+        (None, {
+            'fields': ('cost',)
+        }),
+    )   
 
 
 # Registro de modelos en el admin
