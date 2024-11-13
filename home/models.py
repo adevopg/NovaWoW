@@ -118,14 +118,14 @@ class AccountActivation(models.Model):
 
 
 class SecurityToken(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.IntegerField()  # Referencia al ID del usuario en `acore_auth`
     token = models.CharField(max_length=6)
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
     ip_address = models.GenericIPAddressField()
 
     def __str__(self):
-        return f"Token for {self.user.username}"
+        return f"Token for user_id {self.user_id}"
         
         
 class GuildRenameSettings(models.Model):
