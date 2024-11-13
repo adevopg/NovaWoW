@@ -600,7 +600,7 @@ def my_account(request):
         account_data = cursor.fetchone()
 
     if not account_data:
-        return redirect('login')
+        return redirect('index')
 
     account_id = account_data[0]
     
@@ -780,9 +780,76 @@ def get_account_characters(account_id):
     
     
 def change_password_view(request):
+    # Verificar si el usuario está autenticado mediante la sesión
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener el usuario desde la base de datos de `acore_auth`
+    user_data = get_user_from_acore(username)
+    if not user_data:
+        return redirect('login')
+
+    user_id = user_data['id']
+    email = user_data['email']
+
+    if request.method == 'POST':
+        current_password = request.POST.get('cur-password').strip()
+        new_password = request.POST.get('new-password').strip()
+        conf_new_password = request.POST.get('conf-new-password').strip()
+        security_token = request.POST.get('security-token').strip()
+
+        # Validar campos vacíos
+        if not current_password or not new_password or not conf_new_password or not security_token:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Por favor, complete todos los campos.</span>'})
+
+        # Validar que la nueva contraseña coincida con su confirmación
+        if new_password != conf_new_password:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Las contraseñas no coinciden.</span>'})
+
+        # Validar longitud de la nueva contraseña
+        if len(new_password) > 16:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">La contraseña nueva no debe exceder los 16 caracteres.</span>'})
+
+        # Verificar si el token de seguridad ha sido generado
+        existing_token = SecurityToken.objects.filter(user_id=user_id).first()
+        if not existing_token:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">No tienes un token de seguridad generado. Por favor, genera uno antes de cambiar tu contraseña.</span>'})
+
+        # Verificar si el token proporcionado es correcto
+        if existing_token.token != security_token:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">El token ingresado es incorrecto.</span>'})
+
+        # Verificar la contraseña actual usando la función `authenticate`
+        if not authenticate(username, current_password):
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">La contraseña actual es incorrecta.</span>'})
+
+        # Generar salt y verifier para la nueva contraseña
+        new_salt = binascii.hexlify(os.urandom(32)).decode('utf-8').upper()
+        new_verifier = calculate_srp6_verifier(username, new_password, new_salt)
+
+        # Convertir `salt` y `verifier` a bytes antes de guardarlos en la base de datos
+        new_salt_bytes = binascii.unhexlify(new_salt)
+        new_verifier_bytes = binascii.unhexlify(new_verifier)
+
+        # Actualizar la contraseña en la base de datos
+        with connections['acore_auth'].cursor() as cursor:
+            cursor.execute("""
+                UPDATE account SET salt = %s, verifier = %s WHERE username = %s
+            """, [new_salt_bytes, new_verifier_bytes, username])
+
+        # Cerrar la sesión por seguridad
+        if 'username' in request.session:
+            del request.session['username']
+
+        # Redirigir al usuario a la página de inicio de sesión
+        return JsonResponse({
+            'success': True,
+            'message': '<span class="ok-form-response">Contraseña cambiada exitosamente. Has sido desconectado por seguridad.</span>',
+            'redirect': True
+        })
+
     return render(request, 'account/change_password.html')
-
-
 
 
 def get_user_from_acore(username):
@@ -800,12 +867,12 @@ def security_token_view(request):
     # Verificar si el usuario está autenticado mediante la sesión
     username = request.session.get('username')
     if not username:
-        return redirect('login')
+        return redirect('index')
 
     # Obtener el usuario desde la base de datos de `acore_auth`
     user_data = get_user_from_acore(username)
     if not user_data:
-        return redirect('login')
+        return redirect('index')
 
     user_id = user_data['id']
     email = user_data['email']
@@ -946,7 +1013,7 @@ def help_view(request):
     # Verificar si el usuario está logueado
     if 'username' not in request.session:
         # Si no está logueado, redirigir al inicio de sesión
-        return redirect('login')
+        return redirect('index')
     
     # Si está logueado, renderizar la página de ayuda
     return render(request, 'community/help.html')
@@ -1045,7 +1112,7 @@ def get_achievement_name(achievement_id):
 def novawow_players_view(request):
     # Verificar si el usuario está logueado
     if 'username' not in request.session:
-        return redirect('/login')
+        return redirect('index')
 
     # Obtener las 5 hermandades con más miembros
     with connections['acore_characters'].cursor() as cursor:
