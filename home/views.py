@@ -853,6 +853,95 @@ def help_view(request):
     # Si está logueado, renderizar la página de ayuda
     return render(request, 'community/help.html')
 
+def get_race_icon(race):
+    race_icons = {
+        1: "human-male",
+        2: "orc-male",
+        3: "dwarf-male",
+        4: "night-elf-male",
+        5: "undead-male",
+        6: "tauren-male",
+        7: "gnome-male",
+        8: "troll-male",
+        9: "goblin-male",
+        10: "blood-elf-male",
+        11: "draenei-male"
+    }
+    return race_icons.get(race, "unknown")
+    
+    
+def get_race_iconss(race):
+    race_iconss = {
+        1: "human",
+        2: "orc",
+        3: "dwarf",
+        4: "night-elf",
+        5: "undead",
+        6: "tauren",
+        7: "gnome",
+        8: "troll",
+        9: "goblin",
+        10: "blood-elf",
+        11: "draenei"
+    }
+    return race_iconss.get(race, "unknown")
+
+def get_class_icon(char_class):
+    class_icons = {
+        1: "warrior",
+        2: "paladin",
+        3: "hunter",
+        4: "rogue",
+        5: "priest",
+        6: "death-knight",
+        7: "shaman",
+        8: "mage",
+        9: "warlock",
+        11: "druid"
+    }
+    return class_icons.get(char_class, "unknown")
+    
+    
+def get_class_name(char_class):
+    names = {
+        1: "Guerrero",
+        2: "Paladín",
+        3: "Cazador",
+        4: "Pícaro",
+        5: "Sacerdote",
+        6: "Caballero de la Muerte",
+        7: "Chamán",
+        8: "Mago",
+        9: "Brujo",
+        11: "Druida"
+    }
+    return names.get(char_class, "Desconocido")
+
+def get_achievement_name(achievement_id):
+    achievement_names = {
+        457: "¡Primero del reino! Nivel 80",
+        458: "¡Primero del reino! Pícaro nivel 80",
+        463: "¡Primero del reino! Brujo nivel 80",
+        461: "¡Primero del reino! Caballero de la Muerte nivel 80",
+        462: "¡Primero del reino! Cazador nivel 80",
+        467: "¡Primero del reino! Chamán nivel 80",
+        466: "¡Primero del reino! Druida nivel 80",
+        459: "¡Primero del reino! Guerrero nivel 80",
+        460: "¡Primero del reino! Mago nivel 80",
+        465: "¡Primero del reino! Paladín nivel 80",
+        464: "¡Primero del reino! Sacerdote nivel 80",
+        1408: "¡Primero del reino! Humano nivel 80",
+        1407: "¡Primero del reino! Enano nivel 80",
+        1409: "¡Primero del reino! Elfo de la noche nivel 80",
+        1404: "¡Primero del reino! Gnomo nivel 80",
+        1406: "¡Primero del reino! Draenei nivel 80",
+        1410: "¡Primero del reino! Orco nivel 80",
+        1413: "¡Primero del reino! Renegado nivel 80",
+        1411: "¡Primero del reino! Tauren nivel 80",
+        1412: "¡Primero del reino! Trol nivel 80",
+        1405: "¡Primero del reino! Elfo de sangre nivel 80"
+    }
+    return achievement_names.get(achievement_id, "Logro Desconocido")
 
 
 def novawow_players_view(request):
@@ -860,5 +949,140 @@ def novawow_players_view(request):
     if 'username' not in request.session:
         return redirect('/login')
 
-    # Si está logueado, renderizar la plantilla
-    return render(request, 'realms/novawow_players.html')    
+    # Obtener las 5 hermandades con más miembros
+    with connections['acore_characters'].cursor() as cursor:
+        guild_query = """
+        SELECT g.name, c.name AS leader, 
+               CASE WHEN c.race IN (1, 3, 4, 7, 11) THEN 'alliance' ELSE 'horde' END AS faction,
+               COUNT(gm.guid) AS members, 
+               g.createdate
+        FROM guild g
+        JOIN characters c ON c.guid = g.leaderguid
+        LEFT JOIN guild_member gm ON gm.guildid = g.guildid
+        GROUP BY g.guildid
+        ORDER BY members DESC
+        LIMIT 5
+        """
+        cursor.execute(guild_query)
+        guilds = cursor.fetchall()
+
+    formatted_guilds = [
+        (name, leader, faction, members, datetime.fromtimestamp(createdate).strftime('%d-%m-%Y'))
+        for name, leader, faction, members, createdate in guilds
+    ]
+
+    # Obtener el top 10 de jugadores con más muertes con honor
+    with connections['acore_characters'].cursor() as cursor:
+        kills_query = """
+        SELECT name, race, class, totalKills, todayKills
+        FROM characters
+        ORDER BY totalKills DESC
+        LIMIT 10
+        """
+        cursor.execute(kills_query)
+        top_kills = cursor.fetchall()
+
+    players_with_kills = [
+        {
+            'name': name,
+            'race_icon': f"big-{get_race_icon(race)}",
+            'class_icon': f"{get_class_icon(char_class)}-medium",
+            'total_kills': total_kills,
+            'today_kills': today_kills
+        }
+        for name, race, char_class, total_kills, today_kills in top_kills
+    ]
+
+    # Obtener personajes por clase y facción
+    with connections['acore_characters'].cursor() as cursor:
+        class_faction_query = """
+        SELECT class,
+               SUM(CASE WHEN race IN (1, 3, 4, 7, 11) THEN 1 ELSE 0 END) AS alliance_count,
+               SUM(CASE WHEN race IN (2, 5, 6, 8, 10) THEN 1 ELSE 0 END) AS horde_count,
+               COUNT(*) AS total_count
+        FROM characters
+        GROUP BY class
+        """
+        cursor.execute(class_faction_query)
+        class_faction_data = cursor.fetchall()
+
+    classes_data = [
+        {
+            'class_icon': f"{get_class_icon(char_class)}-chest",
+            'class_name': get_class_name(char_class),
+            'total': total_count,
+            'alliance': alliance_count,
+            'horde': horde_count
+        }
+        for char_class, alliance_count, horde_count, total_count in class_faction_data
+    ]
+
+    # Obtener el top 10 de jugadores con más logros
+    with connections['acore_characters'].cursor() as cursor:
+        achievements_query = """
+        SELECT c.name, c.race, c.class, MAX(cap.counter) AS achievement_points
+        FROM character_achievement_progress cap
+        JOIN characters c ON cap.guid = c.guid
+        GROUP BY c.guid
+        ORDER BY achievement_points DESC
+        LIMIT 10
+        """
+        cursor.execute(achievements_query)
+        top_achievements = cursor.fetchall()
+
+    players_with_achievements = [
+        {
+            'name': name,
+            'race_icon': f"big-{get_race_icon(race)}",
+            'class_icon': f"{get_class_icon(char_class)}-medium",
+            'achievement_points': achievement_points
+        }
+        for name, race, char_class, achievement_points in top_achievements
+    ]
+
+    # Obtener logros "Primeros del Reino"
+    with connections['acore_characters'].cursor() as cursor:
+        first_realm_query = """
+        SELECT ca.achievement, c.name, c.race, c.class, c.gender, ca.date
+        FROM character_achievement ca
+        JOIN characters c ON ca.guid = c.guid
+        WHERE ca.achievement IN (
+            457, 458, 463, 461, 462, 467, 466, 459, 460, 465, 464, 
+            1408, 1407, 1409, 1404, 1406, 1410, 1413, 1411, 1412, 1405
+        )
+        ORDER BY ca.date ASC
+        """
+        cursor.execute(first_realm_query)
+        first_realm_achievements = cursor.fetchall()
+
+    first_realm_data = []
+    for achievement in first_realm_achievements:
+        achievement_id, name, race, char_class, gender, date = achievement
+        formatted_date = datetime.fromtimestamp(date).strftime('%H:%M:%S %d-%m-%Y')
+
+        # Determinar el ícono correcto basado en el logro
+        if achievement_id == 457:
+            icon_url = f"{settings.URL_PRINCIPAL}/static/nw-themes/nw-ryu/nw-images/nw-icons/achievement-level-80.jpg"
+        elif achievement_id in [1408, 1407, 1409, 1404, 1406, 1410, 1413, 1411, 1412, 1405]:
+            race_iconss = get_race_iconss(race)
+            gender_suffix = "male" if gender == 0 else "female"
+            icon_url = f"{settings.URL_PRINCIPAL}/static/nw-themes/nw-ryu/nw-images/nw-races/big-{race_iconss}-{gender_suffix}.webp"
+        else:
+            icon_url = f"{settings.URL_PRINCIPAL}/static/nw-themes/nw-ryu/nw-images/nw-classes/{get_class_icon(char_class)}-medium.jpg"
+
+        first_realm_data.append({
+            'achievement_name': get_achievement_name(achievement_id),
+            'name': name,
+            'race_iconss': f"big-{get_race_iconss(race)}",
+            'icon_url': icon_url,
+            'date': formatted_date
+        })
+
+    # Renderizar la plantilla con los datos obtenidos
+    return render(request, 'realms/novawow_players.html', {
+        'guilds': formatted_guilds,
+        'players_with_kills': players_with_kills,
+        'players_with_achievements': players_with_achievements,
+        'classes_data': classes_data,
+        'first_realm_data': first_realm_data
+    })

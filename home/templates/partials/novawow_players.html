@@ -4,551 +4,156 @@
                 <div class="title-content"><h1>Personajes - <span class="blue-info">{{ server.name }}</span></h1></div>
                     <div class="box-content">
                         <div class="body-box-content centered">
-                            <p><i class="fas fa-exclamation-triangle"></i> La información de esta página se actualiza 1 vez al día automáticamente</p>
+                            <p><i class="fas fa-exclamation-triangle"></i> La información de esta página se actualiza cada 5 minutos automáticamente</p>
                         </div>
                     </div>
                     <div class="box-content">
-                        <div class="title-box-content centered"><h2>Personajes creados por clase</h2></div>
-                        <div class="body-box-content centered">
-                            <div class="show-players">
-                            <div class="inline-div">
-                                <table class="players-table">
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon chest-medium" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/warrior-chest.webp"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="warrior">Total:<span> <span>81330</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> <span class="warrior">Alianzas:<span> <span>38864</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> <span class="warrior">Hordas:<span> <span>42466</span></span></span></td>
-                                    </tr>
-                                </tbody></table>
-                            </div>
-                            <div class="inline-div">
-                                <table class="players-table">
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon chest-medium" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/paladin-chest.webp"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="paladin">Total:<span> <span>96653</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> <span class="paladin">Alianzas:<span> <span>48027</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> <span class="paladin">Hordas:<span> <span>48626</span></span></span></td>
-                                    </tr>
-                                </tbody></table>
-                            </div>
-                            <div class="inline-div">
-                                <table class="players-table">
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon chest-medium" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/hunter-chest.webp"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="hunter">Total:<span> <span>78977</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> <span class="hunter">Alianzas:<span> <span>30116</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> <span class="hunter">Hordas:<span> <span>48861</span></span></span></td>
-                                    </tr>
-                                </tbody></table>
-                            </div>
-                            <div class="inline-div">
-                                <table class="players-table">
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon chest-medium" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/rogue-chest.webp"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="rogue">Total:<span> <span>62207</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> <span class="rogue">Alianzas:<span> <span>27424</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> <span class="rogue">Hordas:<span> <span>34783</span></span></span></td>
-                                    </tr>
-                                </tbody></table>
-                            </div>
-                            <div class="inline-div">
-                                <table class="players-table">
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon chest-medium" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/priest-chest.webp"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="priest">Total:<span> <span>52155</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> <span class="priest">Alianzas:<span> <span>23715</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> <span class="priest">Hordas:<span> <span>28440</span></span></span></td>
-                                    </tr>
-                                </tbody></table>
-                            </div>
-                            <div class="inline-div">
-                                <table class="players-table">
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon chest-medium" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/death-knight-chest.webp"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="death-knight">Total:<span> <span>61145</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> <span class="death-knight">Alianzas:<span> <span>25117</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> <span class="death-knight">Hordas:<span> <span>36028</span></span></span></td>
-                                    </tr>
-                                </tbody></table>
-                            </div>
-                            <div class="inline-div">
-                                <table class="players-table">
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon chest-medium" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/shaman-chest.webp"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="shaman">Total:<span> <span>44359</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> <span class="shaman">Alianzas:<span> <span>15615</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> <span class="shaman">Hordas:<span> <span>28744</span></span></span></td>
-                                    </tr>
-                                </tbody></table>
-                            </div>
-                            <div class="inline-div">
-                                <table class="players-table">
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon chest-medium" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/mage-chest.webp"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="mage">Total:<span> <span>64815</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> <span class="mage">Alianzas:<span> <span>28326</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> <span class="mage">Hordas:<span> <span>36489</span></span></span></td>
-                                    </tr>
-                                </tbody></table>
-                            </div>
-                            <div class="inline-div">
-                                <table class="players-table">
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon chest-medium" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/warlock-chest.webp"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="warlock">Total:<span> <span>52705</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> <span class="warlock">Alianzas:<span> <span>18121</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> <span class="warlock">Hordas:<span> <span>34584</span></span></span></td>
-                                    </tr>
-                                </tbody></table>
-                            </div>
-                            <div class="inline-div">
-                                <table class="players-table">
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon chest-medium" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/druid-chest.webp"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><span class="druid">Total:<span> <span>58315</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> <span class="druid">Alianzas:<span> <span>28540</span></span></span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"><img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> <span class="druid">Hordas:<span> <span>29775</span></span></span></td>
-                                    </tr>
-                                </tbody></table>
-                            </div>
-                            <table class="max-center-table2">
-                                <tbody><tr>
-                                    <td>Personajes totales: <span>652661</span></td>
-                                    <td><span class="alliance-color">Personajes alianzas:</span> <span>283865</span></td>
-                                    <td><span class="horde-color">Personajes hordas:</span> <span>368796</span></td>
-                                </tr>
-                            </tbody></table>
-                            </div>
-                        </div>
-                    </div>
+    <div class="title-box-content centered"><h2>Personajes creados por clase</h2></div>
+    <div class="body-box-content centered show-players">
+        {% for data in classes_data %}
+        <div class="inline-div">
+            <table class="players-table">
+                <tr>
+                    <td><img class="img-med-icon chest-medium" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/{{ data.class_icon }}.webp"></td>
+                </tr>
+                <tr>
+                    <td><span class="{{ data.class_name|lower }}">Total: <span>{{ data.total }}</span></span></td>
+                </tr>
+                <tr><td><hr></td></tr>
+                <tr>
+                    <td class="lefted">
+                        <img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-no-border.webp"> 
+                        <span class="{{ data.class_name|lower }}">Alianzas: <span>{{ data.alliance }}</span></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="lefted">
+                        <img class="img-small-icon-m img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-no-border.webp"> 
+                        <span class="{{ data.class_name|lower }}">Hordas: <span>{{ data.horde }}</span></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
                     <br>
                     <hr>
                     <br>
                     <div class="box-content">
-                        <div class="title-box-content centered"><h2>Primeros del Reino - Nivel 80</h2></div>
-                        <div class="body-box-content justified">
-                            <table class="max-left-table2">
-                                <tbody><tr>
-                                    <th>Logro</th>
-                                    <th>Personaje</th>
-                                    <th class="responsive-td">Fecha</th>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/achievement-level-80.jpg"> <span class="yellow-info"><span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Nivel 80</span></span></td>
-                                    <td class="hunter big-font">Vitom</td>
-                                    <td class="responsive-td"><span>21:06:20 11-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/rogue-medium.jpg"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Pícaro nivel 80</span></td>
-                                    <td class="rogue big-font">Froxphil</td>
-                                    <td class="responsive-td"><span>23:15:33 12-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/warrior-medium.jpg"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Guerrero nivel 80</span></td>
-                                    <td class="warrior big-font">Tomyh</td>
-                                    <td class="responsive-td"><span>18:02:27 12-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/mage-medium.jpg"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Mago nivel 80</span></td>
-                                    <td class="mage big-font">Danndy</td>
-                                    <td class="responsive-td"><span>14:08:35 14-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/death-knight-medium.jpg"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> C. de la M. nivel 80</span></td>
-                                    <td class="death-knight big-font">Shermine</td>
-                                    <td class="responsive-td"><span>11:34:37 12-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/hunter-medium.jpg"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Cazador nivel 80</span></td>
-                                    <td class="hunter big-font">Vitom</td>
-                                    <td class="responsive-td"><span>21:06:20 11-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/warlock-medium.jpg"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Brujo nivel 80</span></td>
-                                    <td class="warlock big-font">Dean</td>
-                                    <td class="responsive-td"><span>22:47:57 12-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/priest-medium.jpg"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Sacerdote nivel 80</span></td>
-                                    <td class="priest big-font">Nespheros</td>
-                                    <td class="responsive-td"><span>05:05:37 13-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/paladin-medium.jpg"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Paladín nivel 80</span></td>
-                                    <td class="paladin big-font">Renzo</td>
-                                    <td class="responsive-td"><span>22:12:50 11-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/druid-medium.jpg"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Druida nivel 80</span></td>
-                                    <td class="druid big-font">Dreikas</td>
-                                    <td class="responsive-td"><span>04:45:27 13-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/shaman-medium.jpg"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Chamán nivel 80</span></td>
-                                    <td class="shaman big-font">Jalh</td>
-                                    <td class="responsive-td"><span>01:18:45 15-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-gnome-male.webp"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Gnomo nivel 80</span></td>
-                                    <td class="death-knight big-font">Shermine</td>
-                                    <td class="responsive-td"><span>11:34:37 12-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-blood-elf-female.webp"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Elfo de sangre nivel 80</span></td>
-                                    <td class="paladin big-font">Renzo</td>
-                                    <td class="responsive-td"><span>22:12:50 11-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-draenei-female.webp"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Draenei nivel 80</span></td>
-                                    <td class="death-knight big-font">Hyrtael</td>
-                                    <td class="responsive-td"><span>17:56:16 12-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-dwarf-male.webp"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Enano nivel 80</span></td>
-                                    <td class="hunter big-font">Hunkx</td>
-                                    <td class="responsive-td"><span>12:53:40 19-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-human-female.webp"> <span class="yellow-info"><span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Humano nivel 80</span></span></td>
-                                    <td class="warrior big-font">Tomyh</td>
-                                    <td class="responsive-td"><span>18:02:27 12-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-night-elf-male.webp"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Elfo de la noche nivel 80</span></td>
-                                    <td class="druid big-font">Dreikas</td>
-                                    <td class="responsive-td"><span>04:45:27 13-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-orc-male.webp"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Orco nivel 80</span></td>
-                                    <td class="hunter big-font">Vitom</td>
-                                    <td class="responsive-td"><span>21:06:20 11-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-tauren-female.webp"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Tauren nivel 80</span></td>
-                                    <td class="druid big-font">Kael</td>
-                                    <td class="responsive-td"><span>21:36:31 13-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-troll-male.webp"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> Trol nivel 80</span></td>
-                                    <td class="death-knight big-font">Capa</td>
-                                    <td class="responsive-td"><span>00:28:26 15-08-2018</span></td>
-                                </tr>
-                                <tr>
-                                    <td><img class="img-small-icon img-small-icon-h img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-undead-male.webp"> <span class="yellow-info responsive-td">¡Primero del reino!</span><span class="yellow-info"> No-muerto nivel 80</span></td>
-                                    <td class="warrior big-font">Retaliated</td>
-                                    <td class="responsive-td"><span>02:43:12 13-08-2018</span></td>
-                                </tr>
-                            </tbody></table>
-                        </div>
-                    </div>
+    <div class="title-box-content centered"><h2>Primeros del Reino - Nivel 80</h2></div>
+    <div class="body-box-content justified">
+        <table class="max-left-table2">
+            <tbody>
+                <tr>
+                    <th>Logro</th>
+                    <th>Personaje</th>
+                    <th class="responsive-td">Fecha</th>
+                </tr>
+                {% for achievement in first_realm_data %}
+                <tr>
+                    <td>
+                        <img class="img-small-icon img-align" src="{{ achievement.icon_url }}">
+                        <span class="yellow-info">{{ achievement.achievement_name }}</span>
+                    </td>
+                    <td class="{{ achievement.race_icon }} big-font">{{ achievement.name }}</td>
+                    <td class="responsive-td">{{ achievement.date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
                     <br>
                     <hr>
                     <br>
                     <div class="box-content">
-                        <div class="title-box-content centered"><h2>Top de logros</h2></div>
-                        <div class="body-box-content centered">
-                            <p>Los 10 jugadores con más logros</p>
-                            <table class="char-center-table">
-                                <tbody><tr>
-                                    <th>Nombre</th>
-                                    <th>Raza</th>
-                                    <th>Clase</th>
-                                    <th>Puntos de logros</th>
-                                </tr>
-                                <tr>
-                                    <td class="mage big-font">Zeroz</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-gnome-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/mage-medium.jpg"></td>
-                                    <td><span>11500</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="paladin big-font">Carlangas</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-human-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/paladin-medium.jpg"></td>
-                                    <td><span>11350</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="paladin big-font">Juanmaverick</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-human-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/paladin-medium.jpg"></td>
-                                    <td><span>11220</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="druid big-font">Acolchado</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-night-elf-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/druid-medium.jpg"></td>
-                                    <td><span>11170</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="mage big-font">Suku</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-human-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/mage-medium.jpg"></td>
-                                    <td><span>11045</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="shaman big-font">Chamsky</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-orc-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/shaman-medium.jpg"></td>
-                                    <td><span>11030</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="priest big-font">Leyenda</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-dwarf-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/priest-medium.jpg"></td>
-                                    <td><span>11020</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="rogue big-font">Farandilqt</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-gnome-female.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/rogue-medium.jpg"></td>
-                                    <td><span>10945</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="warlock big-font">Diablo</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-human-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/warlock-medium.jpg"></td>
-                                    <td><span>10925</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="death-knight big-font">Hermosito</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-human-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/death-knight-medium.jpg"></td>
-                                    <td><span>10760</span></td>
-                                </tr>
-                            </tbody></table>
-                        </div>
-                    </div>
+    <div class="title-box-content centered"><h2>Top de logros</h2></div>
+    <div class="body-box-content centered">
+        <p>Los 10 jugadores con más logros</p>
+        <table class="char-center-table">
+            <tr>
+                <th>Nombre</th>
+                <th>Raza</th>
+                <th>Clase</th>
+                <th>Puntos de logros</th>
+            </tr>
+            {% for player in players_with_achievements %}
+            <tr>
+                <td class="{{ player.class_icon }} big-font">{{ player.name }}</td>
+                <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/{{ player.race_icon }}.webp"></td>
+                <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/{{ player.class_icon }}.jpg"></td>
+                <td>{{ player.achievement_points }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
                     <br>
                     <hr>
                     <br>
                     <div class="box-content">
-                        <div class="title-box-content centered"><h2>Top de muertes con honor</h2></div>
-                        <div class="body-box-content centered">
-                            <p>Los 10 jugadores con más muertes con honor</p>
-                            <table class="char-center-table">
-                                <tbody><tr>
-                                    <th>Nombre</th>
-                                    <th>Raza</th>
-                                    <th>Clase</th>
-                                    <th>Total de muertes</th>
-                                    <th>Total de muertes hoy</th>
-                                </tr>
-                                <tr>
-                                    <td class="warlock big-font">Shimo</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-gnome-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/warlock-medium.jpg"></td>
-                                    <td><span>391004</span></td>
-                                    <td><span>261</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="paladin big-font">Pesterson</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-human-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/paladin-medium.jpg"></td>
-                                    <td><span>362495</span></td>
-                                    <td><span>278</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="paladin big-font">Gannikuss</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-blood-elf-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/paladin-medium.jpg"></td>
-                                    <td><span>316440</span></td>
-                                    <td><span>0</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="priest big-font">Blutengel</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-human-female.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/priest-medium.jpg"></td>
-                                    <td><span>273296</span></td>
-                                    <td><span>358</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="hunter big-font">Kheysi</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-night-elf-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/hunter-medium.jpg"></td>
-                                    <td><span>267510</span></td>
-                                    <td><span>121</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="warlock big-font">Keillath</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-blood-elf-female.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/warlock-medium.jpg"></td>
-                                    <td><span>263755</span></td>
-                                    <td><span>612</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="paladin big-font">Makipala</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-human-female.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/paladin-medium.jpg"></td>
-                                    <td><span>256404</span></td>
-                                    <td><span>524</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="warlock big-font">Descarga</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-human-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/warlock-medium.jpg"></td>
-                                    <td><span>251601</span></td>
-                                    <td><span>163</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="mage big-font">Shakary</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-human-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/mage-medium.jpg"></td>
-                                    <td><span>248022</span></td>
-                                    <td><span>16</span></td>
-                                </tr>
-                                <tr>
-                                    <td class="hunter big-font">Criminal</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/big-dwarf-male.webp"></td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/hunter-medium.jpg"></td>
-                                    <td><span>247483</span></td>
-                                    <td><span>244</span></td>
-                                </tr>
-                            </tbody></table>
-                        </div>
-                    </div>
+    <div class="title-box-content centered"><h2>Top de muertes con honor</h2></div>
+    <div class="body-box-content centered">
+        <p>Los 10 jugadores con más muertes con honor</p>
+        <table class="char-center-table">
+            <tr>
+                <th>Nombre</th>
+                <th>Raza</th>
+                <th>Clase</th>
+                <th>Total de muertes</th>
+                <th>Total de muertes hoy</th>
+            </tr>
+            {% for player in players_with_kills %}
+            <tr>
+                <td class="{{ player.class_icon }} big-font">{{ player.name }}</td>
+                <td>
+				<img class="img-small-icon img-align" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-races/{{ player.race_icon }}.webp"></td>
+                <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-classes/{{ player.class_icon }}.jpg"></td>
+                <td>{{ player.total_kills }}</td>
+                <td>{{ player.today_kills }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
                     <br>
                     <hr>
                     <br>
-                    <div class="box-content">
-                        <div class="title-box-content centered"><h2>Top de hermandades</h2></div>
-                        <div class="body-box-content centered">
-                            <p>Las 5 hermandades con más miembros</p><p>
-                            </p><table class="char-center-table">
-                                <tbody><tr>
-                                    <th>Nombre</th>
-                                    <th>Líder</th>
-                                    <th>Facción</th>
-                                    <th>Miembros</th>
-                                    <th class="responsive-td">Fecha de creación</th>
-                                </tr>
-                                <tr>
-                                    <td><span class="ingame-green big-font">&lt;Guild Not Found&gt;</span></td>
-                                    <td class="shaman big-font">Maxshami</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-icon.jpg"></td>
-                                    <td><span>4205</span></td>
-                                    <td class="responsive-td"><span>23-08-2023</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="ingame-green big-font">&lt;Honor y Gloria&gt;</span></td>
-                                    <td class="rogue big-font">Ravenschwert</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/alliance-icon.jpg"></td>
-                                    <td><span>1930</span></td>
-                                    <td class="responsive-td"><span>26-07-2022</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="ingame-green big-font">&lt;Fearsome legion&gt;</span></td>
-                                    <td class="paladin big-font">Directora</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-icon.jpg"></td>
-                                    <td><span>1526</span></td>
-                                    <td class="responsive-td"><span>06-01-2024</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="ingame-green big-font">&lt;Dragons&gt;</span></td>
-                                    <td class="mage big-font">Dragonsaky</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-icon.jpg"></td>
-                                    <td><span>1304</span></td>
-                                    <td class="responsive-td"><span>02-08-2024</span></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="ingame-green big-font">&lt;Casablanca Baby Gang&gt;</span></td>
-                                    <td class="death-knight big-font">Fumapedrolos</td>
-                                    <td><img class="img-small-icon img-small-icon-h" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/horde-icon.jpg"></td>
-                                    <td><span>1176</span></td>
-                                    <td class="responsive-td"><span>15-07-2024</span></td>
-                                </tr>
-                            </tbody></table>
-                        </div>
-                    </div>
+                  <div class="box-content">
+        <div class="title-box-content centered"><h2>Top de hermandades</h2></div>
+        <div class="body-box-content centered">
+            <p>Las 5 hermandades con más miembros</p>
+            <table class="char-center-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Líder</th>
+                        <th>Facción</th>
+                        <th>Miembros</th>
+                        <th class="responsive-td">Fecha de creación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for guild in guilds %}
+                    <tr>
+                        <td><span class="ingame-green big-font">&lt;{{ guild.0 }}&gt;</span></td>
+                        <td class="{{ guild.1|lower }} big-font">{{ guild.1 }}</td>
+                        <td>
+                            <img class="img-small-icon img-small-icon-h" 
+                                 src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/{{ guild.2 }}-icon.jpg">
+                        </td>
+                        <td><span>{{ guild.3 }}</span></td>
+                        <td class="responsive-td"><span>{{ guild.4 }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
                 </div>
             </div>
         </div>
