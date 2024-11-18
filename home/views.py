@@ -1056,10 +1056,14 @@ def change_email_view(request):
 
 def confirm_old_email_view(request):
     hash = request.GET.get('hash')
-    activation = AccountActivation.objects.filter(old_email_hash=hash).first()
+    activation = AccountActivation.objects.filter(old_email_hash=hash, is_used=False).first()
 
-    if not activation:
+    if not activation or activation.is_expired():
         return HttpResponse('Enlace no válido o expirado.', status=400)
+
+    # Marcar solo el old_email_hash como usado
+    activation.is_used = True
+    activation.save()
 
     # Enviar correo al nuevo correo para confirmar el cambio
     activation_link = f"{settings.URL_PRINCIPAL}/es/confirm-new-email?hash={activation.hash}"
@@ -1080,10 +1084,14 @@ def confirm_old_email_view(request):
 
 def confirm_new_email_view(request):
     hash = request.GET.get('hash')
-    activation = AccountActivation.objects.filter(hash=hash).first()
+    activation = AccountActivation.objects.filter(hash=hash, is_new_email_used=False).first()
 
-    if not activation:
+    if not activation or activation.is_expired():
         return HttpResponse('Enlace no válido o expirado.', status=400)
+
+    # Marcar solo el new_email_hash como usado
+    activation.is_new_email_used = True
+    activation.save()
 
     # Actualizar el correo en la base de datos
     with connections['acore_auth'].cursor() as cursor:
@@ -1107,7 +1115,6 @@ def confirm_new_email_view(request):
     )
 
     return HttpResponse('El cambio de correo ha sido confirmado y completado con éxito.')
-
 
    
 def promo_code_view(request):

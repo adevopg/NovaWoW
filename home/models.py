@@ -103,20 +103,32 @@ class ClaimedReward(models.Model):
     def __str__(self):
         return f"{self.username} - {self.recruit_reward.reward_name} - {self.claimed_at}"
 
+from django.db import models
+from django.utils import timezone
+
+from django.db import models
+from django.utils import timezone
+
 class AccountActivation(models.Model):
     username = models.CharField(max_length=17)
     email = models.EmailField()
     old_email = models.EmailField(null=True, blank=True)
-    password = models.CharField(max_length=64)  # Hash de la contraseña
+    password = models.CharField(max_length=64)
     salt = models.BinaryField(max_length=32)
     verifier = models.BinaryField(max_length=32)
     recruiter_id = models.IntegerField(null=True, blank=True)
     hash = models.CharField(max_length=32, unique=True)
     old_email_hash = models.CharField(max_length=32, null=True, blank=True)
+    is_used = models.BooleanField(default=False)  # Indica si el old_email_hash ha sido usado
+    is_new_email_used = models.BooleanField(default=False)  # Indica si el hash del nuevo correo ha sido usado
     created_at = models.DateTimeField(default=timezone.now)
-    
+
     def is_expired(self):
         return timezone.now() > self.created_at + timezone.timedelta(hours=1)
+
+    def __str__(self):
+        return f"Activation for {self.username}"
+
 
 
 class SecurityToken(models.Model):
