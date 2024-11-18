@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 
 # Configuración para AC SOAP
 AC_SOAP_URL = "http://127.0.0.1:2079"
-AC_SOAP_USER = "AC_SOAP"
+AC_SOAP_USER = "    "
 AC_SOAP_PASSWORD = "Ladyamy89"
 AC_SOAP_URN = "urn:AC"
 

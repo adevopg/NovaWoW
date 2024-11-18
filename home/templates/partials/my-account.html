@@ -20,9 +20,17 @@
 					 <legend>Estado de la cuenta</legend>
     <div class="separate">
         <img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-ranks/1_Newbie.svg" class="nw-rank" alt="Nivel 1" title="Nivel 1">
-        <p>PD: <span>0</span></p>
-        <p>PV: <span>0</span></p>
-        <p>Token de Seguridad: <span>Sin solicitar</span></p>
+        <p>PD: <span>{{ dp }}</span></p>
+		<p>PV: <span>{{ vp }}</span></p>
+<p>Token de Seguridad: 
+    <span>
+        {% if token_status == "Solicitado" %}
+            {{ token_status }} - {{ token_date }}
+        {% else %}
+            {{ token_status }}
+        {% endif %}
+    </span>
+</p>
 
         {% if account_status.is_banned %}
             <p>Cuenta baneada: <span>Sí</span></p>

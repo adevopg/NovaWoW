@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación de Cambio de Correo</title>
+</head>
+<body>
+    <table style="width: 100%; max-width: 600px; margin: 0 auto; border: 1px solid #dddddd; padding: 20px;">
+        <tr>
+            <td style="text-align: center;">
+                <h2>Confirmación de Cambio de Correo</h2>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Hola {{ username }},</p>
+                <p>Has solicitado cambiar tu correo electrónico registrado en <strong>{{ NOMBRE_SERVIDOR }}</strong>.</p>
+                <p>Para confirmar este cambio, haz clic en el siguiente enlace:</p>
+                <p style="text-align: center;">
+                    <a href="{{ confirm_link }}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Confirmar cambio</a>
+                </p>
+                <p>Si no solicitaste este cambio, por favor ignora este correo.</p>
+                <p>Atentamente,<br>El equipo de {{ NOMBRE_SERVIDOR }}</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

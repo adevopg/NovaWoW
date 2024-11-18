@@ -1,69 +1,41 @@
-if (window.history.replaceState) {
-    window.history.replaceState(null, null, window.location.href);
-};
-
-$(function(){
-    $(".toggle-password").click(function() {
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        var type = $(this).hasClass("fa-eye-slash") ? "text" : "password";
-         $("#password").attr("type", type);
-    });
-});
-
-$(function(){
-    $(".toggle-token").click(function() {
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        var type = $(this).hasClass("fa-eye-slash") ? "text" : "password";
-         $("#security-token").attr("type", type);
-    });
-});
-
-$(function(){
-    $('#conf-new-email').on("cut copy paste",function(e) {
-      e.preventDefault();
-    });
-});
-
-$(function(){
-    $('.change-email-button').on('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+$(document).ready(function() {
+    $('#nw-change-email-form').on('submit', function(e) {
+        e.preventDefault(); // Evitar el envío por defecto del formulario
         $("#change-email-response").empty();
 
-        var button = $(this);
-        var buttonoriginal = button.html();
-        var bValue = button.data('id');
-        var data = {changeemail: bValue};
-        data = $("#uw-change-email-form").serialize() + '&' + $.param(data);
+        var form = $(this);
+        var button = $('.change-email-button');
+        var originalText = button.html();
 
-        changeButton(button, 'Cambiando correo');
+        button.html("Cambiando correo...");
+        button.prop("disabled", true);
 
         $.ajax({
             type: 'POST',
-            url: '',
-            data: data,
+            url: form.attr('action'),
+            data: form.serialize(), // Serializar los datos correctamente
             dataType: 'json',
-            success: function(data) {
-                $("#change-email-response").append(data.message).hide().slideDown();
+            success: function(response) {
+                $("#change-email-response").html(response.message).hide().slideDown();
 
-                if (data.success === true) {
+                if (response.success) {
                     button.html("Correo cambiado");
-                    button.css("color","#d79602");
-                }
-                else {
+                } else {
                     setTimeout(function() {
-                        $("#change-email-response").slideUp( function() {
-                        $("#change-email-response").empty();
-                        restoreButton(button, buttonoriginal);
+                        $("#change-email-response").slideUp(function() {
+                            $("#change-email-response").empty();
+                            button.html(originalText);
+                            button.prop("disabled", false);
                         });
                     }, 5000);
                 }
             },
-            error: function() {
-                setTimeout(function() {
-                    alert("Algo ha salido mal. Por favor intente más tarde");
-                    window.location.reload();
-                }, 2000);
+            error: function(xhr, status, error) {
+                console.error("Error:", error);
+                console.error("Detalles:", xhr.responseText);
+                $("#change-email-response").html('<span class="red-form-response">Algo ha salido mal. Inténtelo de nuevo.</span>');
+                button.html(originalText);
+                button.prop("disabled", false);
             }
         });
     });

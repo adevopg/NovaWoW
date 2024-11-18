@@ -5,12 +5,12 @@ import binascii
 import os
 import re
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.db import connections
 from django.contrib import messages
 from django.contrib.auth import logout
 from django import forms
-from .models import Noticia, ClienteCategoria, ServerSelection, RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, ClaimedReward, AccountActivation, SecurityToken, GuildRenameSettings
+from .models import Noticia, ClienteCategoria, ServerSelection, RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, ClaimedReward, AccountActivation, SecurityToken, GuildRenameSettings, VoteSite, VoteLog, HomeApiPoints
 from django.views.decorators.csrf import csrf_exempt
 import logging
 from datetime import datetime, timedelta
@@ -21,7 +21,6 @@ from .library_correo import enviar_correo
 from django.utils.crypto import get_random_string
 from django.conf import settings
 import secrets
-
 
 # Configuración del logger
 logger = logging.getLogger(__name__)
@@ -340,7 +339,7 @@ def register_view(request):
         )
 
         # Enviar correo de activación
-        activation_link = f"http://localhost:8009/es/activate-account?act={activation_hash}"
+        activation_link = f"{settings.URL_PRINCIPAL}/es/activate-account?act={activation_hash}"
         context = {
             'username': username,
             'password': password,
@@ -610,6 +609,21 @@ def my_account(request):
 
     # Obtener el estado de la cuenta
     account_status = get_account_status(account_id)
+    
+    # Obtener los puntos (DP y VP) del usuario desde la tabla `home_api_points`
+    user_points = HomeApiPoints.objects.filter(accountID=account_id).first()
+    dp = user_points.dp if user_points else 0
+    vp = user_points.vp if user_points else 0
+    
+    
+    # Obtener el estado del token de seguridad
+    security_token = SecurityToken.objects.filter(user_id=account_id).first()
+    if security_token:
+        token_status = "Solicitado"
+        token_date = security_token.created_at.strftime('%H:%M:%S %d-%m-%Y')
+    else:
+        token_status = "Sin solicitar"
+        token_date = None
 
     return render(request, 'my-account/my-account.html', {
         'is_logged_in': is_logged_in,
@@ -620,10 +634,15 @@ def my_account(request):
             'last_ip': account_data[4],
             'last_attempt_ip': account_data[5],
             'joindate': formatear_fecha(account_data[6]),
+            
         },
         'account_status': account_status,
         'characters': characters,
         'has_characters': has_characters,
+        'dp': dp,
+        'vp': vp,
+        'token_status': token_status,
+        'token_date': token_date
     })
 
 
@@ -951,24 +970,152 @@ def send_security_token_email(email, username, token, ip_address):
         context=context
     )
 
-
-
 def change_email_view(request):
-    """
-    Vista para la página de 'Cambiar Correo'.
-    Simplemente renderiza un template con información relevante.
-    """
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener el usuario desde la base de datos de `acore_auth`
+    with connections['acore_auth'].cursor() as cursor:
+        cursor.execute("""
+            SELECT id, email, reg_mail
+            FROM account 
+            WHERE username = %s
+        """, [username])
+        account_data = cursor.fetchone()
+
+    if not account_data:
+        return redirect('login')
+
+    user_id, current_email, reg_email = account_data
+    security_token = SecurityToken.objects.filter(user_id=user_id).first()
+
+    if request.method == 'POST':
+        print("Datos recibidos:", request.POST)
+
+        current_password = request.POST.get('cur-password', '').strip()
+        current_email_input = request.POST.get('cur-email', '').strip()
+        new_email = request.POST.get('new-email', '').strip()
+        conf_new_email = request.POST.get('conf-new-email', '').strip()
+        token = request.POST.get('security-token', '').strip()
+
+        # Validar los campos
+        if not all([current_password, current_email_input, new_email, conf_new_email, token]):
+            return JsonResponse({'success': False, 'message': 'Por favor, complete todos los campos.'})
+
+        if current_email_input != current_email:
+            return JsonResponse({'success': False, 'message': 'El correo actual no es correcto.'})
+
+        if new_email != conf_new_email:
+            return JsonResponse({'success': False, 'message': 'Los correos no coinciden.'})
+
+        if not re.match(r'^[a-zA-Z0-9._%+-]+@gmail\.com$', new_email):
+            return JsonResponse({'success': False, 'message': 'El nuevo correo no es válido.'})
+
+        if not security_token or security_token.token != token:
+            return JsonResponse({'success': False, 'message': 'Token de seguridad incorrecto.'})
+
+        if not authenticate(username, current_password):
+            return JsonResponse({'success': False, 'message': 'Contraseña incorrecta.'})
+
+        # Generar hashes
+        old_email_hash = secrets.token_urlsafe(16)
+        new_email_hash = secrets.token_urlsafe(16)
+
+        # Guardar en `AccountActivation`
+        AccountActivation.objects.create(
+            username=username,
+            email=new_email,
+            old_email=current_email,
+            password='',
+            salt=b'',
+            verifier=b'',
+            recruiter_id=user_id,
+            hash=new_email_hash,
+            old_email_hash=old_email_hash
+        )
+
+        # Enviar confirmación al correo actual
+        confirm_old_email_link = f"{settings.URL_PRINCIPAL}/es/confirm-old-email?hash={old_email_hash}"
+        context_old_email = {
+            'username': username,
+            'confirm_link': confirm_old_email_link,
+            'NOMBRE_SERVIDOR': settings.NOMBRE_SERVIDOR
+        }
+        enviar_correo(
+            subject=f'Confirme el cambio de correo para {username}',
+            to_email=current_email,
+            template='emails/confirm_old_email.html',
+            context=context_old_email
+        )
+
+        return JsonResponse({'success': True, 'message': 'Se ha enviado un correo de confirmación al correo actual.'})
+
     return render(request, 'account/change_email.html')
-    
+
+
+def confirm_old_email_view(request):
+    hash = request.GET.get('hash')
+    activation = AccountActivation.objects.filter(old_email_hash=hash).first()
+
+    if not activation:
+        return HttpResponse('Enlace no válido o expirado.', status=400)
+
+    # Enviar correo al nuevo correo para confirmar el cambio
+    activation_link = f"{settings.URL_PRINCIPAL}/es/confirm-new-email?hash={activation.hash}"
+    context_new_email = {
+        'username': activation.username,
+        'activation_link': activation_link,
+        'NOMBRE_SERVIDOR': settings.NOMBRE_SERVIDOR
+    }
+    enviar_correo(
+        subject=f'Confirme su nuevo correo para {activation.username}',
+        to_email=activation.email,
+        template='emails/confirm_new_email.html',
+        context=context_new_email
+    )
+
+    return HttpResponse('Correo confirmado. Se ha enviado un enlace al nuevo correo.')
+
+
+def confirm_new_email_view(request):
+    hash = request.GET.get('hash')
+    activation = AccountActivation.objects.filter(hash=hash).first()
+
+    if not activation:
+        return HttpResponse('Enlace no válido o expirado.', status=400)
+
+    # Actualizar el correo en la base de datos
+    with connections['acore_auth'].cursor() as cursor:
+        cursor.execute("""
+            UPDATE account 
+            SET email = %s, reg_mail = %s 
+            WHERE username = %s
+        """, [activation.email, activation.email, activation.username])
+
+    # Enviar notificación al correo anterior
+    context_old_email = {
+        'username': activation.username,
+        'new_email': activation.email,
+        'NOMBRE_SERVIDOR': settings.NOMBRE_SERVIDOR
+    }
+    enviar_correo(
+        subject=f'Su correo ha sido cambiado en {settings.NOMBRE_SERVIDOR}',
+        to_email=activation.old_email,
+        template='emails/old_email_notification.html',
+        context=context_old_email
+    )
+
+    return HttpResponse('El cambio de correo ha sido confirmado y completado con éxito.')
+
+
+   
 def promo_code_view(request):
     return render(request, 'account/promo_code.html')
 
 def transfer_d_points_view(request):
     # Renderizar la plantilla para la transferencia de puntos
     return render(request, 'account/transfer_d_points.html')    
-
-
-from .models import GuildRenameSettings
 
 def rename_guild_view(request):
     # Verificar si el usuario está autenticado mediante la sesión
@@ -1037,12 +1184,60 @@ def rename_guild_view(request):
         'rename_cost': rename_cost
     })
 
-  
 def vote_points_view(request):
-    """
-    Vista para la página de puntos de votación.
-    """
-    return render(request, 'account/vote_points.html')
+    # Verificar si el usuario tiene un `username` en la sesión
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener el `account_id` basado en el `username`
+    with connections['acore_auth'].cursor() as cursor:
+        cursor.execute("SELECT id FROM account WHERE username = %s", [username])
+        account_data = cursor.fetchone()
+    
+    if not account_data:
+        return JsonResponse({'success': False, 'message': 'Cuenta no encontrada.'})
+
+    account_id = account_data[0]
+
+    if request.method == 'POST':
+        vote_url = request.POST.get('vote').strip()
+
+        site = VoteSite.objects.filter(url=vote_url).first()
+        if not site:
+            return JsonResponse({'success': False, 'message': 'Sitio de votación no encontrado.'})
+
+        # Verificar si ya ha votado en las últimas 12 horas y 30 minutos
+        last_vote = VoteLog.objects.filter(account_id=account_id, vote_site=site).order_by('-created_at').first()
+        now = timezone.now()
+        if last_vote:
+            time_diff = now - last_vote.created_at
+            cooldown_period = timedelta(hours=12, minutes=30)
+            
+            if time_diff < cooldown_period:
+                remaining_time = cooldown_period - time_diff
+                hours, remainder = divmod(remaining_time.seconds, 3600)
+                minutes, _ = divmod(remainder, 60)
+                return JsonResponse({
+                    'success': False,
+                    'message': f'<span class="red-form-response">Tienes que esperar {hours} horas y {minutes} minutos antes de volver a votar.</span>'
+                })
+
+        # Acreditar puntos al usuario y registrar el voto
+        user_points = HomeApiPoints.objects.filter(accountID=account_id).first()
+        if user_points:
+            user_points.vp += site.points
+            user_points.save()
+        else:
+            HomeApiPoints.objects.create(accountID=account_id, vp=site.points, dp=0)
+
+        # Registrar el voto
+        VoteLog.objects.create(account_id=account_id, vote_site=site, last_vote_time=now)
+
+        return JsonResponse({'success': True, 'message': f'Has votado en {site.name}. Se han acreditado {site.points} PV.'})
+
+    vote_sites = VoteSite.objects.all()
+    return render(request, 'account/vote_points.html', {'vote_sites': vote_sites})
 
 def d_points_view(request):
     """

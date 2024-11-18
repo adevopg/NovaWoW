@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Notificación de Cambio de Correo</title>
+</head>
+<body>
+    <table style="width: 100%; max-width: 600px; margin: 0 auto; border: 1px solid #dddddd; padding: 20px;">
+        <tr>
+            <td style="text-align: center;">
+                <h2>Cambio de Correo Exitoso</h2>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Hola {{ username }},</p>
+                <p>Te notificamos que tu correo electrónico en <strong>{{ NOMBRE_SERVIDOR }}</strong> ha sido cambiado exitosamente al siguiente correo:</p>
+                <p style="text-align: center;">
+                    <strong>{{ new_email }}</strong>
+                </p>
+                <p>Si no realizaste este cambio, por favor contacta inmediatamente con soporte.</p>
+                <p>Atentamente,<br>El equipo de {{ NOMBRE_SERVIDOR }}</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

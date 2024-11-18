@@ -52,122 +52,32 @@
                             <button class="refresh-button" onclick="doRefresh();"><img class="refresh-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/refresh.webp" title="Refrescar" alt="Refrescar"></button>
                             <p><span>Nota:</span> Gtop100 puede demorar unos minutos en acreditar el voto.</p>
                             <br>
-                            <div class="inline-div">
-                                <table>
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-vote-sites/gtop100.jpg" title="Gtop100" alt="Gtop100"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Gtop100</td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted">PV: <span>1</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <form action="" method="POST" id="uw-vote-form" accept-charset="utf-8">
-                                                <button type="submit" name="vote" class="vote-button" value="https://gtop100.com/topsites/World-of-Warcraft/sitedetails/{{ NOMBRE_SERVIDOR }}-94649?vote=1&amp;pingUsername=91402">Votar</button>
-                                            </form>
-                                        </td>
-                                    </tr><tr>
-                                </tr></tbody></table>
-                            </div>
-                            <div class="inline-div">
-                                <table>
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-vote-sites/topg.webp" title="TopG" alt="TopG"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>TopG</td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted">PV: <span>1</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <form action="" method="POST" id="uw-vote-form" accept-charset="utf-8">
-                                                <button type="submit" name="vote" class="vote-button" value="https://topg.org/wow-private-servers/in-496618-91402">Votar</button>
-                                            </form>
-                                        </td>
-                                    </tr><tr>
-                                </tr></tbody></table>
-                            </div>
-                            <div class="inline-div">
-                                <table>
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-vote-sites/top100arena.jpg" title="Top100arena" alt="Top100arena"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Top100arena</td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted">PV: <span>1</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <form action="" method="POST" id="uw-vote-form" accept-charset="utf-8">
-                                                <button type="submit" name="vote" class="vote-button" value="http://www.top100arena.com/in.asp?id=94147&amp;incentive=91402">Votar</button>
-                                            </form>
-                                        </td>
-                                    </tr><tr>
-                                </tr></tbody></table>
-                            </div>
-                            <div class="inline-div">
-                                <table>
-                                    <tbody><tr>
-                                        <td><img class="img-med-icon" src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-vote-sites/arenatop100.webp" title="Arena-Top100" alt="Arena-Top100"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Arena-Top100</td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted">PV: <span>1</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="lefted"></td>
-                                    </tr>
-                                    <tr>
-                                        <td><hr></td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <form action="" method="POST" id="uw-vote-form" accept-charset="utf-8">
-                                                <button type="submit" name="vote" class="vote-button" value="https://www.arena-top100.com/index.php?a=in&amp;u={{ NOMBRE_SERVIDOR }}&amp;id=91402">Votar</button>
-                                            </form>
-                                        </td>
-                                    </tr><tr>
-                                </tr></tbody></table>
-                            </div>
+                            <div id="vote-panel">
+   <div id="vote-panel">
+   {% for site in vote_sites %}
+<div class="inline-div">
+    <table>
+        <tr>
+            <td><img class="img-med-icon" src="{{ site.image_url }}" title="{{ site.name }}" alt="{{ site.name }}"></td>
+        </tr>
+        <tr>
+            <td>{{ site.name }}</td>
+        </tr>
+        <tr>
+            <td>PV: <span>{{ site.points }}</span></td>
+        </tr>
+        <tr>
+            <td>
+                  <form method="POST" class="nw-vote-form" accept-charset="utf-8">
+                    {% csrf_token %}
+                    <button type="button" class="vote-button" data-url="{{ site.url }}" data-remaining-time="{{ site.remaining_time }}">Votar</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+{% endfor %}
+
                             <hr>
                             <div class="alert-message" id="voteResponse"></div>
                             <br>

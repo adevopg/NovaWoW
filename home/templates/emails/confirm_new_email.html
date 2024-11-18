@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Activación del Nuevo Correo</title>
+</head>
+<body>
+    <table style="width: 100%; max-width: 600px; margin: 0 auto; border: 1px solid #dddddd; padding: 20px;">
+        <tr>
+            <td style="text-align: center;">
+                <h2>Activación de Nuevo Correo</h2>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>Hola {{ username }},</p>
+                <p>Tu solicitud para cambiar el correo electrónico en <strong>{{ NOMBRE_SERVIDOR }}</strong> ha sido recibida.</p>
+                <p>Por favor, haz clic en el siguiente enlace para confirmar tu nuevo correo:</p>
+                <p style="text-align: center;">
+                    <a href="{{ activation_link }}" style="display: inline-block; padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px;">Activar nuevo correo</a>
+                </p>
+                <p>Si no realizaste esta solicitud, por favor contacta con soporte.</p>
+                <p>Atentamente,<br>El equipo de {{ NOMBRE_SERVIDOR }}</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -106,11 +106,13 @@ class ClaimedReward(models.Model):
 class AccountActivation(models.Model):
     username = models.CharField(max_length=17)
     email = models.EmailField()
+    old_email = models.EmailField(null=True, blank=True)
     password = models.CharField(max_length=64)  # Hash de la contraseña
     salt = models.BinaryField(max_length=32)
     verifier = models.BinaryField(max_length=32)
     recruiter_id = models.IntegerField(null=True, blank=True)
     hash = models.CharField(max_length=32, unique=True)
+    old_email_hash = models.CharField(max_length=32, null=True, blank=True)
     created_at = models.DateTimeField(default=timezone.now)
     
     def is_expired(self):
@@ -118,14 +120,14 @@ class AccountActivation(models.Model):
 
 
 class SecurityToken(models.Model):
-    user_id = models.IntegerField()  # Referencia al ID del usuario en `acore_auth`
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     token = models.CharField(max_length=6)
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()
     ip_address = models.GenericIPAddressField()
 
     def __str__(self):
-        return f"Token for user_id {self.user_id}"
+        return f"Token for {self.user.username}"
         
         
 class GuildRenameSettings(models.Model):
@@ -136,5 +138,40 @@ class GuildRenameSettings(models.Model):
 
     class Meta:
         verbose_name = "Configuración de Renombrar Hermandad"
-        verbose_name_plural = "Configuraciones de Renombrar Hermandad"        
+        verbose_name_plural = "Configuraciones de Renombrar Hermandad"
+
+
+class VoteSite(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    url = models.URLField(max_length=200, help_text="URL del sitio de votación")
+    image_url = models.URLField(max_length=300, help_text="URL completa de la imagen")
+    points = models.IntegerField(default=1, help_text="Puntos otorgados por votar")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+class VoteLog(models.Model):
+    account_id = models.IntegerField()
+    vote_site = models.ForeignKey('VoteSite', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_vote_time = models.DateTimeField(null=True, blank=True)
+    processed = models.BooleanField(default=False)
+    processed_at = models.DateTimeField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Voto para {self.vote_site.name} por cuenta {self.account_id}"
+
+
+class HomeApiPoints(models.Model):
+    accountID = models.IntegerField(unique=True)
+    vp = models.IntegerField(default=0)
+    dp = models.IntegerField(default=0)
+    
+    class Meta:
+        db_table = 'home_api_points'
+
+    def __str__(self):
+        return f"Cuenta {self.accountID} - PV: {self.vp}, DP: {self.dp}"        
         

@@ -14,10 +14,42 @@
                             <div class="centered">
                                 <br>
                                 <br>
-                                <span class="red-form-response">El cambio de correo ya no es una herramienta disponible por autogestión.</span>
-                                <hr>
-                                <div class="alert-message" id="change-email-response"></div>
-                                <br>
+<form id="nw-change-email-form" method="POST" accept-charset="utf-8">
+    {% csrf_token %}
+    <table class="middle-center-table">
+        <tr>
+            <td><input type="password" maxlength="16" name="cur-password" id="cur-password" placeholder="Contraseña actual" required></td>
+        </tr>
+        <tr>
+            <td><input type="email" name="cur-email" id="cur-email" placeholder="Correo actual" required></td>
+        </tr>
+        <tr>
+            <td><input type="email" name="new-email" id="new-email" placeholder="Nuevo correo" required></td>
+        </tr>
+        <tr>
+            <td><input type="email" name="conf-new-email" id="conf-new-email" placeholder="Confirmar nuevo correo" required></td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" maxlength="6" name="security-token" id="security-token" placeholder="Token de seguridad" required>
+                <span class="far fa-eye toggle-token"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button type="submit" class="change-email-button">Cambiar Correo</button>
+            </td>
+        </tr>
+    </table>
+    <hr>
+    <div class="alert-message" id="change-email-response"></div>
+</form>
+
+
+
+
+						</hr>
+						<br>
                             </div>
                         </div>
                     </div>

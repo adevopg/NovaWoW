@@ -3,7 +3,7 @@ from django.contrib import admin
 from django import forms
 from .models import (
     Noticia, ClienteCategoria, SistemaOperativo, ServerSelection,
-    RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, GuildRenameSettings
+    RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, GuildRenameSettings, VoteSite
 )
 from django.db import connections
 import logging
@@ -139,7 +139,15 @@ class GuildRenameSettingsAdmin(admin.ModelAdmin):
         (None, {
             'fields': ('cost',)
         }),
-    )   
+    )
+
+
+@admin.register(VoteSite)
+class VoteSiteAdmin(admin.ModelAdmin):
+    list_display = ('name', 'points', 'url', 'image_url')
+    search_fields = ('name',)
+    list_editable = ('points',)
+    list_display_links = ('name',)    
 
 
 # Registro de modelos en el admin
