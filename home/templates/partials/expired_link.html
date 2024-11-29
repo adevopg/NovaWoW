@@ -1,0 +1,27 @@
+<div class="main-page">
+    <div class="middle-content">
+        <div class="body-content">
+            <div class="title-content">
+                <h1>Enlace Expirado</h1>
+            </div>
+            <div class="box-content">
+                <div class="title-box-content">
+                    <h2>Enlace Expirado</h2>
+                    <a class="back-to-account" href="{% url 'my-account' %}">Regresar a mi cuenta</a>
+                    <a class="back-to-account-responsive" href="{% url 'my-account' %}">Regresar</a>
+                </div>
+                <div class="body-box-content justified">
+                    <div class="centered">
+                        <br>
+                        <div class="alert-message">
+                            <span class="red-form-response">Lo sentimos, el enlace que ha utilizado ha expirado o no es válido.</span>
+                        </div>
+                        <br>
+						<span>No hay códigos de promoción disponibles</span>
+                        <a class="back-to-account" href="{% url 'expired-link' %}">Solicitar nuevo cambio de correo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

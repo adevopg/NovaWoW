@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación de Correo Anterior</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="main-container">
+        <h1>Confirmación de Correo Anterior Exitosa</h1>
+        <p>Has confirmado tu correo anterior. Se ha enviado un enlace al nuevo correo para completar el cambio.</p>
+        <a href="{% url 'my-account' %}">Regresar a Mi Cuenta</a>
+    </div>
+</body>
+</html>

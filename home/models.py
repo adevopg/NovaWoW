@@ -16,6 +16,10 @@ class Noticia(models.Model):
 
     def __str__(self):
         return self.titulo
+        
+class UnstuckHistory(models.Model):
+    character_name = models.CharField(max_length=50)
+    used_at = models.DateTimeField()        
 
 
 class ClienteCategoria(models.Model):

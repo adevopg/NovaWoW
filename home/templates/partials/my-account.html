@@ -207,6 +207,201 @@
                                 </tbody></table>
                                 <br>
                             </div>
+							{% for character in characters %}
+							<div id="character-settings">OPCIONES DE PERSONAJE <i class="fas fa-arrow-down fa-arrow-down-character rotate2"></i>
+							
+							
+							</div>
+							<div id="character-settings-panel" style="display: none;">
+                                <table class="max-center-table fixed-layout-table">
+                                    <tbody><tr>
+                                        <td>
+                                            <a href="unstuck-character">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon unstuck-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Desbloquear personaje</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Para personajes atascados</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="revive-character">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon revive-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Revivir personaje</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">¿Nadie más te quiere revivir?</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="rename-character">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon rename-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Renombrar personaje</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Adquiere un nombre diferente</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="customize-character">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon customize-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Personalizar personaje</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Un cambio de look para renovarse</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="change-race-character">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon change-race-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Cambiar de raza</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Elije una nueva raza acorde a tu clase</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="change-faction-character">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon change-faction-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Cambiar de facción</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Vive nuevas aventuras en la facción opuesta</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="level-up-character">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon level-up-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Subir a nivel 80</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Para los que no quieren levear</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="gold-character">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon gold-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Adquirir oro</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Consigue más oro para tu personaje</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="quest-character">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon quest-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Rastreador de misiones</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Ayuda con cadenas de misiones importantes</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="transfer-character">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon tranfer-char-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Transferir personaje</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Mueve tus personajes a otra cuenta</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="restore-character">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon restore-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Recuperar personaje</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Restaura un personaje borrado</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                         <td>
+                                            <a href="restore-items">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon prox-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Recuperar ítems</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Restaura objetos borrados</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="store-bennu">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon store-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Tienda</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Adquiere objetos de todo tipo</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="send-gift">
+                                                <div class="tool-button">
+                                                    <div class="acc-icon promo-icon"></div>
+                                                    <div class="tool-button-div">
+                                                        <span class="first-brown shadow">Enviar regalo</span>
+                                                        <br>
+                                                        <span class="second-brown shadow">Envía regalos a tus amigos</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody></table>
+                                <br>
+								{% endfor %}
+                            </div>
+							
+						
                             <div id="account-history">HISTORIALES <i class="fas fa-arrow-down fa-arrow-down-history rotate2"></i></div>
                             <div id="account-history-panel">
                                 <table class="max-center-table fixed-layout-table">

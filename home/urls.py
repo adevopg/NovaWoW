@@ -26,6 +26,7 @@ urlpatterns = [
     path('change-email/', views.change_email_view, name='change-email'),
     path('confirm-old-email/', views.confirm_old_email_view, name='confirm-old-email'),
     path('confirm-new-email/', views.confirm_new_email_view, name='confirm-new-email'),
+    path('expired-link/', views.expired_link_view, name='expired-link'),
     path('promo-code/', views.promo_code_view, name='promo_code'),
     path('transfer-d-points/', views.transfer_d_points_view, name='transfer_d_points'),
     path('rename-guild/', views.rename_guild_view, name='rename-guild'),
@@ -39,6 +40,7 @@ urlpatterns = [
     path('activate-account', views.activate_account_view, name='activate_account'),
     path('help', views.help_view, name='help'),
     path('novawow-players', views.novawow_players_view, name='novawow_players'),
+    path('unstuck-character/', views.unstuck_character_view, name='unstuck-character'),
     
 ]
 

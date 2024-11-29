@@ -1,0 +1,43 @@
+<div class="main-page">
+    <div class="middle-content">
+        <div class="body-content">
+            <div class="title-content">
+                <h1>Desbloquear personaje</h1>
+            </div>
+            <div class="box-content">
+                <div class="title-box-content">
+                    <h2>Información</h2>
+                    <a class="back-to-account" href="{% url 'my-account' %}">Regresar a mi cuenta</a>
+                    <a class="back-to-account-responsive" href="{% url 'my-account' %}">Regresar</a>
+                </div>
+                <div class="body-box-content justified">
+                    <p>La herramienta <span>Desbloquear personaje</span> te permite desbloquear un personaje que esté atascado y lo mueve a la ubicación de su Piedra Hogar.</p>
+                    <p>Usa esta opción cuando tu personaje se encuentre atrapado y ninguna otra opción te sirva.</p>
+                    <fieldset>
+                        <legend>NOTA</legend>
+                        <div class="separate2">
+                            <p>Se requiere que el personaje esté desconectado.</p>
+                            <p>Se puede repetir la acción en un mismo personaje cada 12 horas.</p>
+                        </div>
+                    </fieldset>
+                    <div class="centered">
+                        <p>Escoge el personaje que quieres desbloquear</p>
+                        <form id="uw-unstuck-form" method="POST" accept-charset="utf-8">
+                            {% csrf_token %}
+                            <select name="character" required>
+                                <option disabled selected value="">Selecciona un personaje</option>
+                                {% for character in characters %}
+                                    <option value="{{ character }}">{{ character }}</option>
+                                {% endfor %}
+                            </select>
+                            <br>
+                            <button class="unstuck-button" type="submit" name="unstuck" data-id="Desbloquear">Desbloquear</button>
+                        </form>
+                        <hr>
+                        <div class="alert-message" id="unstuck-response"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

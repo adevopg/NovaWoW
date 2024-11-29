@@ -1,34 +1,45 @@
 $(document).ready(function() {
-    $('#nw-change-email-form').on('submit', function(e) {
-        e.preventDefault(); // Evitar el envío por defecto del formulario
+    function handleResponse(response, button, originalText) {
+        $("#change-email-response").html(response.message).hide().slideDown();
+
+        if (response.redirect_url) {
+            setTimeout(function() {
+                window.location.href = response.redirect_url;
+            }, 2000);
+            return;
+        }
+
+        if (response.success) {
+            button.html("Proceso completado");
+        } else {
+            setTimeout(function() {
+                $("#change-email-response").slideUp(function() {
+                    $("#change-email-response").empty();
+                    button.html(originalText);
+                    button.prop("disabled", false);
+                });
+            }, 5000);
+        }
+    }
+
+    // Manejar los enlaces de confirmación
+    $('.confirm-link').on('click', function(e) {
+        e.preventDefault();
         $("#change-email-response").empty();
 
-        var form = $(this);
-        var button = $('.change-email-button');
+        var button = $(this);
+        var url = button.attr('href');
         var originalText = button.html();
 
-        button.html("Cambiando correo...");
+        button.html("Verificando...");
         button.prop("disabled", true);
 
         $.ajax({
-            type: 'POST',
-            url: form.attr('action'),
-            data: form.serialize(), // Serializar los datos correctamente
+            type: 'GET',
+            url: url,
             dataType: 'json',
             success: function(response) {
-                $("#change-email-response").html(response.message).hide().slideDown();
-
-                if (response.success) {
-                    button.html("Correo cambiado");
-                } else {
-                    setTimeout(function() {
-                        $("#change-email-response").slideUp(function() {
-                            $("#change-email-response").empty();
-                            button.html(originalText);
-                            button.prop("disabled", false);
-                        });
-                    }, 5000);
-                }
+                handleResponse(response, button, originalText);
             },
             error: function(xhr, status, error) {
                 console.error("Error:", error);

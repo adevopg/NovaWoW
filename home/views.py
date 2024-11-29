@@ -5,12 +5,13 @@ import binascii
 import os
 import re
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.http import HttpResponse, JsonResponse
 from django.db import connections
 from django.contrib import messages
 from django.contrib.auth import logout
 from django import forms
-from .models import Noticia, ClienteCategoria, ServerSelection, RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, ClaimedReward, AccountActivation, SecurityToken, GuildRenameSettings, VoteSite, VoteLog, HomeApiPoints
+from .models import Noticia, ClienteCategoria, ServerSelection, RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, ClaimedReward, AccountActivation, SecurityToken, GuildRenameSettings, VoteSite, VoteLog, HomeApiPoints, UnstuckHistory
 from django.views.decorators.csrf import csrf_exempt
 import logging
 from datetime import datetime, timedelta
@@ -1001,22 +1002,22 @@ def change_email_view(request):
 
         # Validar los campos
         if not all([current_password, current_email_input, new_email, conf_new_email, token]):
-            return JsonResponse({'success': False, 'message': 'Por favor, complete todos los campos.'})
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Por favor, complete todos los campos.</span>'})
 
         if current_email_input != current_email:
-            return JsonResponse({'success': False, 'message': 'El correo actual no es correcto.'})
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">El correo actual no es correcto.</span>'})
 
         if new_email != conf_new_email:
-            return JsonResponse({'success': False, 'message': 'Los correos no coinciden.'})
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Los correos no coinciden.</span>'})
 
         if not re.match(r'^[a-zA-Z0-9._%+-]+@gmail\.com$', new_email):
-            return JsonResponse({'success': False, 'message': 'El nuevo correo no es válido.'})
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">El nuevo correo no es válido.</span>'})
 
         if not security_token or security_token.token != token:
-            return JsonResponse({'success': False, 'message': 'Token de seguridad incorrecto.'})
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Token de seguridad incorrecto.</span>'})
 
         if not authenticate(username, current_password):
-            return JsonResponse({'success': False, 'message': 'Contraseña incorrecta.'})
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Contraseña incorrecta.</span>'})
 
         # Generar hashes
         old_email_hash = secrets.token_urlsafe(16)
@@ -1049,7 +1050,7 @@ def change_email_view(request):
             context=context_old_email
         )
 
-        return JsonResponse({'success': True, 'message': 'Se ha enviado un correo de confirmación al correo actual.'})
+        return JsonResponse({'success': True, 'message': '<span class="ok-form-response">Se ha enviado un correo de confirmación al correo actual.</span>'})
 
     return render(request, 'account/change_email.html')
 
@@ -1059,7 +1060,11 @@ def confirm_old_email_view(request):
     activation = AccountActivation.objects.filter(old_email_hash=hash, is_used=False).first()
 
     if not activation or activation.is_expired():
-        return HttpResponse('Enlace no válido o expirado.', status=400)
+        return JsonResponse({
+            'success': False,
+            'message': '<span class="red-form-response">Enlace no válido o expirado.</span>',
+            'redirect_url': reverse('expired-link')
+        })
 
     # Marcar solo el old_email_hash como usado
     activation.is_used = True
@@ -1079,15 +1084,18 @@ def confirm_old_email_view(request):
         context=context_new_email
     )
 
-    return HttpResponse('Correo confirmado. Se ha enviado un enlace al nuevo correo.')
-
+    return JsonResponse({'success': True, 'message': '<span class="ok-form-response">Correo confirmado. Se ha enviado un enlace al nuevo correo.</span>'})
 
 def confirm_new_email_view(request):
     hash = request.GET.get('hash')
     activation = AccountActivation.objects.filter(hash=hash, is_new_email_used=False).first()
 
     if not activation or activation.is_expired():
-        return HttpResponse('Enlace no válido o expirado.', status=400)
+        return JsonResponse({
+            'success': False,
+            'message': '<span class="red-form-response">Enlace no válido o expirado.</span>',
+            'redirect_url': reverse('expired-link')
+        })
 
     # Marcar solo el new_email_hash como usado
     activation.is_new_email_used = True
@@ -1114,11 +1122,72 @@ def confirm_new_email_view(request):
         context=context_old_email
     )
 
-    return HttpResponse('El cambio de correo ha sido confirmado y completado con éxito.')
+    return JsonResponse({'success': True, 'message': '<span class="ok-form-response">El cambio de correo ha sido confirmado y completado con éxito.</span>'})
 
-   
+def expired_link_view(request):
+    return render(request, 'account/expired_link.html')
+
 def promo_code_view(request):
     return render(request, 'account/promo_code.html')
+    
+from django.utils.timezone import now
+from datetime import timedelta
+
+def unstuck_character_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener personajes del usuario desde la base de datos `acore_characters`
+    with connections['acore_characters'].cursor() as cursor:
+        cursor.execute("""
+            SELECT name, online
+            FROM characters
+            WHERE account = (
+                SELECT id 
+                FROM acore_auth.account 
+                WHERE username = %s
+            )
+        """, [username])
+        characters_data = cursor.fetchall()
+        characters = {row[0]: row[1] for row in characters_data}  # Diccionario con nombre y estado de conexión
+
+    if request.method == 'POST':
+        character_name = request.POST.get('character')
+
+        # Validar si el personaje fue seleccionado
+        if not character_name:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Por favor, seleccione un personaje.</span>'})
+
+        # Verificar si el personaje pertenece al usuario
+        if character_name not in characters:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">No tienes permiso para desbloquear este personaje.</span>'})
+
+        # Verificar si el personaje está desconectado
+        if characters[character_name] == 1:  # Si está conectado
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">El personaje debe estar desconectado para ser desbloqueado.</span>'})
+
+        # Verificar el historial de uso del comando
+        last_unstuck = UnstuckHistory.objects.filter(character_name=character_name).order_by('-used_at').first()
+        if last_unstuck and last_unstuck.used_at > now() - timedelta(hours=12):
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">El personaje solo puede desbloquearse una vez cada 12 horas.</span>'})
+
+        # Ejecutar el comando SOAP
+        command = f".unstuck {character_name} startzone"
+        response = execute_soap_command(command)
+
+        if response is None:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Error de comunicación con el servidor. Intente nuevamente más tarde.</span>'})
+
+        # Analizar la respuesta
+        if f"You are summoning {character_name} (offline)" in response:
+            # Registrar el uso del comando
+            UnstuckHistory.objects.create(character_name=character_name, used_at=now())
+            return JsonResponse({'success': True, 'message': f'<span class="ok-form-response">El personaje {character_name} ha sido desbloqueado con éxito.</span>'})
+        else:
+            return JsonResponse({'success': False, 'message': f'<span class="red-form-response">Error: {response}</span>'})
+
+    return render(request, 'account/unstuck_character.html', {'characters': characters.keys()})
 
 def transfer_d_points_view(request):
     # Renderizar la plantilla para la transferencia de puntos
