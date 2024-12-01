@@ -1,6 +1,6 @@
 $(function() {
     // Manejar el envío del formulario de creación de cuenta
-    $('#uw-create-form').on('submit', function(e) {
+    $('#nw-create-form').on('submit', function(e) {
         e.preventDefault();
         const data = $(this).serialize();
         const createResponse = $("#create-response");

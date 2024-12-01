@@ -19,7 +19,90 @@ class Noticia(models.Model):
         
 class UnstuckHistory(models.Model):
     character_name = models.CharField(max_length=50)
-    used_at = models.DateTimeField()        
+    used_at = models.DateTimeField()
+
+class ReviveHistory(models.Model):
+    character_name = models.CharField(max_length=50)
+    used_at = models.DateTimeField()
+
+    def __str__(self):
+        return f"{self.character_name} - {self.used_at}"
+        
+class ChangeFactionPrice(models.Model):
+    price = models.DecimalField(max_digits=6, decimal_places=2, default=10.00)
+
+    def __str__(self):
+        return f"Precio para cambiar facción: {self.price} EUR"
+
+
+class LevelUpPrice(models.Model):
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=10.00)
+
+    def __str__(self):
+        return f"Subir a nivel 80: {self.price} EUR"
+
+
+class GoldPrice(models.Model):
+    gold_amount = models.IntegerField()  # Cantidad de oro
+    price = models.DecimalField(max_digits=10, decimal_places=2)  # Precio en EUR
+
+    def __str__(self):
+        return f"{self.gold_amount} oro - {self.price} EUR"
+
+
+
+class TransferPrice(models.Model):
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return f"Precio de transferencia: {self.price} EUR"
+
+
+class StoreCategory(models.Model):
+    name = models.CharField(max_length=100)
+    parent_category = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+class StoreItem(models.Model):
+    name = models.CharField(max_length=200)
+    item_id = models.IntegerField()
+    category = models.ForeignKey(StoreCategory, on_delete=models.CASCADE)
+    image_url = models.URLField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)  # Precio en euros
+
+    def __str__(self):
+        return self.name
+
+class Cart(models.Model):
+    username = models.CharField(max_length=150)  # Para almacenar el nombre de usuario
+    item = models.ForeignKey(StoreItem, on_delete=models.CASCADE)
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    def total_price(self):
+        return self.item.price  
+
+
+class RenamePrice(models.Model):
+    price = models.DecimalField(max_digits=5, decimal_places=2, default=2.00)
+
+    def __str__(self):
+        return f"{self.price} EUR"
+
+
+class CustomizePrice(models.Model):
+    price = models.DecimalField(max_digits=5, decimal_places=2, default=1.00)  
+
+    def __str__(self):
+        return f"{self.price} EUR"
+
+
+class ChangeRacePrice(models.Model):
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return f"Cambiar raza: {self.price} EUR"       
 
 
 class ClienteCategoria(models.Model):

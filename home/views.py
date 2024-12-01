@@ -11,7 +11,8 @@ from django.db import connections
 from django.contrib import messages
 from django.contrib.auth import logout
 from django import forms
-from .models import Noticia, ClienteCategoria, ServerSelection, RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, ClaimedReward, AccountActivation, SecurityToken, GuildRenameSettings, VoteSite, VoteLog, HomeApiPoints, UnstuckHistory
+from .pagos_stripe import create_checkout_session
+from .models import Noticia, ClienteCategoria, ServerSelection, RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, ClaimedReward, AccountActivation, SecurityToken, GuildRenameSettings, VoteSite, VoteLog, HomeApiPoints, UnstuckHistory, ReviveHistory, RenamePrice, CustomizePrice, ChangeRacePrice,  ChangeFactionPrice, LevelUpPrice, GoldPrice, TransferPrice, StoreCategory, StoreItem, Cart
 from django.views.decorators.csrf import csrf_exempt
 import logging
 from datetime import datetime, timedelta
@@ -586,7 +587,7 @@ def my_account(request):
     
     # Si la sesión no tiene el usuario, redirigir al inicio de sesión
     if not username:
-        return redirect('log-in')
+        return redirect('login')
 
     is_logged_in = True  # Si el usuario está en la sesión, asumimos que está conectado
 
@@ -1132,6 +1133,739 @@ def promo_code_view(request):
     
 from django.utils.timezone import now
 from datetime import timedelta
+
+def rename_character_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener personajes del usuario desde la base de datos `acore_characters`
+    with connections['acore_characters'].cursor() as cursor:
+        cursor.execute("""
+            SELECT name
+            FROM characters
+            WHERE account = (
+                SELECT id 
+                FROM acore_auth.account 
+                WHERE username = %s
+            )
+        """, [username])
+        characters = [row[0] for row in cursor.fetchall()]
+
+    # Obtener el precio del renombrado
+    price_obj = RenamePrice.objects.first()
+    price = price_obj.price if price_obj else 2.00
+
+    if request.method == 'POST':
+        character_name = request.POST.get('character')
+
+        # Validar si el personaje fue seleccionado
+        if not character_name:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Por favor, seleccione un personaje.</span>'})
+
+        # Verificar si el personaje pertenece al usuario
+        if character_name not in characters:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">No tienes permiso para renombrar este personaje.</span>'})
+
+        # Crear sesión de pago con Stripe
+        success_url = request.build_absolute_uri(reverse('rename-success'))
+        cancel_url = request.build_absolute_uri(reverse('rename-cancel'))
+        stripe_response = create_checkout_session(price, success_url=success_url, cancel_url=cancel_url)
+
+        if stripe_response["success"]:
+            request.session['rename_character'] = character_name
+            return JsonResponse({
+                'success': True,
+                'session_id': stripe_response["session_id"],
+                'stripe_public_key': settings.STRIPE_PUBLIC_KEY
+            })   
+        else:
+            return JsonResponse({'success': False, 'message': f'<span class="red-form-response">Error al iniciar el pago: {stripe_response["error"]}</span>'})
+
+    return render(request, 'account/rename_character.html', {'characters': characters, 'price': price})
+
+def rename_success_view(request):
+    # Procesar el comando SOAP tras el pago exitoso
+    character_name = request.session.get('rename_character')
+    if not character_name:
+        return redirect('rename-character')
+
+    command = f".char rename {character_name}"
+    response = execute_soap_command(command)
+
+    if response is None or response.strip() == "":
+        message = f"El personaje {character_name} ha sido marcado para renombrar."
+        request.session.pop('rename_character', None)  # Limpiar la sesión
+        return render(request, 'account/rename_success.html', {'message': message})
+    else:
+        return render(request, 'account/rename_success.html', {'message': f"Error: {response}"})
+
+def rename_cancel_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+    return render(request, 'account/rename_cancel.html')
+    
+    
+def customize_character_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener personajes del usuario desde la base de datos `acore_characters`
+    with connections['acore_characters'].cursor() as cursor:
+        cursor.execute("""
+            SELECT name
+            FROM characters
+            WHERE account = (
+                SELECT id 
+                FROM acore_auth.account 
+                WHERE username = %s
+            )
+        """, [username])
+        characters = [row[0] for row in cursor.fetchall()]
+
+    # Obtener el precio de la personalización (si se gestiona desde el admin)
+    price_obj = CustomizePrice.objects.first()
+    price = price_obj.price if price_obj else 1.00
+
+    if request.method == 'POST':
+        character_name = request.POST.get('character')
+
+        # Validar si el personaje fue seleccionado
+        if not character_name:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Por favor, seleccione un personaje.</span>'})
+
+        # Verificar si el personaje pertenece al usuario
+        if character_name not in characters:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">No tienes permiso para personalizar este personaje.</span>'})
+
+        # Crear sesión de pago con Stripe
+        success_url = request.build_absolute_uri(reverse('customize-success'))
+        cancel_url = request.build_absolute_uri(reverse('customize-cancel'))
+        stripe_response = create_checkout_session(price, success_url=success_url, cancel_url=cancel_url)
+
+        if stripe_response["success"]:
+            # Guardar temporalmente el nombre del personaje en la sesión
+            request.session['customize_character'] = character_name
+            return JsonResponse({
+                'success': True,
+                'session_id': stripe_response["session_id"],
+                'stripe_public_key': settings.STRIPE_PUBLIC_KEY
+            })
+        else:
+            return JsonResponse({'success': False, 'message': f'<span class="red-form-response">Error al iniciar el pago: {stripe_response["error"]}</span>'})
+
+    return render(request, 'account/customize_character.html', {'characters': characters, 'price': price})
+
+
+def customize_success_view(request):
+    # Procesar el comando SOAP tras el pago exitoso
+    character_name = request.session.get('customize_character')
+    if not character_name:
+        return redirect('customize-character')
+
+    command = f".char customi {character_name}"
+    response = execute_soap_command(command)
+
+    if response is None or response.strip() == "":
+        message = f"El personaje {character_name} ha sido marcado para personalización."
+        request.session.pop('customize_character', None)  # Limpiar la sesión
+        return render(request, 'account/customize_success.html', {'message': message})
+    else:
+        return render(request, 'account/customize_success.html', {'message': f"Error: {response}"})
+
+
+def customize_cancel_view(request):
+    return render(request, 'account/customize_cancel.html')    
+
+
+def change_race_character_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener personajes del usuario desde la base de datos `acore_characters`
+    with connections['acore_characters'].cursor() as cursor:
+        cursor.execute("""
+            SELECT name
+            FROM characters
+            WHERE account = (
+                SELECT id 
+                FROM acore_auth.account 
+                WHERE username = %s
+            )
+        """, [username])
+        characters = [row[0] for row in cursor.fetchall()]
+
+    # Obtener el precio del cambio de raza
+    price_obj = ChangeRacePrice.objects.first()
+    price = price_obj.price if price_obj else 10.00  # Precio predeterminado si no hay registro
+
+    if request.method == 'POST':
+        character_name = request.POST.get('character')
+
+        # Validar si el personaje fue seleccionado
+        if not character_name:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Por favor, seleccione un personaje.</span>'})
+
+        # Verificar si el personaje pertenece al usuario
+        if character_name not in characters:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">No tienes permiso para cambiar la raza de este personaje.</span>'})
+
+        # Crear sesión de pago con Stripe
+        success_url = request.build_absolute_uri(reverse('change-race-success'))
+        cancel_url = request.build_absolute_uri(reverse('change-race-cancel'))
+        stripe_response = create_checkout_session(price, success_url=success_url, cancel_url=cancel_url)
+
+        if stripe_response["success"]:
+            # Guardar el personaje en la sesión para el cambio
+            request.session['change_race_character'] = character_name
+            return JsonResponse({
+                'success': True,
+                'session_id': stripe_response["session_id"],
+                'stripe_public_key': settings.STRIPE_PUBLIC_KEY
+            })
+        else:
+            return JsonResponse({'success': False, 'message': f'<span class="red-form-response">Error al iniciar el pago: {stripe_response["error"]}</span>'})
+
+    return render(request, 'account/change_race.html', {'characters': characters, 'price': price})
+
+
+def change_race_success_view(request):
+    # Procesar el comando SOAP tras el pago exitoso
+    character_name = request.session.get('change_race_character')
+    if not character_name:
+        return redirect('change-race')
+
+    command = f".char changerace {character_name}"
+    response = execute_soap_command(command)
+
+    if response is None or response.strip() == "":
+        message = f"El personaje {character_name} ha sido marcado para cambio de raza."
+        request.session.pop('change_race_character', None)  # Limpiar la sesión
+        return render(request, 'account/change_race_success.html', {'message': message})
+    else:
+        return render(request, 'account/change_race_success.html', {'message': f"Error: {response}"})
+
+
+def change_race_cancel_view(request):
+    return render(request, 'account/change_race_cancel.html')
+
+
+def change_faction_character_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener personajes del usuario desde la base de datos `acore_characters`
+    with connections['acore_characters'].cursor() as cursor:
+        cursor.execute("""
+            SELECT name
+            FROM characters
+            WHERE account = (
+                SELECT id 
+                FROM acore_auth.account 
+                WHERE username = %s
+            )
+        """, [username])
+        characters = [row[0] for row in cursor.fetchall()]
+
+    # Obtener el precio del cambio de facción
+    price_obj = ChangeFactionPrice.objects.first()
+    price = price_obj.price if price_obj else 10.00
+
+    if request.method == 'POST':
+        character_name = request.POST.get('character')
+
+        # Validar si el personaje fue seleccionado
+        if not character_name:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Por favor, seleccione un personaje.</span>'})
+
+        # Verificar si el personaje pertenece al usuario
+        if character_name not in characters:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">No tienes permiso para cambiar la facción de este personaje.</span>'})
+
+        # Crear sesión de pago con Stripe
+        success_url = request.build_absolute_uri(reverse('change-faction-success'))
+        cancel_url = request.build_absolute_uri(reverse('change-faction-cancel'))
+        stripe_response = create_checkout_session(price, success_url=success_url, cancel_url=cancel_url)
+
+        if stripe_response["success"]:
+            # Guardar el personaje seleccionado en la sesión
+            request.session['change_faction_character'] = character_name
+            return JsonResponse({
+                'success': True,
+                'session_id': stripe_response["session_id"],
+                'stripe_public_key': settings.STRIPE_PUBLIC_KEY
+            })
+        else:
+            return JsonResponse({'success': False, 'message': f'<span class="red-form-response">Error al iniciar el pago: {stripe_response["error"]}</span>'})
+
+    return render(request, 'account/change_faction.html', {'characters': characters, 'price': price})
+
+
+def change_faction_success_view(request):
+    # Procesar el comando SOAP tras el pago exitoso
+    character_name = request.session.get('change_faction_character')
+    if not character_name:
+        return redirect('change-faction-character')
+
+    command = f".char changef {character_name}"
+    response = execute_soap_command(command)
+
+    if response is None or response.strip() == "":
+        message = f"El personaje {character_name} ha cambiado de facción con éxito."
+        request.session.pop('change_faction_character', None)  # Limpiar la sesión
+        return render(request, 'account/change_faction_success.html', {'message': message})
+    else:
+        return render(request, 'account/change_faction_success.html', {'message': f"Error: {response}"})
+
+
+def change_faction_cancel_view(request):
+    return render(request, 'account/change_faction_cancel.html')
+    
+    
+    
+def level_up_character_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener personajes del usuario desde la base de datos `acore_characters`
+    with connections['acore_characters'].cursor() as cursor:
+        cursor.execute("""
+            SELECT name
+            FROM characters
+            WHERE account = (
+                SELECT id 
+                FROM acore_auth.account 
+                WHERE username = %s
+            )
+        """, [username])
+        characters = [row[0] for row in cursor.fetchall()]
+
+    # Obtener el precio de subir a nivel 80
+    price_obj = LevelUpPrice.objects.first()
+    price = price_obj.price if price_obj else 10.00
+
+    if request.method == 'POST':
+        character_name = request.POST.get('character')
+
+        # Validar si el personaje fue seleccionado
+        if not character_name:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Por favor, seleccione un personaje.</span>'})
+
+        # Verificar si el personaje pertenece al usuario
+        if character_name not in characters:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">No tienes permiso para subir de nivel a este personaje.</span>'})
+
+        # Crear sesión de pago con Stripe
+        success_url = request.build_absolute_uri(reverse('level-up-success'))
+        cancel_url = request.build_absolute_uri(reverse('level-up-cancel'))
+        stripe_response = create_checkout_session(price, success_url=success_url, cancel_url=cancel_url)
+
+        if stripe_response["success"]:
+            # Guardar el personaje en la sesión para usarlo después del pago
+            request.session['levelup_character'] = character_name
+            return JsonResponse({
+                'success': True,
+                'session_id': stripe_response["session_id"],
+                'stripe_public_key': settings.STRIPE_PUBLIC_KEY
+            })
+        else:
+            return JsonResponse({'success': False, 'message': f'<span class="red-form-response">Error al iniciar el pago: {stripe_response["error"]}</span>'})
+
+    return render(request, 'account/level_up.html', {'characters': characters, 'price': price})
+
+
+def level_up_success_view(request):
+    character_name = request.session.get('levelup_character')
+    if not character_name:
+        return redirect('level-up-character')
+
+    # Ejecutar el comando SOAP
+    command = f".char level {character_name} 80"
+    response = execute_soap_command(command)
+
+    if response is None or response.strip() == "":
+        message = f"El personaje {character_name} ha sido subido al nivel 80."
+    else:
+        message = f"Error: {response}"
+
+    # Limpiar la sesión
+    request.session.pop('levelup_character', None)
+
+    return render(request, 'account/level_up_success.html', {'message': message})
+
+
+def level_up_cancel_view(request):
+    return render(request, 'account/level_up_cancel.html')
+    
+   
+def gold_character_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener personajes y estado de conexión del usuario
+    with connections['acore_characters'].cursor() as cursor:
+        cursor.execute("""
+            SELECT name, online, money
+            FROM characters
+            WHERE account = (
+                SELECT id 
+                FROM acore_auth.account 
+                WHERE username = %s
+            )
+        """, [username])
+        characters_data = cursor.fetchall()
+
+    characters = {row[0]: {'online': row[1], 'money': row[2]} for row in characters_data}
+
+    # Obtener precios del oro
+    gold_prices = GoldPrice.objects.all().order_by('gold_amount')
+
+    if request.method == 'POST':
+        character_name = request.POST.get('character')
+        gold_amount = request.POST.get('gold_amount')
+
+        # Validaciones iniciales
+        if not character_name or not gold_amount:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Seleccione un personaje y una cantidad de oro.</span>'})
+
+        if character_name not in characters:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">No tienes permiso para enviar oro a este personaje.</span>'})
+
+        if characters[character_name]['online'] == 1:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">El personaje debe estar desconectado para recibir oro.</span>'})
+
+        try:
+            gold_amount = int(gold_amount)
+        except ValueError:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Cantidad de oro no válida.</span>'})
+
+        gold_price = GoldPrice.objects.filter(gold_amount=gold_amount).first()
+        if not gold_price:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Cantidad de oro no válida.</span>'})
+
+        # Convertir el precio a formato que Stripe acepta (en centavos)
+        stripe_price = int(float(gold_price.price) * 1)
+
+        # Crear sesión de pago con Stripe
+        success_url = request.build_absolute_uri(reverse('gold-success'))
+        cancel_url = request.build_absolute_uri(reverse('gold-cancel'))
+        stripe_response = create_checkout_session(stripe_price, success_url=success_url, cancel_url=cancel_url)
+
+        if stripe_response["success"]:
+            # Guardar en sesión los datos para el callback tras el pago
+            request.session['gold_transaction'] = {
+                'character_name': character_name,
+                'gold_amount': gold_amount
+            }
+            return JsonResponse({
+                'success': True,
+                'session_id': stripe_response["session_id"],
+                'stripe_public_key': settings.STRIPE_PUBLIC_KEY
+            })
+        else:
+            return JsonResponse({'success': False, 'message': f'<span class="red-form-response">Error al iniciar el pago: {stripe_response["error"]}</span>'})
+
+    return render(request, 'account/gold_character.html', {'characters': characters, 'gold_prices': gold_prices})
+
+
+def gold_success_view(request):
+    # Procesar el pago exitoso
+    transaction = request.session.pop('gold_transaction', None)
+    if not transaction:
+        return redirect('gold-character')
+
+    character_name = transaction['character_name']
+    gold_amount = int(transaction['gold_amount'])
+
+    # Calcular el oro en formato del juego
+    game_gold_amount = gold_amount * 10000
+
+    # Actualizar la cantidad de oro en la base de datos
+    with connections['acore_characters'].cursor() as cursor:
+        cursor.execute("""
+            UPDATE characters
+            SET money = money + %s
+            WHERE name = %s
+        """, [game_gold_amount, character_name])
+
+    return render(request, 'account/gold_success.html', {'character_name': character_name, 'gold_amount': gold_amount})
+
+
+def gold_cancel_view(request):
+    return render(request, 'account/gold_cancel.html')
+    
+    
+def transfer_character_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener el precio de transferencia
+    price_obj = TransferPrice.objects.first()
+    price = price_obj.price if price_obj else 10.00
+
+    # Obtener el ID de usuario desde acore_auth.account
+    with connections['acore_auth'].cursor() as cursor:
+        cursor.execute("SELECT id FROM account WHERE username = %s", [username])
+        user_data = cursor.fetchone()
+    if not user_data:
+        return JsonResponse({'success': False, 'message': '<span class="red-form-response">Cuenta no encontrada. Por favor, inicie sesión nuevamente.</span>'})
+
+    user_id = user_data[0]  # ID de la cuenta
+
+    # Obtener personajes de la cuenta de origen
+    with connections['acore_characters'].cursor() as cursor:
+        cursor.execute("""
+            SELECT name, class, online
+            FROM characters
+            WHERE account = %s
+        """, [user_id])
+        characters = cursor.fetchall()
+
+    if request.method == 'POST':
+        character_name = request.POST.get('character')
+        destination_account = request.POST.get('destination_account')
+        token = request.POST.get('security_token')
+
+        # Validaciones
+        if not all([character_name, destination_account, token]):
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Por favor, complete todos los campos.</span>'})
+
+        character = next((char for char in characters if char[0] == character_name), None)
+        if not character:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">No tienes permiso para transferir este personaje.</span>'})
+
+        # Verificar si el personaje está desconectado
+        if character[2] == 1:  # Si está conectado
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">El personaje debe estar desconectado para ser transferido.</span>'})
+
+        # Verificar el token de seguridad
+        security_token = SecurityToken.objects.filter(user_id=user_id, token=token).first()
+        if not security_token:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Token de seguridad incorrecto.</span>'})
+
+        # Verificar si el token ha expirado
+        if security_token.expires_at < timezone.now():
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">El token ha expirado. Solicite uno nuevo.</span>'})
+
+        # Verificar si la cuenta de destino existe
+        with connections['acore_auth'].cursor() as cursor:
+            cursor.execute("SELECT id FROM account WHERE username = %s", [destination_account])
+            destination_account_data = cursor.fetchone()
+
+        if not destination_account_data:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">La cuenta de destino no existe.</span>'})
+
+        # Verificar restricciones en la cuenta de destino
+        destination_account_id = destination_account_data[0]
+        with connections['acore_characters'].cursor() as cursor:
+            cursor.execute("""
+                SELECT account, name, class, level, online
+                FROM characters
+                WHERE account = %s
+            """, [destination_account_id])
+            destination_characters = cursor.fetchall()
+
+        if not any(char[3] >= 55 and char[2] != 6 for char in destination_characters):
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">La cuenta destino debe tener al menos un personaje de nivel 55 o superior que no sea Caballero de la Muerte.</span>'})
+
+        if any(char[2] == 6 for char in destination_characters):
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">La cuenta destino no puede tener un Caballero de la Muerte.</span>'})
+
+        # Verificar que ninguna cuenta esté online
+        for char in destination_characters:
+            if char[4] == 1:
+                return JsonResponse({'success': False, 'message': '<span class="red-form-response">Todos los personajes de la cuenta destino deben estar desconectados.</span>'})
+        for char in characters:
+            if char[2] == 1:
+                return JsonResponse({'success': False, 'message': '<span class="red-form-response">Todos los personajes de la cuenta origen deben estar desconectados.</span>'})
+
+        # Crear sesión de pago con Stripe
+        success_url = request.build_absolute_uri(reverse('transfer-success'))
+        cancel_url = request.build_absolute_uri(reverse('transfer-cancel'))
+        stripe_response = create_checkout_session(price, success_url=success_url, cancel_url=cancel_url)
+
+        if stripe_response["success"]:
+            # Guardar los datos de la transferencia en la sesión para usarlos después del pago
+            request.session['transfer_data'] = {
+                'character_name': character_name,
+                'destination_account': destination_account
+            }
+            return JsonResponse({
+                'success': True,
+                'session_id': stripe_response["session_id"],
+                'stripe_public_key': settings.STRIPE_PUBLIC_KEY
+            })
+        else:
+            return JsonResponse({'success': False, 'message': f'<span class="red-form-response">Error al iniciar el pago: {stripe_response["error"]}</span>'})
+
+    return render(request, 'account/transfer_character.html', {'characters': characters, 'price': price})
+
+
+def transfer_success_view(request):
+    transfer_data = request.session.get('transfer_data')
+    if not transfer_data:
+        return redirect('transfer-character')
+
+    character_name = transfer_data['character_name']
+    destination_account = transfer_data['destination_account']
+
+    # Ejecutar comando SOAP
+    command = f".char changeaccount {destination_account} {character_name}"
+    response = execute_soap_command(command)
+
+    if response is None or response.strip() == "":
+        message = f"El personaje {character_name} ha sido transferido a la cuenta {destination_account}."
+        request.session.pop('transfer_data', None)  # Limpiar sesión
+        return render(request, 'account/transfer_success.html', {'message': message})
+    else:
+        return render(request, 'account/transfer_success.html', {'message': f"Error: {response}"})
+
+
+def transfer_cancel_view(request):
+    return render(request, 'account/transfer_cancel.html')  
+    
+    
+def store_novawow_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+    
+    categories = StoreCategory.objects.filter(parent_category=None)
+    items = StoreItem.objects.all()
+    cart_items = Cart.objects.filter(username=username)
+
+    total_price = sum([item.total_price() for item in cart_items])
+
+    return render(request, 'account/store_novawow.html', {
+        'categories': categories,
+        'items': items,
+        'cart_items': cart_items,
+        'total_price': total_price,
+    })
+
+def add_to_cart(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    if request.method == 'POST':
+        item_id = request.POST.get('item_id')
+        item = StoreItem.objects.get(id=item_id)
+        Cart.objects.create(username=username, item=item)
+        return JsonResponse({'success': True, 'message': f'{item.name} añadido al carrito.'})
+
+    return JsonResponse({'success': False, 'message': 'Error al añadir al carrito.'})
+
+def remove_from_cart(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    if request.method == 'POST':
+        cart_id = request.POST.get('cart_id')
+        Cart.objects.filter(id=cart_id, username=username).delete()
+        return JsonResponse({'success': True, 'message': 'Artículo eliminado del carrito.'})
+
+    return JsonResponse({'success': False, 'message': 'Error al eliminar del carrito.'})
+
+def checkout_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    cart_items = Cart.objects.filter(username=username)
+    total_price = sum([item.total_price() for item in cart_items])
+
+    success_url = request.build_absolute_uri(reverse('checkout_success'))
+    cancel_url = request.build_absolute_uri(reverse('checkout_cancel'))
+    stripe_response = create_checkout_session(total_price, success_url, cancel_url)
+
+    if stripe_response["success"]:
+        return JsonResponse({'success': True, 'session_id': stripe_response["session_id"]})
+    
+    return JsonResponse({'success': False, 'message': 'Error al procesar el pago.'})
+
+def checkout_success(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    cart_items = Cart.objects.filter(username=username)
+
+    for cart_item in cart_items:
+        command = f".send item {cart_item.item.item_id} {cart_item.item.name} {username}"
+        execute_soap_command(command)
+        cart_item.delete()
+
+    return render(request, 'account/checkout_success.html', {'message': 'Compra procesada con éxito.'})
+
+def checkout_cancel(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    return render(request, 'account/checkout_cancel.html', {'message': 'Compra cancelada.'})
+
+def revive_character_view(request):
+    username = request.session.get('username')
+    if not username:
+        return redirect('login')
+
+    # Obtener personajes del usuario desde la base de datos `acore_characters`
+    with connections['acore_characters'].cursor() as cursor:
+        cursor.execute("""
+            SELECT name, online
+            FROM characters
+            WHERE account = (
+                SELECT id 
+                FROM acore_auth.account 
+                WHERE username = %s
+            )
+        """, [username])
+        characters_data = cursor.fetchall()
+        characters = {row[0]: row[1] for row in characters_data}  # Diccionario con nombre y estado de conexión
+
+    if request.method == 'POST':
+        character_name = request.POST.get('character')
+
+        # Validar si el personaje fue seleccionado
+        if not character_name:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">Por favor, seleccione un personaje.</span>'})
+
+        # Verificar si el personaje pertenece al usuario
+        if character_name not in characters:
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">No tienes permiso para revivir este personaje.</span>'})
+
+        # Verificar si el personaje está desconectado
+        if characters[character_name] == 1:  # Si está conectado
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">El personaje debe estar desconectado para ser revivido.</span>'})
+
+        # Verificar el historial de uso del comando `revive`
+        last_revive = ReviveHistory.objects.filter(character_name=character_name).order_by('-used_at').first()
+        if last_revive and last_revive.used_at > now() - timedelta(hours=12):
+            return JsonResponse({'success': False, 'message': '<span class="red-form-response">El personaje solo puede revivirse una vez cada 12 horas.</span>'})
+
+        # Ejecutar el comando SOAP
+        command = f".revive {character_name}"
+        response = execute_soap_command(command)
+
+        # Si la respuesta es vacía o None, asumir éxito
+        if response:
+            ReviveHistory.objects.create(character_name=character_name, used_at=now())
+            return JsonResponse({'success': True, 'message': f'<span class="ok-form-response">El personaje {character_name} ha sido revivido con éxito.</span>'})
+
+        # Manejar respuesta explícita que no indique éxito
+        return JsonResponse({'success': False, 'message': f'<span class="red-form-response">Error inesperado: {response}</span>'})
+
+    return render(request, 'account/revive_character.html', {'characters': characters.keys()})
+
 
 def unstuck_character_view(request):
     username = request.session.get('username')

@@ -45,7 +45,7 @@ $(function() {
         // Serializar datos para el envío
         const bValue = button.data('id');
         let data = { login: bValue };
-        data = $("#uw-login-form").serialize() + '&' + $.param(data);
+        data = $("#nw-login-form").serialize() + '&' + $.param(data);
 
         $.ajax({
             type: 'POST',

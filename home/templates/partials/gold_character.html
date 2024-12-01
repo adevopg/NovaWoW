@@ -1,0 +1,32 @@
+<div class="main-page">
+    <div class="middle-content">
+        <div class="body-content">
+            <div class="title-content"><h1>Adquirir oro</h1></div>
+            <div class="box-content">
+                <div class="title-box-content">
+                    <h2>Información</h2>
+                    <a class="back-to-account" href="{% url 'my-account' %}">Regresar a mi cuenta</a>
+                </div>
+                <div class="body-box-content justified">
+                    <p>Selecciona un personaje y la cantidad de oro:</p>
+                    <form id="uw-gold-form">
+                        <select name="character" required>
+                            <option value="" selected disabled>Seleccione un personaje</option>
+                            {% for character, data in characters.items %}
+                                <option value="{{ character }}">{{ character }}</option>
+                            {% endfor %}
+                        </select>
+                        <select name="gold_amount" required>
+                            <option value="" selected disabled>Seleccione cantidad de oro</option>
+                            {% for price in gold_prices %}
+                                <option value="{{ price.gold_amount }}">{{ price.gold_amount }} oro - {{ price.price }} EUR</option>
+                            {% endfor %}
+                        </select>
+                        <button type="button" class="gold-button">Enviar oro</button>
+                    </form>
+                    <div id="gold-response"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

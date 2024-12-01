@@ -1,0 +1,32 @@
+<div class="main-page">
+    <div class="store-categories">
+        {% for category in categories %}
+            <h2>{{ category.name }}</h2>
+            <ul>
+                {% for item in category.storeitem_set.all %}
+                    <li>
+                        <img src="{{ item.image_url }}" alt="{{ item.name }}">
+                        <p>{{ item.name }}</p>
+                        <p>{{ item.price }} €</p>
+                        <button class="add-to-cart" data-item-id="{{ item.id }}">Añadir</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+
+    <div class="cart">
+        <h2>Carrito</h2>
+        <ul>
+            {% for cart_item in cart_items %}
+                <li>
+                    <p>{{ cart_item.item.name }}</p>
+                    <p>{{ cart_item.item.price }} €</p>
+                    <button class="remove-from-cart" data-cart-id="{{ cart_item.id }}">Eliminar</button>
+                </li>
+            {% endfor %}
+        </ul>
+        <p>Total: {{ total_price }} €</p>
+        <button id="checkout-button">Pagar</button>
+    </div>
+</div>

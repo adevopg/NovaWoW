@@ -1,0 +1,28 @@
+<div class="main-page">
+    <div class="middle-content">
+        <div class="body-content">
+            <div class="title-content"><h1>Transferir personaje</h1></div>
+            <div class="box-content">
+                <div class="title-box-content">
+                    <h2>Información</h2>
+                    <a class="back-to-account" href="{% url 'my-account' %}">Regresar a mi cuenta</a>
+                </div>
+                <div class="body-box-content justified">
+                    <form id="uw-transfer-character-form">
+                        <select name="character" required>
+                            <option value="" selected disabled>Seleccione un personaje</option>
+                            {% for character in characters %}
+                                <option value="{{ character.0 }}">{{ character.0 }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="text" name="destination_account" placeholder="Cuenta destino" required>
+                        <input type="password" name="security_token" placeholder="Token de seguridad" required>
+                        <button type="button" class="transfer-button">Transferir por {{ price }} €</button>
+                    </form>
+					<hr>
+                    <center><div id="transfer-character-response"></div></center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

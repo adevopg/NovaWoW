@@ -1,0 +1,42 @@
+<div class="main-page">
+            <div class="middle-content">
+                <div class="body-content">
+                <div class="title-content"><h1>Subir a nivel 80</h1></div>
+                    <div class="box-content">
+                        <div class="title-box-content"><h2>Información</h2><a class="back-to-account" href="my-account">Regresar a mi cuenta</a><a class="back-to-account-responsive" href="my-account">Regresar</a></div>
+                        <div class="body-box-content justified">
+                            <br>
+                            <p>La herramienta <span>Subir a nivel 80</span> te permite subir cualquier personaje al nivel 80.</p>
+                            <p>Sólo subirá de nivel al personaje. Esta opción no incluye ítems/oro/etc.</p>
+                            <br>
+                            <p>Al usar el botón SUBIR A NIVEL 80 del personaje que hayas escogido, se enviará el nivel 80 al personaje.</p>
+                            <p>Cuando ingreses a la lista de personajes de tu cuenta, verás que tu personaje escogido ya es nivel 80.</p>
+                            <br>
+                            <fieldset>
+                            <legend>NOTA</legend>
+                                <div class="separate2">
+                                    <p>Se requiere que el personaje esté desconectado.</p>
+                                    <p>Por favor, asegúrate de haber escogido al personaje correcto ya que esta acción no es reversible una vez realizada.</p>
+                                </div>
+                            </fieldset>
+							<p>Selecciona el personaje que deseas subir al nivel 80:</p>
+                            <form action="" id="nw-levelup-form" method="POST" accept-charset="utf-8">
+                                    <select name="character">
+										 <option value="" selected disabled>Seleccione un personaje</option>
+										{% for character in characters %}
+                                        <option class="priest big-font" value="{{ character }}">{{ character }}</option>
+										{% endfor %}
+                                    </select>
+                                    <br>
+                                    <button class="level-up-button" type="submit" name="level-up-button" data-id="LevelUp">Subir a nivel 80 por {{ price }} €</button>
+                                </form>
+                                <br>
+                                <hr>
+                                <center><div class="alert-message" id="levelup-response"></div></center>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    

@@ -135,6 +135,10 @@ TEMPLATES = [
     },
 ]
 
+STRIPE_PUBLIC_KEY = "pk_test_51QQrdMI3Vazamytgfb8046k0AwaRR3Cu8ni80b8iglZMUlUZVJarW1azXGXl3qV5VZtr2S7Xmpgr43Zcg73Pd8eT00C8CPOnja"  # Cambia según tu configuración
+STRIPE_SECRET_KEY = "sk_test_51QQrdMI3VazamytgcKpxF9cQcUfZYOam8b3IYgpJnpUBdY4xYOorTHRE0AbArfZbRT4nSbY2DEAMEvgxJl6gmgjJ00OaZgiryS"
+
+
 
 WSGI_APPLICATION = 'novawow.wsgi.application'
 

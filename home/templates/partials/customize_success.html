@@ -1,0 +1,44 @@
+<div class="main-page">
+            <div class="middle-content">
+                <div class="body-content">
+                <div class="title-content"><h1>Personalizar personaje</h1></div>
+                    <div class="box-content">
+                        <div class="title-box-content"><h2>Información</h2><a class="back-to-account" href="my-account">Regresar a mi cuenta</a><a class="back-to-account-responsive" href="my-account">Regresar</a></div>
+                        <div class="body-box-content justified">
+                            <br>
+                            <p>La herramienta <span>Personalizar personaje</span> te permite cambiar los siguientes aspectos un personaje:</p>
+                            <p>- Color de la piel</p>
+                            <p>- Rostro</p>
+                            <p>- Pelo</p>
+                            <p>- Sexo</p>
+                            <p>- Características correspondientes a cada raza como cuernos, pendientes, marcas, vello facial</p>
+                            <p>Si también deseas cambiar el nombre del personaje, debes usar la herramienta Renombrar personaje.</p>
+                            <br>
+                            <p>Al usar el botón PERSONALIZAR del personaje que hayas escogido, se enviará una petición de personalización de dicho personaje.</p>
+                            <p>Cuando ingreses a la lista de personajes de tu cuenta, verás un ícono a la izquierda de tu personaje escogido.</p>
+                            <p>Al darle click a dicho ícono ingresarás al menú de edición de personaje que te permitirá escoger diferentes características.</p>
+                            <br>
+                            <fieldset>
+                            <legend>NOTA</legend>
+                                <div class="separate2">
+                                    <p>Por favor, asegúrate de haber escogido al personaje correcto ya que esta acción no es reversible una vez realizada.</p>
+                                </div>
+                            </fieldset>
+                            <div class="body-box-content justified">
+                    <p>Selecciona el personaje que deseas personalizar:</p>
+                    <form id="nw-customize-form">
+                        <select name="character" required>
+                            <option value="" selected disabled>Seleccione un personaje</option>
+                            {% for character in characters %}
+                                <option value="{{ character }}">{{ character }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="button" class="customize-button">Personalizar por {{ price }} €</button>
+                    </form>
+                    <div id="customize-response"></div>
+                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

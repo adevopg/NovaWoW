@@ -3,7 +3,7 @@ from django.contrib import admin
 from django import forms
 from .models import (
     Noticia, ClienteCategoria, SistemaOperativo, ServerSelection,
-    RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, GuildRenameSettings, VoteSite
+    RecruitAFriend, DownloadClientPage, ContentCreator, RecruitReward, GuildRenameSettings, VoteSite, RenamePrice, CustomizePrice, ChangeRacePrice, ChangeFactionPrice, LevelUpPrice, GoldPrice, TransferPrice
 )
 from django.db import connections
 import logging
@@ -11,6 +11,25 @@ from django.shortcuts import redirect
 from django_ckeditor_5.widgets import CKEditor5Widget
 
 logger = logging.getLogger(__name__)
+
+
+@admin.register(ChangeFactionPrice)
+class ChangeFactionPriceAdmin(admin.ModelAdmin):
+    list_display = ('price',)
+    
+@admin.register(GoldPrice)
+class GoldPriceAdmin(admin.ModelAdmin):
+    list_display = ('gold_amount', 'price')
+    ordering = ('gold_amount',)
+
+
+@admin.register(TransferPrice)
+class TransferPriceAdmin(admin.ModelAdmin):
+    list_display = ('price',)    
+    
+@admin.register(LevelUpPrice)
+class LevelUpPriceAdmin(admin.ModelAdmin):
+    list_display = ('price',)    
 
 # Formulario para el modelo Noticia
 class NoticiaAdminForm(forms.ModelForm):
@@ -20,6 +39,19 @@ class NoticiaAdminForm(forms.ModelForm):
         widgets = {
             'contenido': CKEditor5Widget(config_name='default'),
         }
+        
+@admin.register(RenamePrice)
+class RenamePriceAdmin(admin.ModelAdmin):
+    list_display = ("price",)  
+
+
+@admin.register(CustomizePrice)
+class CustomizePriceAdmin(admin.ModelAdmin):
+    list_display = ("price",)
+
+@admin.register(ChangeRacePrice)
+class ChangeRacePriceAdmin(admin.ModelAdmin):
+    list_display = ('price',)    
 
 @admin.register(Noticia)
 class NoticiaAdmin(admin.ModelAdmin):

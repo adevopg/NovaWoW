@@ -4,7 +4,7 @@ $(function() {
 
         var button = $(this);
         var originalText = button.html();
-        var data = $("#uw-sec-token-form").serialize();
+        var data = $("#nw-sec-token-form").serialize();
 
         // Cambiar el texto del botón a "Solicitando token"
         changeButton(button, 'Solicitando token');

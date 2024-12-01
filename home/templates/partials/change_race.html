@@ -1,0 +1,46 @@
+<div class="main-page">
+            <div class="middle-content">
+                <div class="body-content">
+                <div class="title-content"><h1>Cambiar raza del personaje</h1></div>
+                    <div class="box-content">
+                        <div class="title-box-content"><h2>Información</h2><a class="back-to-account" href="my-account">Regresar a mi cuenta</a><a class="back-to-account-responsive" href="my-account">Regresar</a></div>
+                        <div class="body-box-content justified">
+                            <br>
+                            <p>La herramienta <span>Cambiar raza del personaje</span> te permite cambiar la raza del personaje entre otras de la misma facción.</p>
+                            <p>Si también deseas cambiar el nombre del personaje, debes usar la herramienta Renombrar personaje.</p>
+                            <br>
+                            <p>Al usar el botón CAMBIAR RAZA del personaje que hayas escogido, se enviará una petición de cambio de raza de dicho personaje.</p>
+                            <p>Cuando ingreses a la lista de personajes de tu cuenta, verás un ícono a la izquierda de tu personaje escogido.</p>
+                            <p>Al darle click a dicho ícono ingresarás al menú de edición de personaje que te permitirá escoger entre las razas de la misma facción.</p>
+                            <br>
+                            <fieldset>
+                            <legend>NOTA</legend>
+                                <div class="separate2">
+                                    <p>Por favor, asegúrate de haber escogido al personaje correcto ya que esta acción no es reversible una vez realizada.</p>
+                                </div>
+                            </fieldset>
+                              <form id="nw-change-race-form" div class="centered">
+                                <br>
+                                <br>
+                                <p>Escoge el personaje que quieres desbloquear</p>
+                                <br>
+                                <form action="" id="nw-change-race-form" method="POST" accept-charset="utf-8">
+                                    <select name="character">
+										 <option value="" selected disabled>Seleccione un personaje</option>
+										{% for character in characters %}
+                                        <option class="priest big-font" value="{{ character }}">{{ character }}</option>
+										{% endfor %}
+                                    </select>
+                                    <br>
+                                    <button class="change-race-button" type="submit" name="change-race-button" data-id="ChangeRace">Cambiar Raza por {{ price }} €</button>
+                                </form>
+                                <br>
+                                <hr>
+                                <center><div class="alert-message" id="change-race-response"></div></center>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

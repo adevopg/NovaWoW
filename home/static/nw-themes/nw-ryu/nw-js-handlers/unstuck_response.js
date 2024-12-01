@@ -6,7 +6,7 @@ $(function() {
 
         var button = $(this);
         var originalText = button.html();
-        var data = $("#uw-unstuck-form").serialize();
+        var data = $("#nw-unstuck-form").serialize();
 
         button.html("Desbloqueando...");
         button.prop("disabled", true);
@@ -22,7 +22,7 @@ $(function() {
                 if (data.success) {
                     button.html("Desbloqueado");
                     setTimeout(function() {
-                        $("#uw-unstuck-form")[0].reset();
+                        $("#nw-unstuck-form")[0].reset();
                         button.html(originalText);
                         button.prop("disabled", false);
                     }, 5000);

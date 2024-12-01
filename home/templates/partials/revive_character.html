@@ -1,0 +1,39 @@
+<div class="main-page">
+    <div class="middle-content">
+        <div class="body-content">
+            <div class="title-content">
+                <h1>Revivir personaje</h1>
+            </div>
+            <div class="box-content">
+                <div class="title-box-content">
+                    <h2>Información</h2>
+                    <a class="back-to-account" href="{% url 'my-account' %}">Regresar a mi cuenta</a>
+                    <a class="back-to-account-responsive" href="{% url 'my-account' %}">Regresar</a>
+                </div>
+                <div class="body-box-content justified">
+                    <br>
+                    {% if characters %}
+                        <p>Escoge el personaje que quieres revivir:</p>
+                        <br>
+                        <form id="nw-revive-form" action="" method="POST" accept-charset="utf-8">
+                            {% csrf_token %}
+                            <select name="character">
+                                <option disabled selected value="">Seleccione un personaje</option>
+                                {% for character in characters %}
+                                    <option value="{{ character }}">{{ character }}</option>
+                                {% endfor %}
+                            </select>
+                            <br>
+                            <button class="revive-button" type="submit" name="revive" data-id="Revivir">Revivir</button>
+                        </form>
+                        <br>
+                    {% else %}
+                        <p>No hay personajes disponibles para revivir.</p>
+                    {% endif %}
+                    <hr>
+                    <div class="alert-message" id="revive-response"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

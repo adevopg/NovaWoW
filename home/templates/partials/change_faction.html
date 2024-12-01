@@ -1,0 +1,77 @@
+<div class="main-page">
+            <div class="middle-content">
+                <div class="body-content">
+                <div class="title-content"><h1>Cambiar facción del personaje</h1></div>
+                    <div class="box-content">
+                        <div class="title-box-content"><h2>Información</h2><a class="back-to-account" href="my-account">Regresar a mi cuenta</a><a class="back-to-account-responsive" href="my-account">Regresar</a></div>
+                        <div class="body-box-content justified">
+                            <br>
+                            <p>La herramienta <span>Cambiar facción del personaje</span> te permite cambiar de la Alianza a la Horda y viceversa.</p>
+                            <p>Si también deseas cambiar el nombre del personaje, debes usar la herramienta Renombrar personaje.</p>
+                            <br>
+                            <p>Al hacer un cambio de Facción:</p>
+                            <p>- Los items, hechizos, títulos, reputaciones, monturas y logros se cambiarán a la nueva facción</p>
+                            <p>- Las misiones activas en el Registro de misiones serán abandonadas</p>
+                            <p>- Los teams de arena seán borrados</p>
+                            <p>- Los amigos en la Lista de amigos se borrarán</p>
+                            <br>
+                            <p><span class="red-info2">Restricciones del personaje:</span></p>
+                            <p>- No debe tener subastas activas</p>
+                            <p>- No debe tener correos en el buzón</p>
+                            <p>- No debe capitán de un team de arenas</p>
+                            <p>- No debe ser miembro de una hermandad</p>
+                            <p>- No debe tener demasiado oro</p>
+                            <br>
+                            <table class="max-gold-table">
+                                <tbody><tr>
+                                    <th>Nivel</th>
+                                    <th>Max. Oro</th>
+                                </tr>
+                                <tr>
+                                    <td>10-30</td>
+                                    <td>300<img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/money-gold.gif" width="10px"></td>
+                                </tr>
+                                <tr>
+                                    <td>31-50</td>
+                                    <td>1000<img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/money-gold.gif" width="10px"></td>
+                                </tr>
+                                <tr>
+                                    <td>51-70</td>
+                                    <td>5000<img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/money-gold.gif" width="10px"></td>
+                                </tr>
+                                <tr>
+                                    <td>71-80</td>
+                                    <td>20000<img src="{{ URL_PRINCIPAL }}/static/nw-themes/nw-ryu/nw-images/nw-icons/money-gold.gif" width="10px"></td>
+                                </tr>
+                            </tbody></table>
+                            <br>
+                            <p>Al usar el botón CAMBIAR FACCIÓN del personaje que hayas escogido, se enviará una petición de cambio de facción de dicho personaje.</p>
+                            <p>Cuando ingreses a la lista de personajes de tu cuenta, verás un ícono a la izquierda de tu personaje escogido.</p>
+                            <p>Al darle click a dicho ícono ingresarás al menú de edición de personaje que te permitirá pasar a la facción contraria.</p>
+                            <br>
+                            <fieldset>
+                            <legend>NOTA</legend>
+                                <div class="separate2">
+                                    <p>Por favor, asegúrate de haber escogido al personaje correcto ya que esta acción no es reversible una vez realizada.</p>
+                                </div>
+                            </fieldset>
+                           <form action="" id="nw-change-faction-form" method="POST" accept-charset="utf-8">
+                                    <select name="character">
+										 <option value="" selected disabled>Seleccione un personaje</option>
+										{% for character in characters %}
+                                        <option class="priest big-font" value="{{ character }}">{{ character }}</option>
+										{% endfor %}
+                                    </select>
+                                    <br>
+                                    <button class="change-faction-button" type="submit" name="change-faction-button" data-id="ChangeFaction">Cambiar Facción por {{ price }} €</button>
+                                </form>
+                                <br>
+                                <hr>
+                                <center><div class="alert-message" id="change-race-response"></div></center>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    

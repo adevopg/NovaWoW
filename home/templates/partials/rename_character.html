@@ -1,0 +1,43 @@
+<div class="main-page">
+            <div class="middle-content">
+                <div class="body-content">
+                <div class="title-content"><h1>Renombrar personaje</h1></div>
+                    <div class="box-content">
+                        <div class="title-box-content"><h2>Información</h2><a class="back-to-account" href="my-account">Regresar a mi cuenta</a><a class="back-to-account-responsive" href="my-account">Regresar</a></div>
+                        <div class="body-box-content justified">
+                            <br>
+                            <p>La herramienta <span>Renombrar personaje</span> te permite Renombrar un personaje el nombre se cambiara en el proximo inicio de session.</p>
+                            <p>Usa esta opción cuando quieras cambiar el nombre del personaje.</p>
+                            <br>
+                            <fieldset>
+                            <legend>NOTA</legend>
+                                <div class="separate2">
+                                    <p>Se requiere que el personaje esté desconectado.</p>
+                                    <p>Se puede repetir la acción en un mismo las veces que quieras.</p>
+                                </div>
+                            </fieldset>
+                            <form id="nw-rename-form" div class="centered">
+                                <br>
+                                <br>
+                                <p>Escoge el personaje que quieres desbloquear</p>
+                                <br>
+                                <form action="" id="nw-unstuck-form" method="POST" accept-charset="utf-8">
+                                    <select name="character">
+										 <option value="" selected disabled>Seleccione un personaje</option>
+										{% for character in characters %}
+                                        <option class="priest big-font" value="{{ character }}">{{ character }}</option>
+										{% endfor %}
+                                    </select>
+                                    <br>
+                                    <button class="rename-button" type="submit" name="rename-button" data-id="Renombrar">Renombrar por {{ price }} €</button>
+                                </form>
+                                <br>
+                                <hr>
+                                <center><div class="alert-message" id="rename-response"></div></center>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
